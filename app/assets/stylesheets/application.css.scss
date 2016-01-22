@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap";
+
+ul {
+  padding-right: 25px;
+}
+
+li.logo {
+  font-color: gray;
+  font-size: 150%;
+}
