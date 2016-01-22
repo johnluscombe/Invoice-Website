@@ -1,4 +1,13 @@
-<h1>List of users</h1>
-
-<p><%= pluralize(@users.count, 'user') %></p>
-<ol><%= render @users %></ol>
+<h1>Employee invoices</h1>
+<br>
+<table>
+  <col width="200">
+  <col width="200">
+  <col width="100">
+  <tr>
+    <th>Employee Name</th>
+    <th>Email</th>
+    <th>Rate</th>
+  </tr>
+  <%= render @users %>
+</table>

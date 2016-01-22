@@ -1,4 +1,5 @@
-<li>
-  <%= link_to user.name, user %>: <%= user.email %>
-  <%= link_to 'delete', user, method: :delete %>
-</li>
+<tr>
+  <td><%= link_to user.fullname, user %></td>
+  <td><%= user.email %></td>
+  <td><%= sprintf('%.2f', user.rate) %></td>
+</tr>
