@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160122205746) do
+ActiveRecord::Schema.define(version: 20160122210200) do
 
   create_table "invoices", force: :cascade do |t|
     t.date     "start_date"
@@ -30,7 +30,10 @@ ActiveRecord::Schema.define(version: 20160122205746) do
     t.integer  "hours"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "invoice_id"
   end
+
+  add_index "payments", ["invoice_id"], name: "index_payments_on_invoice_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "password_digest"

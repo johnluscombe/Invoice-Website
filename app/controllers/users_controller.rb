@@ -58,11 +58,12 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation,
+                                 invoices_attributes: [:id, :start_date, :end_date, :status])
   end
 
   def ensure_user_logged_in
-    unless current_user #If not user is logged in
+    unless current_user #If no user is logged in
       flash[:warning] = "Not logged in"
       redirect_to login_path
     end
