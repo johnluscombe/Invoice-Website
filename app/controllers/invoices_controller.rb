@@ -9,6 +9,8 @@ class InvoicesController < ApplicationController
   end
 
   def new
+    puts "New params below"
+    puts params
     @user = User.find(params[:user_id])
     @invoice = @user.invoices.build
   end
@@ -19,6 +21,8 @@ class InvoicesController < ApplicationController
   end
 
   def create
+    puts "Create params below"
+    puts params
     @user = User.find(params[:user_id])
     @invoice = @user.invoices.build(invoice_params)
     if @invoice.save

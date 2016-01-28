@@ -1,13 +1,23 @@
 <h1>Employee invoices</h1>
 <br>
-<table>
-  <col width="200">
-  <col width="200">
-  <col width="100">
-  <tr>
-    <th>Employee Name</th>
-    <th>Email</th>
-    <th>Rate</th>
-  </tr>
-  <%= render @users %>
-</table>
+<% if User.where(:admin => false).count > 0 %>
+  <table>
+    <col width="200">
+    <col width="200">
+    <col width="100">
+    <col width="50">
+    <col width="50">
+    <tr>
+      <th>Employee Name</th>
+      <th>Email</th>
+      <th>Rate</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <%= render @users %>
+  </table>
+  <%= link_to "New user", new_user_path %>
+<% else %>
+    <p>You do not have any employees yet.</p>
+    <%= link_to "New user", new_user_path %>
+<% end %>

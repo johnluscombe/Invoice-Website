@@ -1,11 +1,21 @@
-<%= f.label :name %>
+<%= f.label "Full Name" %>
+<%= f.text_field :fullname %>
+
+<%= f.label "Username" %>
 <%= f.text_field :name %>
 
 <%= f.label :email %>
 <%= f.text_field :email %>
 
-<%= f.label :password %>
-<%= f.password_field :password %>
+<% if current_user.admin %>
+  <%= f.label :rate %>
+  <%= f.text_field :rate %>
+<% end %>
 
-<%= f.label :password_confirmation, 'Confirmation' %>
-<%= f.password_field :password_confirmation %>
+<% if current_user?(@user) %>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+
+  <%= f.label :password_confirmation, 'Confirmation' %>
+  <%= f.password_field :password_confirmation %>
+<% end %>

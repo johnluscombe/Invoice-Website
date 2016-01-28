@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160122210200) do
+ActiveRecord::Schema.define(version: 20160128222709) do
 
   create_table "invoices", force: :cascade do |t|
     t.date     "start_date"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20160122210200) do
     t.string   "name"
     t.float    "rate"
     t.string   "fullname"
+    t.boolean  "first_time"
   end
 
 end

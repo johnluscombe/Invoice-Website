@@ -5,9 +5,15 @@ class LoginsController < ApplicationController
   def create
     user = User.find_by(name: params[:username])
     if user && user.authenticate(params[:password])
-      flash[:success] = 'Logged in'
+      if !user.first_time
+        flash[:success] = 'Logged in'
+      end
       session[:user_id] = user.id
-      redirect_to users_path
+      if user.first_time
+        redirect_to edit_user_path(user)
+      else
+        redirect_to users_path
+      end
     else
       flash.now[:danger] = 'Invalid username or password'
       render 'new'

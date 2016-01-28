@@ -1,14 +1,5 @@
 <tr>
-  <td><%= link_to invoice.start_date, invoice(@user) %></td>
-  <td><%= link_to invoice.end_date, invoice(@user) %></td>
+  <td><%= invoice.start_date %></td>
+  <td><%= invoice.end_date %></td>
   <td><%= invoice.status %></td>
 </tr>
-
-create_table "invoices", force: :cascade do |t|
-t.date     "start_date"
-t.date     "end_date"
-t.string   "status"
-t.datetime "created_at", null: false
-t.datetime "updated_at", null: false
-t.integer  "user_id"
-end
