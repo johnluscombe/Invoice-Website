@@ -47,6 +47,15 @@ td {
   border: none;
 }
 
+.top-bottom-border {
+  border-left: none;
+  border-right: none;
+}
+
+.space-above {
+  margin-top: 10px;
+}
+
 .emphasized {
   font-size: 1.5em;
 }
@@ -57,4 +66,8 @@ td {
 
 .decline {
   color: red;
+}
+
+.override {
+  background-color: #FFA;
 }

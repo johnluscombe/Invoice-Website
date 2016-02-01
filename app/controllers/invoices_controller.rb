@@ -23,6 +23,7 @@ class InvoicesController < ApplicationController
     @user = @invoice.user
     if params.has_key?(:submit)
       @invoice.update(:status => "Pending")
+      #SubmitEmail.send_submit_email(@user, @invoice).deliver
       redirect_to user_invoices_path(@user)
     elsif params.has_key?(:reset)
       @invoice.update(:status => "In Progress")
@@ -58,7 +59,7 @@ class InvoicesController < ApplicationController
   private
 
   def invoice_params
-    params.require(:invoice).permit(:start_date, :end_date, :status,
+    params.require(:invoice).permit(:start_date, :end_date, :status, :hours, :net_pay,
                                     payments_attributes: [:id, :date, :description, :hours])
   end
 

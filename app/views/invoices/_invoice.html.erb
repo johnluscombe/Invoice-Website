@@ -1,12 +1,22 @@
 <tr>
   <td><%= link_to invoice.start_date, invoice_payments_path(invoice) %></td>
   <td><%= invoice.end_date %></td>
-  <td><%= sprintf('%.2f', invoice.payments.sum(:hours)) %></td>
-  <td>$ <%= sprintf('%.2f', invoice.payments.sum(:hours) * invoice.user.rate) %></td>
+  <% if invoice.hours == nil %>
+      <td><%= sprintf('%.2f', invoice.payments.sum(:hours)) %></td>
+  <% else %>
+      <td class="override"><%= sprintf('%.2f', invoice.hours) %></td>
+  <% end %>
+
+  <% if invoice.net_pay == nil %>
+      <td>$ <%= sprintf('%.2f', invoice.payments.sum(:hours) * invoice.user.rate) %></td>
+  <% else %>
+      <td class="override">$ <%= sprintf('%.2f', invoice.net_pay) %></td>
+  <% end %>
+
   <% if invoice.status == "Approved" %>
-      <td class="approve"><%= invoice.status %></td>
+      <td class="approve"><strong><%= invoice.status %></strong></td>
   <% elsif invoice.status == "Declined" %>
-      <td class="decline"><%= invoice.status %></td>
+      <td class="decline"><strong><%= invoice.status %></strong></td>
   <% else %>
       <td><%= invoice.status %></td>
   <% end %>

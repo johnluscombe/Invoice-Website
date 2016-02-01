@@ -11,15 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201015209) do
+ActiveRecord::Schema.define(version: 20160201174033) do
 
   create_table "invoices", force: :cascade do |t|
     t.date     "start_date"
     t.date     "end_date"
     t.string   "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "user_id"
+    t.float    "hours"
+    t.float    "net_pay"
+    t.boolean  "status_override"
   end
 
   add_index "invoices", ["user_id"], name: "index_invoices_on_user_id"
