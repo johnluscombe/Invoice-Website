@@ -5,7 +5,7 @@ class PaymentsController < ApplicationController
 
   def index
     @invoice = Invoice.find(params[:invoice_id])
-    @payments = @invoice.payments.all
+    @payments = @invoice.payments.all.order(:date)
   end
 
   def new

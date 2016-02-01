@@ -3,7 +3,56 @@
   <td><%= invoice.end_date %></td>
   <td><%= sprintf('%.2f', invoice.payments.sum(:hours)) %></td>
   <td>$ <%= sprintf('%.2f', invoice.payments.sum(:hours) * invoice.user.rate) %></td>
-  <td><%= invoice.status %></td>
-  <td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
-  <td><%= link_to "Delete", invoice_path(invoice), method: :delete %></td>
+  <% if invoice.status == "Approved" %>
+      <td class="approve"><%= invoice.status %></td>
+  <% elsif invoice.status == "Declined" %>
+      <td class="decline"><%= invoice.status %></td>
+  <% else %>
+      <td><%= invoice.status %></td>
+  <% end %>
+  <% if current_user.admin == false %>
+    <% if invoice.status == "In Progress" %>
+        <td><%= link_to "Submit", edit_invoice_path(invoice, :submit => true) %></td>
+        <td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
+        <td><%= link_to "Delete", invoice_path(invoice), method: :delete %></td>
+    <% elsif invoice.status == "Pending" %>
+        <td><%= link_to "Reset", edit_invoice_path(invoice, :reset => true) %></td>
+        <td></td>
+        <td></td>
+    <% else %>
+        <td></td>
+        <td></td>
+        <td></td>
+    <% end %>
+  <% else %>
+      <% if invoice.status == "Started" %>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
+          <td><%= link_to "Delete", invoice_path(invoice), method: :delete %></td>
+      <% elsif invoice.status == "In Progress" %>
+          <td><%= link_to "Submit", edit_invoice_path(invoice, :submit => true) %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
+          <td><%= link_to "Delete", invoice_path(invoice), method: :delete %></td>
+      <% elsif invoice.status == "Pending" %>
+          <td></td>
+          <td><%= link_to "Approve", edit_invoice_path(invoice, :approve => true), class: "approve" %></td>
+          <td><%= link_to "Decline", edit_invoice_path(invoice, :decline => true), class: "decline" %></td>
+          <td><%= link_to "Reset", edit_invoice_path(invoice, :reset => true) %></td>
+          <td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
+          <td><%= link_to "Delete", invoice_path(invoice), method: :delete %></td>
+      <% else %>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= link_to "Reset", edit_invoice_path(invoice, :reset => true) %></td>
+          <td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
+          <td><%= link_to "Delete", invoice_path(invoice), method: :delete %></td>
+      <% end %>
+  <% end %>
 </tr>

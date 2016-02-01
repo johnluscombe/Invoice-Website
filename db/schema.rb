@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128222709) do
+ActiveRecord::Schema.define(version: 20160201015209) do
 
   create_table "invoices", force: :cascade do |t|
     t.date     "start_date"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160128222709) do
   create_table "payments", force: :cascade do |t|
     t.date     "date"
     t.string   "description"
-    t.integer  "hours"
+    t.float    "hours"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "invoice_id"

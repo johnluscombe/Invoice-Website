@@ -5,7 +5,7 @@ class InvoicesController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-    @invoices = @user.invoices.all
+    @invoices = @user.invoices.all.order(:start_date)
   end
 
   def new
@@ -21,6 +21,19 @@ class InvoicesController < ApplicationController
   def edit
     @invoice = Invoice.find(params[:id])
     @user = @invoice.user
+    if params.has_key?(:submit)
+      @invoice.update(:status => "Pending")
+      redirect_to user_invoices_path(@user)
+    elsif params.has_key?(:reset)
+      @invoice.update(:status => "In Progress")
+      redirect_to user_invoices_path(@user)
+    elsif current_user.admin and params.has_key?(:approve)
+      @invoice.update(:status => "Approved")
+      redirect_to user_invoices_path(@user)
+    elsif current_user.admin and params.has_key?(:decline)
+      @invoice.update(:status => "Declined")
+      redirect_to user_invoices_path(@user)
+    end
   end
 
   def update

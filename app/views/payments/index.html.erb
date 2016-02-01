@@ -4,7 +4,13 @@
     <h1>Payments for Invoice Starting <%= @invoice.start_date %></h1>
 <% end %>
 <br>
-<p class="emphasized"><strong>Status: <%= @invoice.status %></strong></p>
+<% if @invoice.status == "Approved" %>
+    <p class="emphasized"><strong>Status: <span class="approve"><%= @invoice.status %></span></strong></p>
+<% elsif @invoice.status == "Declined" %>
+    <p class="emphasized"><strong>Status: <span class="decline"><%= @invoice.status %></span></strong></p>
+<% else %>
+    <p class="emphasized"><strong>Status: <%= @invoice.status %></strong></p>
+<% end %>
 <% if @invoice.payments.count > 0 %>
     <table>
       <col width="100">
