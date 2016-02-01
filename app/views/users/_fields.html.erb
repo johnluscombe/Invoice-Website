@@ -1,21 +1,42 @@
-<%= f.label "Full Name" %>
-<%= f.text_field :fullname %>
+<table class="no-border">
+  <col width="100">
+  <col width="500">
+  <tr>
+    <td class="no-border right-align middle-align"><%= f.label "Full Name" %></td>
+    <td class="no-border"><%= f.text_field :fullname %>
+    <i class="glyphicon glyphicon-info-sign"></i> First and last name</td>
+  </tr>
 
-<%= f.label "Username" %>
-<%= f.text_field :name %>
+  <tr>
+    <td class="no-border right-align middle-align"><%= f.label "Username" %></td>
+    <td class="no-border"><%= f.text_field :name %>
+    <i class="glyphicon glyphicon-info-sign"></i> Username you will use to log in</td>
+  </tr>
 
-<%= f.label :email %>
-<%= f.text_field :email %>
+  <tr>
+    <td class="no-border right-align middle-align"><%= f.label :email %></td>
+    <td class="no-border"><%= f.text_field :email %>
+    <i class="glyphicon glyphicon-info-sign"></i> Optional. Email to receive invoice statements.</td>
+  </tr>
 
-<% if current_user.admin %>
-  <%= f.label :rate %>
-  <%= f.text_field :rate %>
-<% end %>
+  <% if !current_user?(@user) and current_user.admin %>
+      <tr>
+        <td class="no-border right-align middle-align"><%= f.label :rate %></td>
+        <td class="no-border"><%= f.text_field :rate %>
+        <i class="glyphicon glyphicon-info-sign"></i> Hourly rate to pay employee.</td>
+      </tr>
+  <% end %>
 
-<% if current_user?(@user) %>
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-
-  <%= f.label :password_confirmation, 'Confirmation' %>
-  <%= f.password_field :password_confirmation %>
-<% end %>
+  <% if current_user?(@user) %>
+      <tr>
+        <td class="no-border right-align middle-align"><%= f.label :password %></td>
+        <td class="no-border"><%= f.password_field :password %>
+        <i class="glyphicon glyphicon-info-sign"></i> Password you will use to log in.</td>
+      </tr>
+      <tr>
+        <td class="no-border right-align middle-align"><%= f.label :password_confirmation, 'Confirmation' %></td>
+        <td class="no-border"><%= f.password_field :password_confirmation %>
+        <i class="glyphicon glyphicon-info-sign"></i> Verify that you entered the correct password.</td>
+      </tr>
+  <% end %>
+</table><br>

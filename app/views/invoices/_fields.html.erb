@@ -4,5 +4,7 @@
 <%= f.label :end_date %>
 <%= f.text_field :end_date %>
 
-<%= f.label :status %>
-<%= f.text_field :status %>
+<% if current_user.admin %>
+  <%= f.label :status %>
+  <%= f.text_field :status %>
+<% end %>

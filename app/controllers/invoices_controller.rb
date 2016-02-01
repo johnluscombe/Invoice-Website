@@ -1,7 +1,7 @@
 class InvoicesController < ApplicationController
-  before_action :ensure_user_logged_in, only: [:edit, :update, :destroy]
-  before_action :ensure_correct_user, only: [:edit, :update]
-  before_action :ensure_admin, only: [:destroy]
+  before_action :ensure_user_logged_in
+  before_action :ensure_correct_user, only: [:index]
+  #before_action :ensure_admin, only: [:index]
 
   def index
     @user = User.find(params[:user_id])
@@ -9,22 +9,8 @@ class InvoicesController < ApplicationController
   end
 
   def new
-    puts "New params below"
-    puts params
     @user = User.find(params[:user_id])
-    @invoice = @user.invoices.build
-  end
-
-  def edit
-    @invoice = Invoice.find(params[:id])
-    @user = @invoice.user
-  end
-
-  def create
-    puts "Create params below"
-    puts params
-    @user = User.find(params[:user_id])
-    @invoice = @user.invoices.build(invoice_params)
+    @invoice = @user.invoices.build(:user_id => @user.id, :start_date => "2016-01-01", :status => "Started")
     if @invoice.save
       redirect_to user_invoices_path(@user)
     else
@@ -32,12 +18,9 @@ class InvoicesController < ApplicationController
     end
   end
 
-  def show
-    @user = User.find(params[:user_id])
-    @invoice = @user.invoices.build(invoice_params)
-  rescue
-    flash[:danger] = "Unable to find user"
-    redirect_to users_path
+  def edit
+    @invoice = Invoice.find(params[:id])
+    @user = @invoice.user
   end
 
   def update
@@ -67,33 +50,28 @@ class InvoicesController < ApplicationController
   end
 
   def ensure_user_logged_in
-    unless current_user #If no user is logged in
-      flash[:warning] = "Not logged in"
+    unless current_user
       redirect_to login_path
     end
   end
 
   def ensure_correct_user
     @user = User.find(params[:user_id])
-    unless current_user?(@user) #If the user does not match the one logged in
-      flash[:danger] = "Cannot edit other user's profiles"
-      redirect_to root_path
+    unless current_user.admin or current_user?(@user)
+      if current_user.admin
+        flash[:danger] = "There has a been a problem loading the page, we're sorry for the inconvenience"
+        redirect_to users_path
+      else
+        flash[:danger] = "There has a been a problem loading the page, please contact your administrator"
+        redirect_to user_invoices_path(current_user)
+      end
     end
-  rescue #If the user cannot be found
-    flash[:danger] = "Unable to find user"
-    redirect_to users_path
   end
 
   def ensure_admin
-    @user = User.find(params[:user_id])
-    if (current_user.id == @user.id) #If admin tries to delete himself
-      flash[:danger] = 'Cannot delete yourself'
-      redirect_to root_path
-    else
-      unless current_user.admin? #If the user is not admin
-        flash[:danger] = 'Only admins allowed to delete user'
-        redirect_to root_path
-      end
+    unless current_user.admin
+      flash[:danger] = "There has a been a problem loading the page, please contact your administrator"
+      redirect_to user_invoices_path(current_user)
     end
   end
 end

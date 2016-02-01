@@ -1,6 +1,6 @@
 <tr>
-  <td><%= link_to user.fullname, user %></td>
-  <td><% user.email %></td>
+  <td><%= link_to user.fullname, user_invoices_path(user) %></td>
+  <td><%= user.email %></td>
   <td><%= sprintf('%.2f', user.rate) %></td>
   <td><%= link_to "Edit", edit_user_path(user) %>
   <td><%= link_to "Delete", user_path(user), method: :delete %></td>

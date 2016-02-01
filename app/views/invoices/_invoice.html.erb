@@ -1,5 +1,9 @@
 <tr>
-  <td><%= invoice.start_date %></td>
+  <td><%= link_to invoice.start_date, invoice_payments_path(invoice) %></td>
   <td><%= invoice.end_date %></td>
+  <td><%= sprintf('%.2f', invoice.payments.sum(:hours)) %></td>
+  <td>$ <%= sprintf('%.2f', invoice.payments.sum(:hours) * invoice.user.rate) %></td>
   <td><%= invoice.status %></td>
+  <td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
+  <td><%= link_to "Delete", invoice_path(invoice), method: :delete %></td>
 </tr>

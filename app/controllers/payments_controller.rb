@@ -1,7 +1,12 @@
 class PaymentsController < ApplicationController
-  before_action :ensure_user_logged_in, only: [:edit, :update, :destroy]
-  before_action :ensure_correct_user, only: [:edit, :update]
-  before_action :ensure_admin, only: [:destroy]
+  #before_action :ensure_user_logged_in, only: [:edit, :update, :destroy]
+  #before_action :ensure_correct_user, only: [:edit, :update]
+  #before_action :ensure_admin, only: [:destroy]
+
+  def index
+    @invoice = Invoice.find(params[:invoice_id])
+    @payments = @invoice.payments.all
+  end
 
   def new
     @invoice = Invoice.find(params[:invoice_id])
@@ -21,7 +26,9 @@ class PaymentsController < ApplicationController
     @user = @invoice.user
 
     if @payment.save
-      redirect_to invoices_path(:user_id => @user.id)
+      @invoice.status = "In Progress"
+      @invoice.save
+      redirect_to invoice_payments_path(:invoice_id => @invoice.id)
     else
       render 'new'
     end
@@ -42,7 +49,7 @@ class PaymentsController < ApplicationController
     @user = @invoice.user
 
     if @payment.update(payment_params)
-      redirect_to invoices_path(:user_id => @user.id)
+      redirect_to invoice_payments_path(:invoice_id => @invoice.id)
     else
       render 'edit'
     end

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :ensure_user_logged_in, only: [:index, :destroy]
-  #before_action :ensure_correct_user, only: [:edit, :update]
-  before_action :ensure_admin, only: [:index, :destroy]
+  before_action :ensure_user_logged_in
+  #before_action :ensure_correct_user
+  before_action :ensure_admin, only: [:index, :new, :create, :destroy]
 
   def index
     @users = User.where(:admin => false)
@@ -14,6 +14,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.first_time = true
+    if @user.password_digest==nil
+      @user.password = "password"
+      @user.password_confirmation = "password"
+    end
     if @user.save
       if current_user?(@user)
         flash[:success] = "Welcome to the site, #{@user.name}"
@@ -26,13 +30,6 @@ class UsersController < ApplicationController
       flash.now[:danger] = "Unable to create new user"
       render 'new'
     end
-  end
-
-  def show
-    @user = User.find(params[:id])
-  rescue
-    flash[:danger] = "Unable to find user"
-    redirect_to users_path
   end
 
   def edit
@@ -53,12 +50,13 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       if current_user?(@user)
         flash[:success] = "Your profile has been modified"
-        redirect_to @user
+        redirect_to user_invoices_path(@user)
       else
         flash[:success] = "User successfully updated"
         redirect_to users_path
       end
       @user.first_time = false
+      @user.save
     else
       flash[:danger] = "Unable to update profile"
       render 'edit'
@@ -80,26 +78,28 @@ class UsersController < ApplicationController
   end
 
   def ensure_user_logged_in
-    unless current_user #If no user is logged in
+    unless current_user
       redirect_to login_path
     end
   end
 
   def ensure_correct_user
-    @user = User.find(params[:id])
-    unless current_user?(@user) #If the user does not match the one logged in
-      flash[:danger] = "Cannot edit other user's profiles"
-      redirect_to root_path
+    @user = User.find(params[:user_id])
+    unless current_user?(@user)
+      if current_user.admin
+        flash[:danger] = "There has a been a problem loading the page, we're sorry for the inconvenience"
+        redirect_to users_path
+      else
+        flash[:danger] = "There has a been a problem loading the page, please contact your administrator"
+        redirect_to user_invoices_path(current_user)
+      end
     end
-  rescue #If the user cannot be found
-    flash[:danger] = "Unable to find user"
-    redirect_to users_path
   end
 
   def ensure_admin
-    unless current_user and current_user.admin? #If the user is not admin
-      flash[:danger] = 'Only admins allowed to delete user'
-      redirect_to root_path
+    unless current_user.admin
+      flash[:danger] = "There has a been a problem loading the page, please contact your administrator"
+      redirect_to user_invoices_path(current_user)
     end
   end
 end

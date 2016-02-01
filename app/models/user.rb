@@ -12,6 +12,6 @@ class User < ActiveRecord::Base
 #\z # end of input
 #/xi}
 
-  validates :password, presence: true, on: :create
+  validates :password, presence: true
   #validates :rate, presence: true
 end

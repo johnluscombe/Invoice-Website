@@ -13,7 +13,7 @@
  *= require_tree .
  *= require_self
  */
-
+@import "bootstrap-sprockets";
 @import "bootstrap";
 
 ul {
@@ -27,4 +27,26 @@ li.logo {
 
 td {
   border: 1px solid black;
+  padding-left: 2px;
+}
+
+.center {
+  text-align: center;
+}
+
+.right-align {
+  text-align: right;
+  padding-right: 5px;
+}
+
+.middle-align {
+  padding-top: 5px;
+}
+
+.no-border {
+  border: none;
+}
+
+.emphasized {
+  font-size: 1.5em;
 }

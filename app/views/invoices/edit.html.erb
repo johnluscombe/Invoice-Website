@@ -2,7 +2,7 @@
 
 <%= render 'shared/errors', object: @invoice %>
 
-<%= form_for @user do |form| %>
+<%= form_for @invoice do |form| %>
 <%= render partial: 'fields', locals: { f: form } %>
 
 <%= form.submit 'Update invoice' %>

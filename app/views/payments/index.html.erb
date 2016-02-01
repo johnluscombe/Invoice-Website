@@ -1,0 +1,33 @@
+<% if @invoice.end_date != nil %>
+    <h1>Payments for Invoice <%= @invoice.start_date %> - <%= @invoice.end_date %></h1>
+<% else %>
+    <h1>Payments for Invoice Starting <%= @invoice.start_date %></h1>
+<% end %>
+<br>
+<p class="emphasized"><strong>Status: <%= @invoice.status %></strong></p>
+<% if @invoice.payments.count > 0 %>
+    <table>
+      <col width="100">
+      <col width="200">
+      <col width="100">
+      <col width="100">
+      <col width="50">
+      <col width="50">
+      <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Hours</th>
+        <th>Daily Rate</th>
+      </tr>
+      <%= render @payments %>
+      <tr>
+        <td class="right-align" colspan="2"><strong>Total:</strong></td>
+        <td class="right-align"><strong><%= sprintf("%.2f", @invoice.payments.sum(:hours)) %></strong></td>
+        <td class="center emphasized" colspan="3"><strong>$ <%= sprintf('%.2f', @invoice.payments.sum(:hours) * @invoice.user.rate) %></strong></td>
+      </tr>
+    </table><br>
+    <%= link_to "New payment", new_invoice_payment_path(@invoice) %>
+<% else %>
+    <p>There are no payments under this invoice yet.</p>
+    <%= link_to "New payment", new_invoice_payment_path(@invoice) %>
+<% end %>

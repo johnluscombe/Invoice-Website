@@ -1,0 +1,9 @@
+<h1>Edit payment</h1>
+
+<%= render 'shared/errors', object: @payment %>
+
+<%= form_for @payment do |form| %>
+<%= render partial: 'fields', locals: { f: form } %>
+
+<%= form.submit 'Update payment' %>
+<% end %>

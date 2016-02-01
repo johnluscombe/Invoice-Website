@@ -1,0 +1,7 @@
+<%= render 'shared/errors', object: @payment %>
+
+<%= form_for [@invoice, @payment] do |form| %>
+    <%= render partial: 'fields', locals: { f: form } %>
+
+    <%= form.submit 'Create new payment' %>
+<% end %>
