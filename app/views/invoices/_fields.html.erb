@@ -1,10 +1,19 @@
-<%= f.label :start_date %>
-<%= f.text_field :start_date %>
-
-<%= f.label :end_date %>
-<%= f.text_field :end_date %>
-
+<table class="no-border">
+  <col width="100">
+  <col width="500">
+  <tr>
+    <td class="no-border right-align middle-align"><%= f.label :start_date %></td>
+    <td class="no-border"><%= f.text_field :start_date %></td>
+  </tr>
+  <tr>
+    <td class="no-border right-align middle-align"><%= f.label :end_date %></td>
+    <td class="no-border"><%= f.text_field :end_date %></td>
+  </tr>
 <% if current_user.admin %>
-  <%= f.label :status %>
-  <%= f.text_field :status %>
+    <td class="no-border right-align middle-align"><%= f.label :status %></td>
+    <td class="no-border">
+      <%= f.select :status, [['Started', 'Started'], ['In Progress', 'In Progress'], ['Pending', 'Pending'],
+                             ['Approved', 'Approved'], ['Declined', 'Declined']] %>
+    </td>
 <% end %>
+</table><br>
