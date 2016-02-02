@@ -22,12 +22,24 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @user = @invoice.user
     if params.has_key?(:submit)
-      @invoice.update(:status => "Pending")
+      if @invoice.end_date == nil
+        @invoice.update(:end_date => Date.today, :status => "Pending")
+      else
+        @invoice.update(:status => "Pending")
+      end
       #SubmitEmail.send_submit_email(@user, @invoice).deliver
-      redirect_to user_invoices_path(@user)
+      if params.has_key?(:from_payments)
+        redirect_to invoice_payments_path(@invoice)
+      else
+        redirect_to user_invoices_path(@user)
+      end
     elsif params.has_key?(:reset)
       @invoice.update(:status => "In Progress")
-      redirect_to user_invoices_path(@user)
+      if params.has_key?(:from_payments)
+        redirect_to invoice_payments_path(@invoice)
+      else
+        redirect_to user_invoices_path(@user)
+      end
     elsif current_user.admin and params.has_key?(:approve)
       @invoice.update(:status => "Approved")
       redirect_to user_invoices_path(@user)

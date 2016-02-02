@@ -1,8 +1,18 @@
-<%= f.label :date %>
-<%= f.text_field :date %>
-
-<%= f.label :description %>
-<%= f.text_field :description %>
-
-<%= f.label :hours %>
-<%= f.text_field :hours %>
+<h1>New payment</h1><br>
+<%= link_to "Back to Payments", invoice_payments_path(@invoice) %><br><br>
+<table>
+  <col width="100">
+  <col width="200">
+  <tr>
+    <td class="no-border right-align middle-align"><%= f.label :date %></td>
+    <td class="no-border"><%= f.text_field :date %></td>
+  </tr>
+  <tr>
+    <td class="no-border right-align middle-align"><%= f.label :description %></td>
+    <td class="no-border"><%= f.text_area :description, :cols => 50, :rows => 3 %></td>
+  </tr>
+  <tr>
+    <td class="no-border right-align middle-align"><%= f.label :hours %></td>
+    <td class="no-border"><%= f.text_field :hours %></td>
+  </tr>
+</table><br>

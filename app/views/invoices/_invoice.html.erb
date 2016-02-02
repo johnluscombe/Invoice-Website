@@ -21,7 +21,11 @@
       <td><%= invoice.status %></td>
   <% end %>
   <% if current_user.admin == false %>
-    <% if invoice.status == "In Progress" %>
+    <% if invoice.status == "Started" %>
+        <td></td>
+        <td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
+        <td><%= link_to "Delete", invoice_path(invoice), method: :delete %></td>
+    <% elsif invoice.status == "In Progress" %>
         <td><%= link_to "Submit", edit_invoice_path(invoice, :submit => true) %></td>
         <td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
         <td><%= link_to "Delete", invoice_path(invoice), method: :delete %></td>
