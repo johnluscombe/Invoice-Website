@@ -22,7 +22,11 @@
     <% elsif current_user %>
         <li><%= link_to 'Invoices', user_invoices_path(current_user) %></li>
         <% if Invoice.where(:user_id => current_user.id).count > 0 %>
-          <li><%= link_to 'Current Invoice', invoice_payments_path(Invoice.where(:user_id => current_user.id).last) %></li>
+            <% if Invoice.where(:user_id => current_user.id).where(status: ["Started","In Progress"]).count > 0 %>
+                <li><%= link_to 'Current Invoice', invoice_payments_path(Invoice.where(:user_id => current_user.id).where(status: ["Started","In Progress"]).last) %></li>
+            <% else %>
+                <li><%= link_to 'Current Invoice', invoice_payments_path(Invoice.where(:user_id => current_user.id).order(:start_date).last) %></li>
+            <% end %>
         <% end %>
     <% end %>
   </ul>

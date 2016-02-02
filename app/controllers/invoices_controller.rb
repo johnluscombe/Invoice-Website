@@ -10,11 +10,20 @@ class InvoicesController < ApplicationController
 
   def new
     @user = User.find(params[:user_id])
-    @invoice = @user.invoices.build(:user_id => @user.id, :start_date => "2016-01-01", :status => "Started")
-    if @invoice.save
+    if @user.rate == nil
+      if @user.admin
+        flash[:danger] = "You have not set an hourly rate for this employee"
+      else
+        flash[:danger] = "You have not been assigned an hourly rate. Please contact your administrator."
+      end
       redirect_to user_invoices_path(@user)
     else
-      render 'new'
+      @invoice = @user.invoices.build(:user_id => @user.id, :start_date => Date.today, :status => "Started")
+      if @invoice.save
+        redirect_to user_invoices_path(@user)
+      else
+        render 'new'
+      end
     end
   end
 

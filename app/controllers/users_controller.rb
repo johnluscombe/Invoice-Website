@@ -13,7 +13,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.first_time = true
     if @user.password_digest==nil
       @user.password = "password"
       @user.password_confirmation = "password"
@@ -50,7 +49,11 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       if current_user?(@user)
         flash[:success] = "Your profile has been modified"
-        redirect_to user_invoices_path(@user)
+        if @user.admin
+          redirect_to users_path
+        else
+          redirect_to user_invoices_path(@user)
+        end
       else
         flash[:success] = "User successfully updated"
         redirect_to users_path
