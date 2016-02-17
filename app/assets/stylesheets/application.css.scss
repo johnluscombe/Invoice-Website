@@ -20,11 +20,6 @@ ul {
   padding-right: 25px;
 }
 
-li.logo {
-  font-color: gray;
-  font-size: 150%;
-}
-
 td {
   border: 1px solid black;
   padding-left: 2px;
@@ -70,4 +65,24 @@ td {
 
 .override {
   background-color: #FFA;
+}
+
+nav {
+  border-radius: 0 !important;
+  padding: 0;
+}
+
+img {
+  height: 50px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.nav {
+  padding: 0;
+}
+
+li > a {
+  color: white !important;
+  margin-right: 10px;
 }

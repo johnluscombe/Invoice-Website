@@ -8,39 +8,43 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-  <ul class="nav navbar-nav">
+<nav class="navbar navbar-default navbar-inverse">
+  <div class="navbar-header">
     <% if current_user and current_user.admin %>
-        <li class="logo"><%= link_to 'Luscombe & Associates', users_path %></li>
+        <li class="logo"><%= link_to image_tag("logo.png", :class => "brand"), users_path %></li>
     <% elsif current_user %>
-        <li class="logo"><%= link_to 'Luscombe & Associates', user_invoices_path(current_user) %></li>
+        <li class="logo"><%= link_to image_tag("logo.png", :class => "brand"), user_invoices_path(current_user) %></li>
     <% else %>
-        <li class="logo"><%= link_to 'Luscombe & Associates', root_path %></li>
+        <li class="logo"><%= link_to image_tag("logo.png", :class => "brand"), root_path %></li>
     <% end %>
-    <% if current_user and current_user.admin %>
-        <li><%= link_to 'Users', users_path %></li>
-    <% elsif current_user %>
-        <li><%= link_to 'Invoices', user_invoices_path(current_user) %></li>
-        <% if Invoice.where(:user_id => current_user.id).count > 0 %>
-            <% if Invoice.where(:user_id => current_user.id).where(status: ["Started","In Progress"]).count > 0 %>
-                <li><%= link_to 'Current Invoice', invoice_payments_path(Invoice.where(:user_id => current_user.id).where(status: ["Started","In Progress"]).last) %></li>
-            <% else %>
-                <li><%= link_to 'Current Invoice', invoice_payments_path(Invoice.where(:user_id => current_user.id).order(:start_date).last) %></li>
-            <% end %>
-        <% end %>
-    <% end %>
-  </ul>
-  <ul class="nav navbar-nav navbar-right">
-    <% if current_user %>
-        <li><%= link_to "Welcome, " + current_user.fullname, edit_user_path(current_user) %></li>
-        <li><%= link_to "Edit Profile", edit_user_path(current_user) %></li>
-    <% end %>
-    <% if logged_in? %>
-        <li><%= link_to 'Log Out', logout_path, method: :delete %></li>
-    <% else %>
-        <li><%= link_to 'Log In', login_path %></li>
-    <% end %>
-  </ul>
+  </div>
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <% if current_user and current_user.admin %>
+          <li><%= link_to 'Users', users_path %></li>
+      <% elsif current_user %>
+          <li><%= link_to 'Invoices', user_invoices_path(current_user) %></li>
+          <% if Invoice.where(:user_id => current_user.id).count > 0 %>
+              <% if Invoice.where(:user_id => current_user.id).where(status: ["Started","In Progress"]).count > 0 %>
+                  <li><%= link_to 'Current Invoice', invoice_payments_path(Invoice.where(:user_id => current_user.id).where(status: ["Started","In Progress"]).last) %></li>
+              <% else %>
+                  <li><%= link_to 'Current Invoice', invoice_payments_path(Invoice.where(:user_id => current_user.id).order(:start_date).last) %></li>
+              <% end %>
+          <% end %>
+      <% end %>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <% if current_user %>
+          <li><%= link_to "Welcome, " + current_user.fullname, edit_user_path(current_user) %></li>
+          <li><%= link_to "Edit Profile", edit_user_path(current_user) %></li>
+      <% end %>
+      <% if logged_in? %>
+          <li><%= link_to 'Log Out', logout_path, method: :delete %></li>
+      <% else %>
+          <li><%= link_to 'Log In', login_path %></li>
+      <% end %>
+    </ul>
+  </div>
 </nav>
 
 <% flash.each do |type, message| %>

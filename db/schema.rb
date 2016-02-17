@@ -13,22 +13,19 @@
 
 ActiveRecord::Schema.define(version: 20160202195239) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "invoices", force: :cascade do |t|
     t.date     "start_date"
     t.date     "end_date"
     t.string   "status"
-    t.integer  "user_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "user_id"
     t.float    "hours"
     t.float    "net_pay"
     t.boolean  "status_override"
   end
 
-  add_index "invoices", ["user_id"], name: "index_invoices_on_user_id", using: :btree
+  add_index "invoices", ["user_id"], name: "index_invoices_on_user_id"
 
   create_table "payments", force: :cascade do |t|
     t.date     "date"
@@ -39,21 +36,19 @@ ActiveRecord::Schema.define(version: 20160202195239) do
     t.integer  "invoice_id"
   end
 
-  add_index "payments", ["invoice_id"], name: "index_payments_on_invoice_id", using: :btree
+  add_index "payments", ["invoice_id"], name: "index_payments_on_invoice_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
     t.string   "password_digest"
     t.string   "email"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.boolean  "admin",           default: false
+    t.string   "name"
     t.float    "rate"
     t.string   "fullname"
     t.boolean  "first_time",      default: true
     t.boolean  "master",          default: false
   end
 
-  add_foreign_key "invoices", "users"
-  add_foreign_key "payments", "invoices"
 end
