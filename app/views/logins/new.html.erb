@@ -1,11 +1,15 @@
 <h1>Sign In</h1>
 
 <%= form_tag logins_path do %>
-    <%= label_tag :username %>
-    <%= text_field_tag :username, params[:username] %>
-
-    <%= label_tag :password %>
-    <%= password_field_tag :password, params[:password] %>
-
-    <%= submit_tag 'Log In' %>
+    <table class="login">
+      <tr>
+        <td class="no-border right-align middle-align login"><%= label_tag :username %></td>
+        <td class="no-border login"><%= text_field_tag :username, params[:username] %></td>
+      </tr>
+      <tr>
+        <td class="no-border right-align middle-align login"><%= label_tag :password %></td>
+        <td class="no-border login"><%= password_field_tag :password, params[:password] %></td>
+        <td class="no-border login"><%= submit_tag 'Log In' %></td>
+      </tr>
+    </table>
 <% end %>
