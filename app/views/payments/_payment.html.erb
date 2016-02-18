@@ -1,8 +1,8 @@
 <tr>
   <td><%= payment.date %></td>
   <td><%= payment.description %></td>
-  <td class="right-align"><%= sprintf("%.2f", payment.hours) %></td>
-  <td class="right-align">$ <%= sprintf("%.2f", payment.hours * payment.invoice.user.rate) %></td>
+  <td><%= sprintf("%.2f", payment.hours) %></td>
+  <td>$ <%= sprintf("%.2f", payment.hours * payment.invoice.user.rate) %></td>
   <td class="center"><%= link_to "Edit", edit_payment_path(payment) %></td>
   <td class="center"><%= link_to "Delete", payment_path(payment), method: :delete %></td>
 </tr>

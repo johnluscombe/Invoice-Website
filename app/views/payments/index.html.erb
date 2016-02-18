@@ -2,7 +2,7 @@
     <h1>Payments for Invoice <%= @invoice.start_date %> - <%= @invoice.end_date %></h1>
 <% else %>
     <h1>Payments for Invoice Starting <%= @invoice.start_date %></h1>
-<% end %><br>
+<% end %>
 <%= link_to "Back to Invoices", user_invoices_path(@user) %><br><br>
 <% if @invoice.status == "Approved" %>
     <p class="emphasized"><strong>Status: <span class="approve"><%= @invoice.status %></span></strong></p>
@@ -12,7 +12,7 @@
     <p class="emphasized"><strong>Status: <%= @invoice.status %></strong></p>
 <% end %>
 <% if @invoice.payments.count > 0 %>
-    <table>
+    <table class="table table-striped">
       <col width="100">
       <col width="200">
       <col width="100">
@@ -24,14 +24,16 @@
         <th>Description</th>
         <th>Hours</th>
         <th>Daily Rate</th>
+        <th></th>
+        <th></th>
       </tr>
       <%= render @payments %>
       <tr>
         <td class="right-align" colspan="2"><strong>Total:</strong></td>
-        <td class="right-align"><strong><%= sprintf("%.2f", @invoice.payments.sum(:hours)) %></strong></td>
+        <td><strong><%= sprintf("%.2f", @invoice.payments.sum(:hours)) %></strong></td>
         <td class="center emphasized" colspan="3"><strong>$ <%= sprintf('%.2f', @invoice.payments.sum(:hours) * @invoice.user.rate) %></strong></td>
       </tr>
-    </table><br>
+    </table>
     <table class="no-border">
       <col width="100">
       <col width="100">
