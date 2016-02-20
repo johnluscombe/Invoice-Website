@@ -67,19 +67,22 @@ nav {
   padding: 0;
 }
 
-img {
-  height: 50px;
-  margin-left: 2px;
-  margin-right: 2px;
-}
-
 .nav {
   padding: 0;
 }
 
 li > a {
   color: white !important;
-  margin-right: 10px;
+}
+
+img.brand {
+  height: 100%;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+a.navbar-brand {
+  padding: 0;
 }
 
 td.login {

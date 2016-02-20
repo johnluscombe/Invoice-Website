@@ -18,7 +18,7 @@
       <span class="icon-bar"></span>
     </button>
     <% if current_user and current_user.admin %>
-        <li class="logo"><%= link_to image_tag("logo.png", :class => "brand"), users_path %></li>
+        <%= link_to image_tag("logo.png", :class => "brand"), users_path, :class => "navbar-brand" %>
     <% elsif current_user %>
         <li class="logo"><%= link_to image_tag("logo.png", :class => "brand"), user_invoices_path(current_user) %></li>
     <% else %>
