@@ -5,5 +5,9 @@
 <%= form_for @invoice do |form| %>
 <%= render partial: 'fields', locals: { f: form } %>
 
-<%= form.submit 'Update invoice' %>
+<%= form.submit 'Update invoice', :class => "btn btn-success" %>
+
+<button class="btn btn-danger">
+  <%= link_to "Cancel", user_invoices_path(@user) %>
+</button><br><br>
 <% end %>

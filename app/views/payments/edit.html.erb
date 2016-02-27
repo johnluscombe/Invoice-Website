@@ -5,5 +5,5 @@
 <%= form_for @payment do |form| %>
 <%= render partial: 'fields', locals: { f: form } %>
 
-<%= form.submit 'Update payment' %>
+<%= form.submit 'Update payment', :class => "btn btn-success" %>
 <% end %>

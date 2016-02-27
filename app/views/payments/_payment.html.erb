@@ -1,8 +1,12 @@
 <tr>
-  <td><%= payment.date %></td>
-  <td><%= payment.description %></td>
-  <td><%= sprintf("%.2f", payment.hours) %></td>
-  <td>$ <%= sprintf("%.2f", payment.hours * payment.invoice.user.rate) %></td>
-  <td class="center"><%= link_to "Edit", edit_payment_path(payment) %></td>
-  <td class="center"><%= link_to "Delete", payment_path(payment), method: :delete %></td>
+  <td class="middle-align"><%= payment.date %></td>
+  <td class="middle-align"><%= payment.description %></td>
+  <td class="middle-align"><%= sprintf("%.2f", payment.hours) %></td>
+  <td class="middle-align">$ <%= sprintf("%.2f", payment.hours * payment.invoice.user.rate) %></td>
+  <td class="center"><button class="btn btn-primary">
+    <%= link_to "Edit", edit_payment_path(payment) %>
+  </button></td>
+  <td class="center"><button class="btn btn-danger">
+    <%= link_to "Delete", payment_path(payment), method: :delete %>
+  </button></td>
 </tr>

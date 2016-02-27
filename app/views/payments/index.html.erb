@@ -3,9 +3,9 @@
 <% else %>
     <h1>Payments for Invoice Starting <%= @invoice.start_date %></h1>
 <% end %>
-<td><button class="btn btn-primary">
+<button class="btn btn-primary">
   <%= link_to "Back to Invoices", user_invoices_path(@user) %>
-</button></td><br><br>
+</button><br><br>
 <% if @invoice.status == "Approved" %>
     <p class="emphasized"><strong>Status: <span class="approve"><%= @invoice.status %></span></strong></p>
 <% elsif @invoice.status == "Declined" %>
@@ -31,20 +31,24 @@
       </tr>
       <%= render @payments %>
       <tr>
-        <td class="right-align" colspan="2"><strong>Total:</strong></td>
-        <td><strong><%= sprintf("%.2f", @invoice.payments.sum(:hours)) %></strong></td>
+        <td class="middle-align right-align" colspan="2"><strong>Total:</strong></td>
+        <td class="middle-align"><strong><%= sprintf("%.2f", @invoice.payments.sum(:hours)) %></strong></td>
         <td class="center emphasized" colspan="3"><strong>$ <%= sprintf('%.2f', @invoice.payments.sum(:hours) * @invoice.user.rate) %></strong></td>
       </tr>
     </table>
     <table class="no-border">
-      <col width="100">
-      <col width="100">
+      <col width="125">
+      <col width="125">
       <tr>
         <% if @invoice.status == "Started" or @invoice.status == "In Progress" %>
-            <td class="no-border"><%= link_to "New payment", new_invoice_payment_path(@invoice) %></td>
+            <td><button class="btn btn-success">
+              <%= link_to "New Payment", new_invoice_payment_path(@invoice) %>
+            </button></td>
         <% end %>
         <% if @invoice.status == "In Progress" %>
-            <td class="no-border"><%= link_to "Submit invoice", edit_invoice_path(@invoice, :submit => true, :from_payments => true) %></td>
+            <td><button class="btn btn-success">
+              <%= link_to "Submit Invoice", edit_invoice_path(@invoice, :submit => true, :from_payments => true) %>
+            </button></td>
         <% elsif @invoice.status == "Pending" %>
             <td class="no-border"><%= link_to "Reset invoice", edit_invoice_path(@invoice, :reset => true, :from_payments => true) %></td>
         <% end %>
