@@ -18,11 +18,11 @@
       <span class="icon-bar"></span>
     </button>
     <% if current_user and current_user.admin %>
-        <%= link_to image_tag("logo.png", :class => "brand"), users_path, :class => "navbar-brand" %>
+        <li><%= link_to image_tag("logo.png", :class => "brand"), users_path, :class => "navbar-brand" %></li>
     <% elsif current_user %>
-        <li class="logo"><%= link_to image_tag("logo.png", :class => "brand"), user_invoices_path(current_user) %></li>
+        <li><%= link_to image_tag("logo.png", :class => "brand"), user_invoices_path(current_user), :class => "navbar-brand"  %></li>
     <% else %>
-        <li class="logo"><%= link_to image_tag("logo.png", :class => "brand"), root_path %></li>
+        <li><%= link_to image_tag("logo.png", :class => "brand"), root_path, :class => "navbar-brand" %></li>
     <% end %>
   </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

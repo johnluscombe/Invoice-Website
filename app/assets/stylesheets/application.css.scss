@@ -24,13 +24,17 @@ ul {
   text-align: center;
 }
 
+.left-align {
+  text-align: left;
+}
+
 .right-align {
   text-align: right;
   padding-right: 5px;
 }
 
 .middle-align {
-  padding-top: 5px;
+  vertical-align: middle !important;
 }
 
 .no-border {
@@ -91,6 +95,11 @@ td.login {
 
 div.field_with_errors {
   display: inline;
+}
+
+button > a {
+  color: white !important;
+  text-decoration: none !important;
 }
 
 * {

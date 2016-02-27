@@ -12,26 +12,29 @@
       <col width="100">
       <col width="100">
       <col width="100">
-      <col width="75">
+      <col width="50">
+      <col width="50">
       <% if current_user.admin %>
-          <col width="75">
-          <col width="75">
-          <col width="75">
+          <col width="50">
+          <col width="50">
+          <col width="50">
       <% end %>
       <col width="50">
       <col width="50">
       <tr>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Hours</th>
-        <th>Net Pay</th>
-        <th>Status</th>
+        <th class="center">Start Date</th>
+        <th class="center">End Date</th>
+        <th class="center">Hours</th>
+        <th class="center">Net Pay</th>
+        <th class="center">Status</th>
         <th></th>
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
+        <% if current_user.admin %>
+          <th></th>
+          <th></th>
+        <% end %>
       </tr>
       <%= render @invoices %>
     </table>
