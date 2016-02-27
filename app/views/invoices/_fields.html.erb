@@ -3,11 +3,11 @@
   <col width="200">
   <tr>
     <td class="no-border right-align middle-align"><%= f.label :start_date %></td>
-    <td class="no-border"><%= f.text_field :start_date %></td>
+    <td class="no-border"><%= f.date_field :start_date %></td>
   </tr>
   <tr>
     <td class="no-border right-align middle-align"><%= f.label :end_date %></td>
-    <td class="no-border"><%= f.text_field :end_date %></td>
+    <td class="no-border"><%= f.date_field :end_date %></td>
   </tr>
 <% if current_user.admin %>
       <tr>

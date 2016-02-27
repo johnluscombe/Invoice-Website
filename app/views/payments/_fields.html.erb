@@ -1,10 +1,9 @@
-<%= link_to "Back to Payments", invoice_payments_path(@invoice) %><br><br>
 <table>
   <col width="100">
   <col width="200">
   <tr>
     <td class="no-border right-align middle-align"><%= f.label :date %></td>
-    <td class="no-border"><%= f.text_field :date %></td>
+    <td class="no-border"><%= f.date_field :date %></td>
   </tr>
   <tr>
     <td class="no-border right-align middle-align"><%= f.label :description %></td>

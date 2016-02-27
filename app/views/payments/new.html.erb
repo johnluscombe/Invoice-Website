@@ -6,4 +6,8 @@
     <%= render partial: 'fields', locals: { f: form } %>
 
     <%= form.submit 'Create new payment', :class => "btn btn-success" %>
+
+    <button class="btn btn-danger">
+      <%= link_to "Cancel", invoice_payments_path(@invoice) %>
+    </button>
 <% end %>

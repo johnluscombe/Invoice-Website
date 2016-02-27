@@ -1,8 +1,20 @@
 <tr>
-  <td class="middle-align"><%= payment.date %></td>
+  <% if payment.date != nil %>
+    <td class="middle-align"><%= payment.date.strftime("%m-%d-%Y") %></td>
+  <% else %>
+      <td></td>
+  <% end %>
+
   <td class="middle-align"><%= payment.description %></td>
-  <td class="middle-align"><%= sprintf("%.2f", payment.hours) %></td>
-  <td class="middle-align">$ <%= sprintf("%.2f", payment.hours * payment.invoice.user.rate) %></td>
+
+  <% if payment.hours != nil %>
+    <td class="middle-align"><%= sprintf("%.2f", payment.hours) %></td>
+    <td class="middle-align">$ <%= sprintf("%.2f", payment.hours * payment.invoice.user.rate) %></td>
+  <% else %>
+      <td class="middle-align">0.00</td>
+      <td class="middle-align">$ 0.00</td>
+  <% end %>
+
   <td class="center"><button class="btn btn-primary">
     <%= link_to "Edit", edit_payment_path(payment) %>
   </button></td>

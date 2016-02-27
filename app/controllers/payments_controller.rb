@@ -62,7 +62,7 @@ class PaymentsController < ApplicationController
     @user = @invoice.user
     @payment.destroy
 
-    redirect_to user_invoices_path(@user)
+    redirect_to invoice_payments_path(@invoice)
   end
 
   private

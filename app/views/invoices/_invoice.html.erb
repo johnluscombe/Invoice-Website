@@ -1,6 +1,16 @@
 <tr>
-  <td class="middle-align center"><%= invoice.start_date %></td>
-  <td class="middle-align center"><%= invoice.end_date %></td>
+  <% if invoice.start_date != nil %>
+    <td class="middle-align center"><%= invoice.start_date.strftime("%m-%d-%Y") %></td>
+  <% else %>
+      <td></td>
+  <% end %>
+
+  <% if invoice.end_date != nil %>
+      <td class="middle-align center"><%= invoice.end_date.strftime("%m-%d-%Y") %></td>
+  <% else %>
+      <td></td>
+  <% end %>
+
   <% if invoice.hours == nil %>
       <td class="middle-align right-align"><%= sprintf('%.2f', invoice.payments.sum(:hours)) %></td>
   <% else %>
