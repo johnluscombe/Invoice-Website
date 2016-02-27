@@ -1,6 +1,8 @@
 <% if current_user.admin %>
     <h1>Employee invoices</h1>
-    <%= link_to "Back to Users", users_path(@user) %><br>
+    <td><button class="btn btn-primary">
+      <%= link_to "Back to Users", users_path(@user) %>
+    </button></td><br>
 <% else %>
     <h1>Invoices</h1>
 <% end %>
@@ -38,8 +40,12 @@
       </tr>
       <%= render @invoices %>
     </table>
-    <%= link_to "New invoice", new_user_invoice_path(@user) %>
+    <td><button class="btn btn-success">
+      <%= link_to "New Invoice", new_user_invoice_path(@user) %>
+    </button></td>
 <% else %>
     <p>You do not have any invoices yet.</p>
-    <%= link_to "New invoice", new_user_invoice_path(@user) %>
+    <td><button class="btn btn-success">
+      <%= link_to "New Invoice", new_user_invoice_path(@user) %>
+    </button></td>
 <% end %>

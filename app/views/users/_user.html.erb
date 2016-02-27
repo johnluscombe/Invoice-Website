@@ -1,14 +1,20 @@
 <tr>
-  <td><%= link_to user.fullname, user_invoices_path(user) %></td>
-  <td><%= user.email %></td>
+  <td class="middle-align"><%= user.fullname %></td>
+  <td class="middle-align"><%= user.email %></td>
   <% if user.rate != nil %>
       <% if user.invoices.where(:status => ["Started", "In Progress", "Pending"]).count > 0 %>
-          <td>$ <%= sprintf("%.2f", user.invoices.where(:status => ["Started", "In Progress", "Pending"]).last.payments.sum(:hours) * user.rate) %></td>
+          <td class="middle-align right-align">$ <%= sprintf("%.2f", user.invoices.where(:status => ["Started", "In Progress", "Pending"]).last.payments.sum(:hours) * user.rate) %></td>
       <% else %>
-          <td>$ 0.00</td>
+          <td class="middle-align right-align">$ 0.00</td>
       <% end %>
   <% else %>
       <td></td>
   <% end %>
-  <td class="center"><%= link_to "Delete", user_path(user), method: :delete %></td>
+  <td class="center"><button class="btn btn-primary">
+    <%= link_to "View Invoices", user_invoices_path(user) %>
+  </button></td>
+
+  <td class="center"><button class="btn btn-danger">
+    <%= link_to "Delete", user_path(user), method: :delete %>
+  </button></td>
 </tr>

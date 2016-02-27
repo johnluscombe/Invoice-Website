@@ -1,4 +1,4 @@
-<h1>Employee invoices</h1>
+<h1>Employees</h1>
 <br>
 <% if User.where(:admin => false).count > 0 %>
   <table class="table table-striped">
@@ -8,15 +8,20 @@
     <col width="50">
     <col width="50">
     <tr>
-      <th style="vertical-align: bottom;">Employee Name</th>
-      <th style="vertical-align: bottom;">Email</th>
-      <th style="vertical-align: bottom;">Current Invoice Amount</th>
+      <th class="bottom-align">Employee Name</th>
+      <th class="bottom-align">Email</th>
+      <th class="bottom-align center">Current Invoice Amount</th>
+      <th></th>
       <th></th>
     </tr>
     <%= render @users %>
   </table>
-  <%= link_to "New user", new_user_path %>
+  <td><button class="btn btn-success">
+    <%= link_to "New User", new_user_path %>
+  </button></td>
 <% else %>
     <p>You do not have any employees yet.</p>
-    <%= link_to "New user", new_user_path %>
+    <td><button class="btn btn-success">
+      <%= link_to "New User", new_user_path %>
+    </button></td>
 <% end %>

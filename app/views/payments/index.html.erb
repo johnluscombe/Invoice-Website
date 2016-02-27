@@ -3,7 +3,9 @@
 <% else %>
     <h1>Payments for Invoice Starting <%= @invoice.start_date %></h1>
 <% end %>
-<%= link_to "Back to Invoices", user_invoices_path(@user) %><br><br>
+<td><button class="btn btn-primary">
+  <%= link_to "Back to Invoices", user_invoices_path(@user) %>
+</button></td><br><br>
 <% if @invoice.status == "Approved" %>
     <p class="emphasized"><strong>Status: <span class="approve"><%= @invoice.status %></span></strong></p>
 <% elsif @invoice.status == "Declined" %>
@@ -50,6 +52,8 @@
 <% else %>
     <p>There are no payments under this invoice yet.</p>
     <% if @invoice.status == "Started" or @invoice.status == "In Progress" %>
-        <%= link_to "New payment", new_invoice_payment_path(@invoice) %>
+        <td><button class="btn btn-success">
+          <%= link_to "New Payment", new_invoice_payment_path(@invoice) %>
+        </button></td>
     <% end %>
 <% end %>
