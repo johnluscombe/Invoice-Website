@@ -1,7 +1,11 @@
-<% if @invoice.end_date != nil %>
-    <h1>Payments for Invoice <%= @invoice.start_date %> - <%= @invoice.end_date %></h1>
+<% if @invoice.start_date != nil and @invoice.end_date != nil %>
+    <h1>Payments for Invoice <%= @invoice.start_date.strftime("%m-%d-%Y") %> - <%= @invoice.end_date.strftime("%m-%d-%Y") %></h1>
+<% elsif @invoice.start_date != nil and @invoice.end_date == nil %>
+    <h1>Payments for Invoice Starting <%= @invoice.start_date.strftime("%m-%d-%Y") %></h1>
+<% elsif @invoice.start_date == nil and @invoice.end_date != nil %>
+    <h1>Payments for Invoice Ending <%= @invoice.end_date.strftime("%m-%d-%Y") %></h1>
 <% else %>
-    <h1>Payments for Invoice Starting <%= @invoice.start_date %></h1>
+    <h1>Payments</h1>
 <% end %>
 <button class="btn btn-primary">
   <%= link_to "Back to Invoices", user_invoices_path(@user) %>
