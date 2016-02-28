@@ -9,7 +9,12 @@
 
   <% if payment.hours != nil %>
     <td class="middle-align"><%= sprintf("%.2f", payment.hours) %></td>
-    <td class="middle-align">$ <%= sprintf("%.2f", payment.hours * payment.invoice.user.rate) %></td>
+
+    <% if payment.daily_rate == nil %>
+      <td class="middle-align">$ <%= sprintf("%.2f", payment.hours * payment.invoice.user.rate) %></td>
+    <% else %>
+      <td class="override middle-align">$ <%= sprintf("%.2f", payment.daily_rate) %></td>
+    <% end %>
   <% else %>
       <td class="middle-align">0.00</td>
       <td class="middle-align">$ 0.00</td>

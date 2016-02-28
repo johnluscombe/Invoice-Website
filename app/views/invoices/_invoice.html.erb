@@ -18,7 +18,9 @@
   <% end %>
 
   <% if invoice.net_pay == nil %>
-      <td class="middle-align right-align">$ <%= sprintf('%.2f', invoice.payments.sum(:hours) * invoice.user.rate) %></td>
+      <td class="middle-align right-align">$
+        <%= sprintf('%.2f', invoice.payments.where(:daily_rate => nil).sum(:hours) * invoice.user.rate + invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) %>
+      </td>
   <% else %>
       <td class="override middle-align right-align">$ <%= sprintf('%.2f', invoice.net_pay) %></td>
   <% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202195239) do
+ActiveRecord::Schema.define(version: 20160228220722) do
 
   create_table "invoices", force: :cascade do |t|
     t.date     "start_date"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20160202195239) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "invoice_id"
+    t.float    "daily_rate"
   end
 
   add_index "payments", ["invoice_id"], name: "index_payments_on_invoice_id"

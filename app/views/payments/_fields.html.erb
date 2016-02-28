@@ -14,3 +14,22 @@
     <td class="no-border"><%= f.text_field :hours %></td>
   </tr>
 </table><br>
+<table class="no-border">
+  <col width="100">
+  <col width="200">
+  <% if current_user.admin %>
+      <tr>
+        <td colspan="2" class="top-bottom-border center"><strong>Overrides</strong></td>
+      </tr>
+  <% end %>
+</table>
+<table class="no-border space-above">
+  <col width="100">
+  <col width="200">
+  <% if current_user.admin %>
+      <tr>
+        <td class="no-border right-align middle-align"><%= f.label :daily_rate %></td>
+        <td class="no-border"><%= f.text_field :daily_rate %></td>
+      </tr>
+  <% end %>
+</table><br>

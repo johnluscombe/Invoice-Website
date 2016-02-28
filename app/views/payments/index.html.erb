@@ -37,7 +37,9 @@
       <tr>
         <td class="middle-align right-align" colspan="2"><strong>Total:</strong></td>
         <td class="middle-align"><strong><%= sprintf("%.2f", @invoice.payments.sum(:hours)) %></strong></td>
-        <td class="center emphasized" colspan="3"><strong>$ <%= sprintf('%.2f', @invoice.payments.sum(:hours) * @invoice.user.rate) %></strong></td>
+        <td class="center emphasized" colspan="3"><strong>$
+          <%= sprintf('%.2f', @invoice.payments.where(:daily_rate => nil).sum(:hours) * @invoice.user.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) %></strong>
+        </td>
       </tr>
     </table>
     <table class="no-border">
