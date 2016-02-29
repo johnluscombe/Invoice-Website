@@ -1,11 +1,17 @@
 class InvoicesController < ApplicationController
   before_action :ensure_user_logged_in
-  before_action :ensure_correct_user, only: [:index]
+  #before_action :ensure_correct_user, only: [:index]
   #before_action :ensure_admin, only: [:index]
 
   def index
-    @user = User.find(params[:user_id])
-    @invoices = @user.invoices.all.order(:start_date)
+    if params.has_key?(:pending_only)
+      ensure_admin
+      @invoices = Invoice.where(:status => "Pending")
+    else
+      ensure_correct_user
+      @user = User.find(params[:user_id])
+      @invoices = @user.invoices.all.order(:start_date)
+    end
   end
 
   def new
@@ -40,21 +46,37 @@ class InvoicesController < ApplicationController
       if params.has_key?(:from_payments)
         redirect_to invoice_payments_path(@invoice)
       else
-        redirect_to user_invoices_path(@user)
+        if params.has_key?(:from_pending)
+          redirect_to invoices_path(:pending_only => true)
+        else
+          redirect_to user_invoices_path(@user)
+        end
       end
     elsif params.has_key?(:reset)
       @invoice.update(:status => "In Progress")
       if params.has_key?(:from_payments)
         redirect_to invoice_payments_path(@invoice)
       else
-        redirect_to user_invoices_path(@user)
+        if params.has_key?(:from_pending)
+          redirect_to invoices_path(:pending_only => true)
+        else
+          redirect_to user_invoices_path(@user)
+        end
       end
     elsif current_user.admin and params.has_key?(:approve)
       @invoice.update(:status => "Approved")
-      redirect_to user_invoices_path(@user)
+      if params.has_key?(:from_pending)
+        redirect_to invoices_path(:pending_only => true)
+      else
+        redirect_to user_invoices_path(@user)
+      end
     elsif current_user.admin and params.has_key?(:decline)
       @invoice.update(:status => "Declined")
-      redirect_to user_invoices_path(@user)
+      if params.has_key?(:from_pending)
+        redirect_to invoices_path(:pending_only => true)
+      else
+        redirect_to user_invoices_path(@user)
+      end
     end
   end
 

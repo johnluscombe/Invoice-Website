@@ -1,4 +1,8 @@
 <tr>
+  <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
+    <td class="middle-align center"><%= invoice.user.fullname %></td>
+  <% end %>
+
   <% if invoice.start_date != nil %>
     <td class="middle-align center"><%= invoice.start_date.strftime("%m-%d-%Y") %></td>
   <% else %>
@@ -51,7 +55,11 @@
         </button></td>
 
         <td><button class="btn btn-primary">
-          <%= link_to "Submit", edit_invoice_path(invoice, :submit => true) %>
+          <% if @user %>
+            <%= link_to "Submit", edit_invoice_path(invoice, :submit => true) %>
+          <% else %>
+            <%= link_to "Submit", edit_invoice_path(invoice, :submit => true, :from_pending => true) %>
+          <% end %>
         </button></td>
 
         <td><button class="btn btn-primary">
@@ -67,7 +75,11 @@
         </button></td>
 
         <td><button class="btn btn-primary">
-          <%= link_to "Reset", edit_invoice_path(invoice, :reset => true) %>
+          <% if @user %>
+              <%= link_to "Reset", edit_invoice_path(invoice, :reset => true) %>
+          <% else %>
+              <%= link_to "Reset", edit_invoice_path(invoice, :reset => true, :from_pending => true) %>
+          <% end %>
         </button></td>
         <td></td>
         <td></td>
@@ -99,7 +111,11 @@
             <%= link_to "Add Payments", invoice_payments_path(invoice) %>
           </button></td>
           <td><button class="btn btn-primary">
-            <%= link_to "Submit", edit_invoice_path(invoice, :submit => true) %>
+            <% if @user %>
+                <%= link_to "Submit", edit_invoice_path(invoice, :submit => true) %>
+            <% else %>
+                <%= link_to "Submit", edit_invoice_path(invoice, :submit => true, :from_pending => true) %>
+            <% end %>
           </button></td>
           <td></td>
           <td></td>
@@ -116,15 +132,27 @@
           </button></td>
 
           <td><button class="btn btn-success">
-            <%= link_to "Approve", edit_invoice_path(invoice, :approve => true), class: "approve" %>
+            <% if @user %>
+              <%= link_to "Approve", edit_invoice_path(invoice, :approve => true), class: "approve" %>
+            <% else %>
+              <%= link_to "Approve", edit_invoice_path(invoice, :approve => true, :from_pending => true), class: "approve" %>
+            <% end %>
           </button></td>
 
           <td><button class="btn btn-danger">
-            <%= link_to "Decline", edit_invoice_path(invoice, :decline => true), class: "decline" %>
+            <% if @user %>
+              <%= link_to "Decline", edit_invoice_path(invoice, :decline => true), class: "decline" %>
+            <% else %>
+              <%= link_to "Decline", edit_invoice_path(invoice, :decline => true, :from_pending => true), class: "decline" %>
+            <% end %>
           </button></td>
 
           <td><button class="btn btn-primary">
-            <%= link_to "Reset", edit_invoice_path(invoice, :reset => true) %>
+            <% if @user %>
+                <%= link_to "Reset", edit_invoice_path(invoice, :reset => true) %>
+            <% else %>
+                <%= link_to "Reset", edit_invoice_path(invoice, :reset => true, :from_pending => true) %>
+            <% end %>
           </button></td>
 
           <td><button class="btn btn-primary">
@@ -141,7 +169,11 @@
           <td></td>
           <td></td>
           <td><button class="btn btn-primary">
-            <%= link_to "Reset", edit_invoice_path(invoice, :reset => true) %>
+            <% if @user %>
+              <%= link_to "Reset", edit_invoice_path(invoice, :reset => true) %>
+            <% else %>
+                <%= link_to "Reset", edit_invoice_path(invoice, :reset => true, :from_pending => true) %>
+            <% end %>
           </button></td>
 
           <td><button class="btn btn-primary">

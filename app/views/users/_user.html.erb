@@ -1,6 +1,7 @@
 <tr>
   <td class="middle-align"><%= user.fullname %></td>
   <td class="middle-align"><%= user.email %></td>
+  <td class="middle-align right-align">$ <%= sprintf("%.2f", user.rate) %></td>
   <% if user.rate != nil %>
       <% if user.invoices.where(:status => ["Started", "In Progress", "Pending"]).count > 0 %>
           <td class="middle-align right-align">$ <%= sprintf("%.2f", user.invoices.where(:status => ["Started", "In Progress", "Pending"]).last.payments.sum(:hours) * user.rate) %></td>

@@ -56,7 +56,9 @@
               <%= link_to "Submit Invoice", edit_invoice_path(@invoice, :submit => true, :from_payments => true) %>
             </button></td>
         <% elsif @invoice.status == "Pending" %>
-            <td class="no-border"><%= link_to "Reset invoice", edit_invoice_path(@invoice, :reset => true, :from_payments => true) %></td>
+            <td><button class="btn btn-primary">
+              <%= link_to "Reset invoice", edit_invoice_path(@invoice, :reset => true, :from_payments => true) %>
+            </button></td>
         <% end %>
     </table>
 <% else %>

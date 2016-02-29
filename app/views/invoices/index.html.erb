@@ -7,8 +7,11 @@
     <h1>Invoices</h1>
 <% end %>
 <br>
-<% if @user.invoices.count > 0 %>
+<% if (@user and @user.invoices.count > 0) or (@user == nil and Invoice.where(:status => "Pending").count > 0) %>
     <table class="table table-striped">
+      <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
+          <col width="200">
+      <% end %>
       <col width="100">
       <col width="100">
       <col width="100">
@@ -24,6 +27,9 @@
       <col width="50">
       <col width="50">
       <tr>
+        <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
+            <th class="center">Employee</th>
+        <% end %>
         <th class="center">Start Date</th>
         <th class="center">End Date</th>
         <th class="center">Hours</th>
@@ -40,13 +46,17 @@
       </tr>
       <%= render @invoices %>
     </table>
-    <td><button class="btn btn-success">
-      <%= link_to "New Invoice", new_user_invoice_path(@user) %>
-    </button></td>
-<% else %>
+    <% if @user %>
+      <td><button class="btn btn-success">
+        <%= link_to "New Invoice", new_user_invoice_path(@user) %>
+      </button></td>
+    <% end %>
+<% elsif @user %>
     <p>You do not have any invoices yet.</p>
     <td><button class="btn btn-success">
       <%= link_to "New Invoice", new_user_invoice_path(@user) %>
     </button></td>
+<% elsif Invoice.where(:status => "Pending").count == 0 %>
+    <p>There are no pending invoices.</p>
 <% end %>
 <br><br>

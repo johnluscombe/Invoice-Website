@@ -18,17 +18,18 @@
       <span class="icon-bar"></span>
     </button>
     <% if current_user and current_user.admin %>
-        <li><%= link_to image_tag("logo.png", :class => "brand"), users_path, :class => "navbar-brand" %></li>
+        <%= link_to image_tag("logo.png", :class => "brand"), users_path, :class => "navbar-brand" %>
     <% elsif current_user %>
-        <li><%= link_to image_tag("logo.png", :class => "brand"), user_invoices_path(current_user), :class => "navbar-brand"  %></li>
+        <%= link_to image_tag("logo.png", :class => "brand"), user_invoices_path(current_user), :class => "navbar-brand"  %>
     <% else %>
-        <li><%= link_to image_tag("logo.png", :class => "brand"), root_path, :class => "navbar-brand" %></li>
+        <%= link_to image_tag("logo.png", :class => "brand"), root_path, :class => "navbar-brand" %>
     <% end %>
   </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
       <% if current_user and current_user.admin %>
           <li><%= link_to 'Users', users_path %></li>
+          <li><%= link_to 'Pending Invoices', invoices_path(:pending_only => true) %></li>
       <% elsif current_user %>
           <li><%= link_to 'Invoices', user_invoices_path(current_user) %></li>
           <% if Invoice.where(:user_id => current_user.id).count > 0 %>
