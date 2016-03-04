@@ -20,10 +20,10 @@
       <td class="middle-align">$ 0.00</td>
   <% end %>
 
-  <td class="center"><button class="btn btn-primary">
-    <%= link_to "Edit", edit_payment_path(payment) %>
-  </button></td>
-  <td class="center"><button class="btn btn-danger">
-    <%= link_to "Delete", payment_path(payment), method: :delete %>
-  </button></td>
+  <td class="center">
+    <%= link_to "Edit", edit_payment_path(payment), class: "btn btn-primary" %>
+  </td>
+  <td class="center">
+    <%= link_to "Delete", payment_path(payment), class: "btn btn-danger", method: :delete %>
+  </td>
 </tr>

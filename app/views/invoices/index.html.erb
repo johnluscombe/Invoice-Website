@@ -1,8 +1,6 @@
 <% if current_user.admin %>
     <h1>Employee invoices</h1>
-    <button class="btn btn-primary">
-      <%= link_to "Back to Users", users_path(@user) %>
-    </button><br>
+    <%= link_to "Back to Users", users_path(@user), class: "btn btn-primary" %><br>
 <% else %>
     <h1>Invoices</h1>
 <% end %>
@@ -47,15 +45,15 @@
       <%= render @invoices %>
     </table>
     <% if @user %>
-      <td><button class="btn btn-success">
-        <%= link_to "New Invoice", new_user_invoice_path(@user) %>
-      </button></td>
+      <td>
+        <%= link_to "New Invoice", new_user_invoice_path(@user), class: "btn btn-success" %>
+      </td>
     <% end %>
 <% elsif @user %>
     <p>You do not have any invoices yet.</p>
-    <td><button class="btn btn-success">
-      <%= link_to "New Invoice", new_user_invoice_path(@user) %>
-    </button></td>
+    <td>
+      <%= link_to "New Invoice", new_user_invoice_path(@user), class: "btn btn-success" %>
+    </td>
 <% elsif Invoice.where(:status => "Pending").count == 0 %>
     <p>There are no pending invoices.</p>
 <% end %>

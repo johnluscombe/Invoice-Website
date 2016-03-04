@@ -18,12 +18,12 @@
     </tr>
     <%= render @users %>
   </table>
-  <td><button class="btn btn-success">
-    <%= link_to "New User", new_user_path %>
-  </button></td>
+  <td>
+    <%= link_to "New User", new_user_path, class: "btn btn-success" %>
+  </td>
 <% else %>
     <p>You do not have any employees yet.</p>
-    <td><button class="btn btn-success">
-      <%= link_to "New User", new_user_path %>
-    </button></td>
+    <td>
+      <%= link_to "New User", new_user_path, class: "btn btn-success" %>
+    </td>
 <% end %>

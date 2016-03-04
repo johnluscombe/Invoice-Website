@@ -7,9 +7,9 @@
 <% else %>
     <h1>Payments</h1>
 <% end %>
-<button class="btn btn-primary">
-  <%= link_to "Back to Invoices", user_invoices_path(@user) %>
-</button><br><br>
+
+<%= link_to "Back to Invoices", user_invoices_path(@user), class: "btn btn-primary" %><br><br>
+
 <% if @invoice.status == "Approved" %>
     <p class="emphasized"><strong>Status: <span class="approve"><%= @invoice.status %></span></strong></p>
 <% elsif @invoice.status == "Declined" %>
@@ -47,25 +47,25 @@
       <col width="125">
       <tr>
         <% if @invoice.status == "Started" or @invoice.status == "In Progress" %>
-            <td><button class="btn btn-success">
-              <%= link_to "New Payment", new_invoice_payment_path(@invoice) %>
-            </button></td>
+            <td>
+              <%= link_to "New Payment", new_invoice_payment_path(@invoice), class: "btn btn-success" %>
+            </td>
         <% end %>
         <% if @invoice.status == "In Progress" %>
-            <td><button class="btn btn-success">
-              <%= link_to "Submit Invoice", edit_invoice_path(@invoice, :submit => true, :from_payments => true) %>
-            </button></td>
+            <td>
+              <%= link_to "Submit Invoice", edit_invoice_path(@invoice, :submit => true, :from_payments => true), class: "btn btn-success" %>
+            </td>
         <% elsif @invoice.status == "Pending" %>
-            <td><button class="btn btn-primary">
-              <%= link_to "Reset invoice", edit_invoice_path(@invoice, :reset => true, :from_payments => true) %>
-            </button></td>
+            <td>
+              <%= link_to "Reset invoice", edit_invoice_path(@invoice, :reset => true, :from_payments => true), class: "btn btn-primary" %>
+            </td>
         <% end %>
     </table>
 <% else %>
     <p>There are no payments under this invoice yet.</p>
     <% if @invoice.status == "Started" or @invoice.status == "In Progress" %>
-        <td><button class="btn btn-success">
-          <%= link_to "New Payment", new_invoice_payment_path(@invoice) %>
-        </button></td>
+        <td>
+          <%= link_to "New Payment", new_invoice_payment_path(@invoice), class: "btn btn-success" %>
+        </td>
     <% end %>
 <% end %>

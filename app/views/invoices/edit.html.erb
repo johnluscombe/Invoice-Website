@@ -7,7 +7,6 @@
 
 <%= form.submit 'Update invoice', :class => "btn btn-success" %>
 
-<button class="btn btn-danger">
-  <%= link_to "Cancel", user_invoices_path(@user) %>
-</button><br><br>
+<%= link_to "Cancel", user_invoices_path(@user), class: "btn btn-danger" %><br><br>
+
 <% end %>

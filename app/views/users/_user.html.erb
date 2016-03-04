@@ -11,11 +11,11 @@
   <% else %>
       <td></td>
   <% end %>
-  <td class="center"><button class="btn btn-primary">
-    <%= link_to "View Invoices", user_invoices_path(user) %>
-  </button></td>
+  <td class="center">
+    <%= link_to "View Invoices", user_invoices_path(user), class: "btn btn-primary" %>
+  </td>
 
-  <td class="center"><button class="btn btn-danger">
-    <%= link_to "Delete", user_path(user), method: :delete %>
-  </button></td>
+  <td class="center">
+    <%= link_to "Delete", user_path(user), class: "btn btn-danger", method: :delete %>
+  </td>
 </tr>

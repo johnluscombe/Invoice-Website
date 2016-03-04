@@ -6,7 +6,6 @@
 
 <%= form.submit 'Create new user', :class => "btn btn-success" %>
 
-<button class="btn btn-danger">
-  <%= link_to "Cancel", users_path(@user) %>
-</button>
+<%= link_to "Cancel", users_path(@user), class: "btn btn-danger" %>
+
 <% end %>
