@@ -47,7 +47,7 @@
         </td>
 
         <td>
-          <%= link_to "Delete", invoice_path(invoice), class: "btn btn-primary", method: :delete %>
+          <%= link_to "Delete", invoice_path(invoice), class: "btn btn-danger", method: :delete %>
         </td>
     <% elsif invoice.status == "In Progress" %>
         <td>
