@@ -2,20 +2,24 @@
   <col width="100">
   <col width="200">
   <tr>
-    <td class="no-border right-align middle-align"><%= f.label :start_date %></td>
+    <td class="no-border right-align padding-top"><%= f.label :start_date %></td>
     <td class="no-border"><%= f.date_field :start_date %></td>
   </tr>
   <tr>
-    <td class="no-border right-align middle-align"><%= f.label :end_date %></td>
+    <td class="no-border right-align padding-top"><%= f.label :end_date %></td>
     <td class="no-border"><%= f.date_field :end_date %></td>
   </tr>
 <% if current_user.admin %>
       <tr>
-        <td class="no-border right-align middle-align"><%= f.label :status %></td>
+        <td class="no-border right-align padding-top"><%= f.label :status %></td>
         <td class="no-border">
           <%= f.select :status, [['Started', 'Started'], ['In Progress', 'In Progress'], ['Pending', 'Pending'],
                                  ['Approved', 'Approved'], ['Declined', 'Declined']] %>
         </td>
+      </tr>
+      <tr>
+        <td class="no-border right-align padding-top"><%= f.label "Check #" %></td>
+        <td class="no-border"><%= f.text_field :check_no %></td>
       </tr>
 <% end %>
 </table><br>
@@ -33,15 +37,15 @@
   <col width="200">
   <% if current_user.admin %>
       <tr>
-        <td class="no-border right-align middle-align"><%= f.label :hours %></td>
+        <td class="no-border right-align padding-top"><%= f.label :hours %></td>
         <td class="no-border"><%= f.text_field :hours %></td>
       </tr>
       <tr>
-        <td class="no-border right-align middle-align"><%= f.label "Hourly Rate" %></td>
+        <td class="no-border right-align padding-top"><%= f.label "Hourly Rate" %></td>
         <td class="no-border"><%= f.text_field :rate %></td>
       </tr>
       <tr>
-        <td class="no-border right-align middle-align"><%= f.label :net_pay %></td>
+        <td class="no-border right-align padding-top"><%= f.label :net_pay %></td>
         <td class="no-border"><%= f.text_field :net_pay %></td>
       </tr>
   <% end %>

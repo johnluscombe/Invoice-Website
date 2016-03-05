@@ -10,11 +10,13 @@
       <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
           <col width="200">
       <% end %>
+      <col width="125">
+      <col width="50">
+      <col width="75">
       <col width="100">
-      <col width="100">
-      <col width="100">
-      <col width="100">
-      <col width="100">
+      <% if current_user.admin %>
+          <col width="75">
+      <% end %>
       <col width="50">
       <col width="50">
       <% if current_user.admin %>
@@ -28,11 +30,13 @@
         <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
             <th class="center">Employee</th>
         <% end %>
-        <th class="center">Start Date</th>
-        <th class="center">End Date</th>
+        <th class="center">For Dates</th>
         <th class="center">Hours</th>
         <th class="center">Net Pay</th>
         <th class="center">Status</th>
+        <% if current_user.admin %>
+            <th class="center">Check No.</th>
+        <% end %>
         <th></th>
         <th></th>
         <th></th>

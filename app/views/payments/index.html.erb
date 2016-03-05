@@ -36,10 +36,45 @@
       <%= render @payments %>
       <tr>
         <td class="middle-align right-align" colspan="2"><strong>Total:</strong></td>
-        <td class="middle-align"><strong><%= sprintf("%.2f", @invoice.payments.sum(:hours)) %></strong></td>
-        <td class="center emphasized" colspan="3"><strong>$
-          <%= sprintf('%.2f', @invoice.payments.where(:daily_rate => nil).sum(:hours) * @invoice.user.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) %></strong>
-        </td>
+
+        <% if @invoice.hours == nil %>
+            <td class="middle-align"><strong><%= sprintf('%.2f', @invoice.payments.sum(:hours)) %></strong></td>
+        <% else %>
+            <td class="override middle-align"><strong><%= sprintf('%.2f', @invoice.hours) %></strong></td>
+        <% end %>
+
+        <% if @invoice.net_pay == nil %>
+            <% if @invoice.rate == nil %>
+                <% if @invoice.hours == nil %>
+                    <!-- No overrides -->
+                    <td class="center emphasized" colspan="3"><strong>$
+                      <%= sprintf('%.2f', @invoice.payments.where(:daily_rate => nil).sum(:hours) * @invoice.user.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) %>
+                    </strong></td>
+                <% else %>
+                    <!-- Hours override -->
+                    <td class="center emphasized" colspan="3"><strong>$
+                      <%= sprintf('%.2f', @invoice.hours * @invoice.user.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) %>
+                    </strong></td>
+                <% end %>
+            <% else %>
+                <% if @invoice.hours == nil %>
+                    <!-- Rate override -->
+                    <td class="center emphasized" colspan="3"><strong>$
+                      <%= sprintf('%.2f', @invoice.payments.where(:daily_rate => nil).sum(:hours) * @invoice.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) %>
+                    </strong></td>
+                <% else %>
+                    <!-- Rate and hours override -->
+                    <td class="center emphasized" colspan="3"><strong>$
+                      <%= sprintf('%.2f', @invoice.hours * @invoice.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) %>
+                    </strong></td>
+                <% end %>
+            <% end %>
+        <% else %>
+            <!-- Net pay override -->
+            <td class="override center emphasized" colspan="3"><strong>$
+              <%= sprintf('%.2f', @invoice.net_pay) %>
+            </strong></td>
+        <% end %>
       </tr>
     </table>
     <table class="no-border">
@@ -60,7 +95,7 @@
               <%= link_to "Reset invoice", edit_invoice_path(@invoice, :reset => true, :from_payments => true), class: "btn btn-primary" %>
             </td>
         <% end %>
-    </table>
+    </table><br>
 <% else %>
     <p>There are no payments under this invoice yet.</p>
     <% if @invoice.status == "Started" or @invoice.status == "In Progress" %>

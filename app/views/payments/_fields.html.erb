@@ -2,7 +2,7 @@
   <col width="100">
   <col width="200">
   <tr>
-    <td class="no-border right-align middle-align"><%= f.label :date %></td>
+    <td class="no-border right-align padding-top"><%= f.label :date %></td>
     <td class="no-border"><%= f.date_field :date %></td>
   </tr>
   <tr>
@@ -10,7 +10,7 @@
     <td class="no-border"><%= f.text_area :description, :cols => 50, :rows => 3 %></td>
   </tr>
   <tr>
-    <td class="no-border right-align middle-align"><%= f.label :hours %></td>
+    <td class="no-border right-align padding-top"><%= f.label :hours %></td>
     <td class="no-border"><%= f.text_field :hours %></td>
   </tr>
 </table><br>
@@ -28,7 +28,7 @@
   <col width="200">
   <% if current_user.admin %>
       <tr>
-        <td class="no-border right-align middle-align"><%= f.label :daily_rate %></td>
+        <td class="no-border right-align padding-top"><%= f.label :daily_rate %></td>
         <td class="no-border"><%= f.text_field :daily_rate %></td>
       </tr>
   <% end %>
