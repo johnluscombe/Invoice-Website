@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160228220722) do
+ActiveRecord::Schema.define(version: 20160305001142) do
 
   create_table "invoices", force: :cascade do |t|
     t.date     "start_date"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160228220722) do
     t.float    "hours"
     t.float    "net_pay"
     t.boolean  "status_override"
+    t.float    "rate"
   end
 
   add_index "invoices", ["user_id"], name: "index_invoices_on_user_id"
