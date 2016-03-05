@@ -9,11 +9,11 @@
       </td>
   <% elsif invoice.start_date == nil and invoice.end_date != nil %>
       <td class="middle-align center">
-        "Ended" <%= invoice.end_date.strftime("%m/%d/%y") %>
+        Ended <%= invoice.end_date.strftime("%m/%d/%y") %>
       </td>
   <% elsif invoice.start_date != nil and invoice.end_date == nil %>
       <td class="middle-align center">
-        "Started" <%= invoice.start_date.strftime("%m/%d/%y") %>
+        Started <%= invoice.start_date.strftime("%m/%d/%y") %>
       </td>
   <% else %>
       <td></td>
