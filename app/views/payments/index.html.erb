@@ -10,13 +10,12 @@
 
 <%= link_to "Back to Invoices", user_invoices_path(@user), class: "btn btn-primary" %><br><br>
 
-<% if @invoice.status == "Approved" %>
+<% if @invoice.status == "Paid" %>
     <p class="emphasized"><strong>Status: <span class="approve"><%= @invoice.status %></span></strong></p>
-<% elsif @invoice.status == "Declined" %>
-    <p class="emphasized"><strong>Status: <span class="decline"><%= @invoice.status %></span></strong></p>
 <% else %>
     <p class="emphasized"><strong>Status: <%= @invoice.status %></strong></p>
 <% end %>
+
 <% if @invoice.payments.count > 0 %>
     <table class="table table-striped">
       <col width="100">

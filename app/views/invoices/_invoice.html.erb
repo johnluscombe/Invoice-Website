@@ -56,10 +56,8 @@
       <td class="override middle-align right-align">$ <%= sprintf('%.2f', invoice.net_pay) %></td>
   <% end %>
 
-  <% if invoice.status == "Approved" %>
+  <% if invoice.status == "Paid" %>
       <td class="approve middle-align center"><strong><%= invoice.status %></strong></td>
-  <% elsif invoice.status == "Declined" %>
-      <td class="decline middle-align center"><strong><%= invoice.status %></strong></td>
   <% else %>
       <td class="middle-align center"><%= invoice.status %></td>
   <% end %>
@@ -130,7 +128,6 @@
           </td>
           <td></td>
           <td></td>
-          <td></td>
           <td>
             <%= link_to "Edit", edit_invoice_path(invoice), class: "btn btn-primary" %>
           </td>
@@ -150,7 +147,6 @@
             <% end %>
           </td>
           <td></td>
-          <td></td>
           <td>
             <%= link_to "Edit", edit_invoice_path(invoice), class: "btn btn-primary" %>
           </td>
@@ -165,17 +161,9 @@
 
           <td>
             <% if @user %>
-              <%= link_to "Approve", edit_invoice_path(invoice, :approve => true), class: "btn btn-success" %>
+              <%= link_to "Mark as Paid", edit_invoice_path(invoice, :approve => true), class: "btn btn-success" %>
             <% else %>
-              <%= link_to "Approve", edit_invoice_path(invoice, :approve => true, :from_pending => true), class: "btn btn-success" %>
-            <% end %>
-          </td>
-
-          <td>
-            <% if @user %>
-              <%= link_to "Decline", edit_invoice_path(invoice, :decline => true), class: "btn btn-danger" %>
-            <% else %>
-              <%= link_to "Decline", edit_invoice_path(invoice, :decline => true, :from_pending => true), class: "btn btn-danger" %>
+              <%= link_to "Mark as Paid", edit_invoice_path(invoice, :approve => true, :from_pending => true), class: "btn btn-success" %>
             <% end %>
           </td>
 
@@ -198,7 +186,6 @@
           <td>
             <%= link_to "View Invoice", invoice_payments_path(invoice), class: "btn btn-primary" %>
           </td>
-          <td></td>
           <td></td>
           <td>
             <% if @user %>

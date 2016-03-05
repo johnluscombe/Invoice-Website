@@ -64,14 +64,7 @@ class InvoicesController < ApplicationController
         end
       end
     elsif current_user.admin and params.has_key?(:approve)
-      @invoice.update(:status => "Approved")
-      if params.has_key?(:from_pending)
-        redirect_to invoices_path(:pending_only => true)
-      else
-        redirect_to user_invoices_path(@user)
-      end
-    elsif current_user.admin and params.has_key?(:decline)
-      @invoice.update(:status => "Declined")
+      @invoice.update(:status => "Paid")
       if params.has_key?(:from_pending)
         redirect_to invoices_path(:pending_only => true)
       else
