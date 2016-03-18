@@ -10,7 +10,7 @@ class InvoicesController < ApplicationController
     else
       ensure_correct_user
       @user = User.find(params[:user_id])
-      @invoices = @user.invoices.all.order(:start_date)
+      @invoices = @user.invoices.all.order(:start_date).reverse_order
     end
   end
 
