@@ -23,12 +23,11 @@
       <% end %>
       <col width="50">
       <col width="50">
+      <col width="50">
+      <col width="50">
       <% if current_user.admin %>
           <col width="50">
-          <col width="50">
       <% end %>
-      <col width="50">
-      <col width="50">
       <tr>
         <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
             <th class="center">Employee</th>
@@ -43,8 +42,8 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
         <% if current_user.admin %>
-          <th></th>
           <th></th>
         <% end %>
       </tr>
