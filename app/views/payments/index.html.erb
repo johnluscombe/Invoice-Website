@@ -18,28 +18,50 @@
 
 <% if @invoice.payments.count > 0 %>
     <table class="table table-striped">
-      <col width="100">
-      <col width="200">
-      <col width="100">
-      <col width="100">
-      <col width="50">
-      <col width="50">
+      <% if current_user.master %>
+          <col width="50"> <!-- ID for Masters -->
+      <% end %>
+      <col width="100"> <!-- Date -->
+      <col width="200"> <!-- Description -->
+      <col width="100"> <!-- Hours -->
+      <col width="100"> <!-- Daily Rate -->
+      <% if current_user.master %>
+          <col width="200"> <!-- Created At for Masters -->
+          <col width="200"> <!-- Updated At for Masters -->
+      <% end %>
+      <col width="50"> <!-- Edit Button -->
+      <col width="50"> <!-- Delete Button -->
       <tr>
+        <% if current_user.master %>
+            <th>ID</th>
+        <% end %>
         <th>Date</th>
         <th>Description</th>
         <th>Hours</th>
         <th>Daily Rate</th>
+        <% if current_user.master %>
+            <th>Created At</th>
+            <th>Updated At</th>
+        <% end %>
         <th></th>
         <th></th>
       </tr>
       <%= render @payments %>
       <tr>
-        <td class="middle-align right-align" colspan="2"><strong>Total:</strong></td>
+        <% if current_user.master %>
+            <td class="middle-align right-align" colspan="3"><strong>Total:</strong></td>
+        <% else %>
+            <td class="middle-align right-align" colspan="2"><strong>Total:</strong></td>
+        <% end %>
 
         <% if @invoice.hours == nil %>
             <td class="middle-align"><strong><%= sprintf('%.2f', @invoice.payments.sum(:hours)) %></strong></td>
         <% else %>
             <td class="override middle-align"><strong><%= sprintf('%.2f', @invoice.hours) %></strong></td>
+        <% end %>
+
+        <% if current_user.master %>
+            <td colspan="2"></td>
         <% end %>
 
         <% if @invoice.net_pay == nil %>

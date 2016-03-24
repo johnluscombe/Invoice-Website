@@ -1,6 +1,10 @@
 <tr>
+  <% if current_user.master %>
+      <td class="middle-align"><%= payment.id %></td>
+  <% end %>
+
   <% if payment.date != nil %>
-    <td class="middle-align"><%= payment.date.strftime("%m-%d-%Y") %></td>
+      <td class="middle-align"><%= payment.date.strftime("%m-%d-%Y") %></td>
   <% else %>
       <td></td>
   <% end %>
@@ -18,6 +22,21 @@
   <% else %>
       <td class="middle-align">0.00</td>
       <td class="middle-align">$ 0.00</td>
+  <% end %>
+
+  <% if current_user.master %>
+      <% if payment.created_at %>
+          <td class="middle-align"><%= payment.created_at.to_time.to_datetime.to_s[0..9] + " " +
+                                           payment.created_at.to_time.to_datetime.to_s[11..18] %></td>
+      <% else %>
+          <td class="middle-align">nil</td>
+      <% end %>
+      <% if payment.updated_at %>
+          <td class="middle-align"><%= payment.updated_at.to_time.to_datetime.to_s[0..9] + " " +
+                                           payment.updated_at.to_time.to_datetime.to_s[11..18] %></td>
+      <% else %>
+          <td class="middle-align">nil</td>
+      <% end %>
   <% end %>
 
   <td class="center">

@@ -11,6 +11,9 @@
 <br>
 <% if (@user and @user.invoices.count > 0) or (@user == nil and Invoice.where(:status => "Pending").count > 0) %>
     <table class="table table-striped">
+      <% if current_user.master %>
+          <col width="50"> <!-- ID for Masters -->
+      <% end %>
       <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
           <col width="200">
       <% end %>
@@ -36,6 +39,9 @@
           <col width="50"> <!-- Button 5 for Admins and Masters -->
       <% end %>
       <tr>
+        <% if current_user.master %>
+            <th class="bottom-align">ID</th>
+        <% end %>
         <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
             <th class="bottom-align">Employee</th>
         <% end %>

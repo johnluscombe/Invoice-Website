@@ -1,6 +1,9 @@
 <tr>
+  <% if current_user.master %>
+      <td class="middle-align"><%= invoice.id %></td>
+  <% end %>
   <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
-    <td class="middle-align"><%= invoice.user.fullname %></td>
+      <td class="middle-align"><%= invoice.user.fullname %></td>
   <% end %>
 
   <% if invoice.start_date != nil and invoice.end_date != nil %>
