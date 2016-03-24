@@ -116,6 +116,12 @@ button > a {
   }
 }
 
+@media (min-width: 1800px) {
+  .container {
+    width: 1755px;
+  }
+}
+
 .empty_row {
   height: 20px;
 }

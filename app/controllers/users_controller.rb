@@ -21,6 +21,9 @@ class UsersController < ApplicationController
       @user.password = "password"
       @user.password_confirmation = "password"
     end
+    if @user.master
+      @user.admin = true
+    end
     if @user.save
       if current_user?(@user)
         flash[:success] = "Welcome to the site, #{@user.name}"
@@ -62,7 +65,9 @@ class UsersController < ApplicationController
         flash[:success] = "User successfully updated"
         redirect_to users_path
       end
-      @user.first_time = false
+      if current_user?(@user)
+        @user.first_time = false
+      end
       if @user.master
         @user.admin = true
       end

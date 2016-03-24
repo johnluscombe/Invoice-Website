@@ -68,6 +68,15 @@
         <% else %> No
         <% end %>
       </td>
+      <td class="center middle-align">
+        <% if user.first_time %> Yes
+        <% else %> No
+        <% end %>
+      </td>
+      <td class="middle-align"><%= user.created_at.to_time.to_datetime.to_s[0..9] + " " +
+                                       user.created_at.to_time.to_datetime.to_s[11..18] %></td>
+      <td class="middle-align"><%= user.updated_at.to_time.to_datetime.to_s[0..9] + " " +
+                                       user.updated_at.to_time.to_datetime.to_s[11..18] %></td>
   <% end %>
 
   <% if user.admin %>
@@ -80,19 +89,19 @@
     </td>
   <% end %>
 
-  <% if current_user.admin %>
-    <td class="center">
-      <%= link_to "Edit User", edit_user_path(user), class: "btn btn-primary" %>
-    </td>
-  <% end %>
+  <td class="center">
+    <%= link_to "Edit User", edit_user_path(user), class: "btn btn-primary" %>
+  </td>
 
-  <% if user.master %>
-      <td class="center">
-        <%= button_to "Delete User", user_path(user), class: "btn btn-danger disabled", method: :delete %>
-      </td>
-  <% else %>
-      <td class="center">
-        <%= button_to "Delete User", user_path(user), class: "btn btn-danger", method: :delete %>
-      </td>
+  <% if current_user.master %>
+    <% if user.master %>
+        <td class="center">
+          <%= button_to "Delete User", user_path(user), class: "btn btn-danger disabled", method: :delete %>
+        </td>
+    <% else %>
+        <td class="center">
+          <%= button_to "Delete User", user_path(user), class: "btn btn-danger", method: :delete %>
+        </td>
+    <% end %>
   <% end %>
 </tr>

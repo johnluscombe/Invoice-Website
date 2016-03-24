@@ -19,7 +19,7 @@
     <i class="glyphicon glyphicon-info-sign"></i> Optional. Email to receive invoice statements.</td>
   </tr>
 
-  <% if current_user.master %>
+  <% if current_user.master and !current_user?(@user) %>
       <tr class="empty_row"></tr>
       <tr>
         <td class="no-border right-align middle-align"><%= f.label "Manager?" %></td>
@@ -42,11 +42,24 @@
       <tr class="empty_row"></tr>
   <% end %>
 
-  <% if !current_user?(@user) and current_user.admin %>
+  <% if !current_user?(@user) and current_user.admin and !@user.admin and !@user.master %>
       <tr>
         <td class="no-border right-align middle-align"><%= f.label :rate %></td>
         <td class="no-border"><%= f.text_field :rate %>
         <i class="glyphicon glyphicon-info-sign"></i> Hourly rate to pay employee.</td>
+      </tr>
+  <% end %>
+
+  <% if current_user?(@user) %>
+      <tr>
+        <td class="no-border right-align middle-align"><%= f.label :password %></td>
+        <td class="no-border"><%= f.password_field :password %>
+          <i class="glyphicon glyphicon-info-sign"></i> Password you will use to log in.</td>
+      </tr>
+      <tr>
+        <td class="no-border right-align middle-align"><%= f.label "Confirmation" %></td>
+        <td class="no-border"><%= f.password_field :password_confirmation %>
+          <i class="glyphicon glyphicon-info-sign"></i> Verify that the password you entered is correct.</td>
       </tr>
   <% end %>
 

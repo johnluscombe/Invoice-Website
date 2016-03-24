@@ -15,12 +15,15 @@
     <% if current_user.master %>
         <col width="50"> <!-- Manager? for Masters -->
         <col width="50"> <!-- Admin? for Masters -->
+        <col width="50"> <!-- Reset Profile? for Masters -->
+        <col width="200"> <!-- Created At for Masters -->
+        <col width="200"> <!-- Updated At for Masters -->
     <% end %>
     <col width="50"> <!-- View Invoices Button -->
-    <% if current_user.admin %>
-      <col width="50"> <!-- Edit User Button -->
+    <col width="50"> <!-- Edit User Button -->
+    <% if current_user.master %>
+      <col width="50"> <!-- Delete User Button -->
     <% end %>
-    <col width="50"> <!-- Delete User Button -->
     <tr>
       <% if current_user.master %>
           <th class="bottom-align">ID</th>
@@ -35,21 +38,31 @@
       <% if current_user.master %>
           <th class="bottom-align">Manager?</th>
           <th class="bottom-align">Admin?</th>
+          <th class="bottom-align">Reset Profile?</th>
+          <th class="bottom-align">Created At</th>
+          <th class="bottom-align">Updated At</th>
       <% end %>
       <th></th>
-      <% if current_user.admin %>
+      <th></th>
+      <% if current_user.master %>
         <th></th>
       <% end %>
-      <th></th>
     </tr>
     <%= render @users %>
   </table>
-  <td>
-    <%= link_to "New User", new_user_path, class: "btn btn-success" %>
-  </td>
+    <% if current_user.master %>
+      <td>
+        <%= link_to "New User", new_user_path, class: "btn btn-success" %>
+      </td>
+    <% end %>
 <% else %>
-    <p>You do not have any employees yet.</p>
-    <td>
-      <%= link_to "New User", new_user_path, class: "btn btn-success" %>
-    </td>
+    <% if current_user.master %>
+      <p>There are no employees yet.</p>
+      <td>
+        <%= link_to "New User", new_user_path, class: "btn btn-success" %>
+      </td>
+    <% else %>
+      <p>You do not have any employees yet.</p>
+      <p>Please contact your administrator to add employees.</p>
+    <% end %>
 <% end %>
