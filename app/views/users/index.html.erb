@@ -1,6 +1,6 @@
 <h1>Employees</h1>
 <br>
-<% if User.where(:admin => false).count > 0 %>
+<% if (User.where(:admin => false).count > 0 and !current_user.master) || (User.count > 0 and current_user.master) %>
   <table class="table table-striped">
     <% if current_user.master %>
       <col width="50"> <!-- ID for Masters -->
@@ -36,9 +36,9 @@
       <th class="bottom-align right-align">Hourly Rate</th>
       <th class="bottom-align right-align">Current Invoice</th>
       <% if current_user.master %>
-          <th class="bottom-align">Manager?</th>
-          <th class="bottom-align">Admin?</th>
-          <th class="bottom-align">Reset Profile?</th>
+          <th class="bottom-align center">Manager?</th>
+          <th class="bottom-align center">Admin?</th>
+          <th class="bottom-align center">Reset Profile?</th>
           <th class="bottom-align">Created At</th>
           <th class="bottom-align">Updated At</th>
       <% end %>

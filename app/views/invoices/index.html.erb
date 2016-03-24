@@ -14,30 +14,44 @@
       <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
           <col width="200">
       <% end %>
-      <col width="125">
-      <col width="50">
-      <col width="75">
-      <col width="100">
-      <% if current_user.admin %>
-          <col width="75">
+      <col width="125"> <!-- For Dates -->
+      <col width="50"> <!-- Hours -->
+      <% if current_user.master %>
+        <col width="50"> <!-- Rate for Masters -->
       <% end %>
-      <col width="50">
-      <col width="50">
-      <col width="50">
-      <col width="50">
+      <col width="50"> <!-- Net Pay -->
+      <col width="100"> <!-- Status -->
       <% if current_user.admin %>
-          <col width="50">
+          <col width="75"> <!-- Check No. for Admins and Masters -->
+      <% end %>
+      <% if current_user.master %>
+          <col width="125"> <!-- Created At for Masters -->
+          <col width="125"> <!-- Updated At for Masters -->
+      <% end %>
+      <col width="50"> <!-- Button 1 -->
+      <col width="50"> <!-- Button 2 -->
+      <col width="50"> <!-- Button 3 -->
+      <col width="50"> <!-- Button 4 -->
+      <% if current_user.admin %>
+          <col width="50"> <!-- Button 5 for Admins and Masters -->
       <% end %>
       <tr>
         <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
-            <th class="center">Employee</th>
+            <th class="center bottom-align">Employee</th>
         <% end %>
-        <th class="center">For Dates</th>
-        <th class="center">Hours</th>
-        <th class="center">Net Pay</th>
-        <th class="center">Status</th>
+        <th class="center bottom-align">For Dates</th>
+        <th class="center bottom-align">Hours</th>
+        <% if current_user.master %>
+          <th class="center bottom-align">Rate</th>
+        <% end %>
+        <th class="center bottom-align">Net Pay</th>
+        <th class="center bottom-align">Status</th>
         <% if current_user.admin %>
-            <th class="center">Check No.</th>
+            <th class="center bottom-align">Check No.</th>
+        <% end %>
+        <% if current_user.master %>
+            <th class="bottom-align">Created At</th>
+            <th class="bottom-align">Updated At</th>
         <% end %>
         <th></th>
         <th></th>

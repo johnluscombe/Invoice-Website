@@ -25,6 +25,10 @@
       <td class="override middle-align right-align"><%= sprintf('%.2f', invoice.hours) %></td>
   <% end %>
 
+  <% if current_user.master %>
+      <td class="middle-align right-align"><%= sprintf('%.2f', invoice.user.rate) %></td>
+  <% end %>
+
   <% if invoice.net_pay == nil %>
       <% if invoice.rate == nil %>
           <% if invoice.hours == nil %>
@@ -66,25 +70,32 @@
       <td class="middle-align right-align"><%= invoice.check_no %></td>
   <% end %>
 
+  <% if current_user.master %>
+      <td class="middle-align"><%= invoice.created_at.to_time.to_datetime.to_s[0..9] + " " +
+                                       invoice.created_at.to_time.to_datetime.to_s[11..18] %></td>
+      <td class="middle-align"><%= invoice.updated_at.to_time.to_datetime.to_s[0..9] + " " +
+                                       invoice.updated_at.to_time.to_datetime.to_s[11..18] %></td>
+  <% end %>
+
   <% if current_user.admin == false %>
     <% if invoice.status == "Started" %>
-        <td>
+        <td class="middle-align">
           <%= link_to "View Payments", invoice_payments_path(invoice), class: "btn btn-primary" %>
         </td>
-        <td></td>
-        <td>
+        <td class="middle-align"></td>
+        <td class="middle-align">
           <%= link_to "Edit", edit_invoice_path(invoice), class: "btn btn-primary"  %>
         </td>
 
-        <td>
+        <td class="middle-align">
           <%= link_to "Delete", invoice_path(invoice), class: "btn btn-danger", method: :delete %>
         </td>
     <% elsif invoice.status == "In Progress" %>
-        <td>
+        <td class="middle-align">
           <%= link_to "View Payments", invoice_payments_path(invoice), class: "btn btn-primary" %>
         </td>
 
-        <td>
+        <td class="middle-align">
           <% if @user %>
             <%= link_to "Submit", edit_invoice_path(invoice, :submit => true), class: "btn btn-primary" %>
           <% else %>
@@ -92,74 +103,74 @@
           <% end %>
         </td>
 
-        <td>
+        <td class="middle-align">
           <%= link_to "Edit", edit_invoice_path(invoice), class: "btn btn-primary" %>
         </td>
 
-        <td>
+        <td class="middle-align">
           <%= link_to "Delete", invoice_path(invoice), class: "btn btn-danger", method: :delete %>
         </td>
     <% elsif invoice.status == "Pending" %>
-        <td>
+        <td class="middle-align">
           <%= link_to "View Invoice", invoice_payments_path(invoice), class: "btn btn-primary" %>
         </td>
 
-        <td>
+        <td class="middle-align">
           <% if @user %>
               <%= link_to "Reset", edit_invoice_path(invoice, :reset => true), class: "btn btn-primary" %>
           <% else %>
               <%= link_to "Reset", edit_invoice_path(invoice, :reset => true, :from_pending => true), class: "btn btn-primary" %>
           <% end %>
         </td>
-        <td></td>
-        <td></td>
+        <td class="middle-align"></td>
+        <td class="middle-align"></td>
     <% else %>
-        <td>
+        <td class="middle-align">
           <%= link_to "View Invoice", invoice_payments_path(invoice), class: "btn btn-primary" %>
         </td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td class="middle-align"></td>
+        <td class="middle-align"></td>
+        <td class="middle-align"></td>
     <% end %>
   <% else %>
       <% if invoice.status == "Started" %>
-          <td>
+          <td class="middle-align">
             <%= link_to "View Payments", invoice_payments_path(invoice), class: "btn btn-primary" %>
           </td>
-          <td></td>
-          <td></td>
-          <td>
+          <td class="middle-align"></td>
+          <td class="middle-align"></td>
+          <td class="middle-align">
             <%= link_to "Edit", edit_invoice_path(invoice), class: "btn btn-primary" %>
           </td>
 
-          <td>
+          <td class="middle-align">
             <%= link_to "Delete", invoice_path(invoice), class: "btn btn-danger", method: :delete %>
           </td>
       <% elsif invoice.status == "In Progress" %>
-          <td>
+          <td class="middle-align">
             <%= link_to "View Payments", invoice_payments_path(invoice), class: "btn btn-primary" %>
           </td>
-          <td>
+          <td class="middle-align">
             <% if @user %>
                 <%= link_to "Submit", edit_invoice_path(invoice, :submit => true), class: "btn btn-primary" %>
             <% else %>
                 <%= link_to "Submit", edit_invoice_path(invoice, :submit => true, :from_pending => true), class: "btn btn-primary" %>
             <% end %>
           </td>
-          <td></td>
-          <td>
+          <td class="middle-align"></td>
+          <td class="middle-align">
             <%= link_to "Edit", edit_invoice_path(invoice), class: "btn btn-primary" %>
           </td>
 
-          <td>
+          <td class="middle-align">
             <%= link_to "Delete", invoice_path(invoice), class: "btn btn-danger", method: :delete %>
           </td>
       <% elsif invoice.status == "Pending" %>
-          <td>
+          <td class="middle-align">
             <%= link_to "View Invoice", invoice_payments_path(invoice), class: "btn btn-primary" %>
           </td>
 
-          <td>
+          <td class="middle-align">
             <% if @user %>
               <%= link_to "Mark as Paid", edit_invoice_path(invoice, :approve => true), class: "btn btn-success" %>
             <% else %>
@@ -167,7 +178,7 @@
             <% end %>
           </td>
 
-          <td>
+          <td class="middle-align">
             <% if @user %>
                 <%= link_to "Reset", edit_invoice_path(invoice, :reset => true), class: "btn btn-primary" %>
             <% else %>
@@ -175,19 +186,19 @@
             <% end %>
           </td>
 
-          <td>
+          <td class="middle-align">
             <%= link_to "Edit", edit_invoice_path(invoice), class: "btn btn-primary" %>
           </td>
 
-          <td>
+          <td class="middle-align">
             <%= link_to "Delete", invoice_path(invoice), class: "btn btn-danger", method: :delete %>
           </td>
       <% else %>
-          <td>
+          <td class="middle-align">
             <%= link_to "View Invoice", invoice_payments_path(invoice), class: "btn btn-primary" %>
           </td>
-          <td></td>
-          <td>
+          <td class="middle-align"></td>
+          <td class="middle-align">
             <% if @user %>
               <%= link_to "Reset", edit_invoice_path(invoice, :reset => true), class: "btn btn-primary" %>
             <% else %>
@@ -195,11 +206,11 @@
             <% end %>
           </td>
 
-          <td>
+          <td class="middle-align">
             <%= link_to "Edit", edit_invoice_path(invoice), class: "btn btn-primary" %>
           </td>
 
-          <td>
+          <td class="middle-align">
             <%= link_to "Delete", invoice_path(invoice), class: "btn btn-danger", method: :delete %>
           </td>
       <% end %>
