@@ -4,7 +4,10 @@ class InvoicesController < ApplicationController
   #before_action :ensure_admin, only: [:index]
 
   def index
-    if params.has_key?(:pending_only)
+    if params.has_key?(:all)
+      ensure_master
+      @invoices = Invoice.all
+    elsif params.has_key?(:pending_only)
       ensure_admin
       @invoices = Invoice.where(:status => "Pending")
     else
@@ -122,6 +125,17 @@ class InvoicesController < ApplicationController
     unless current_user.admin
       flash[:danger] = "There has a been a problem loading the page, please contact your administrator"
       redirect_to user_invoices_path(current_user)
+    end
+  end
+
+  def ensure_master
+    unless current_user.master
+      flash[:danger] = "There has a been a problem loading the page, please contact your administrator"
+      if current_user.admin
+        redirect_to users_path
+      else
+        redirect_to user_invoices_path(current_user)
+      end
     end
   end
 end

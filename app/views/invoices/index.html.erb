@@ -19,7 +19,7 @@
       <% if current_user.master %>
         <col width="50"> <!-- Rate for Masters -->
       <% end %>
-      <col width="50"> <!-- Net Pay -->
+      <col width="75"> <!-- Net Pay -->
       <col width="100"> <!-- Status -->
       <% if current_user.admin %>
           <col width="75"> <!-- Check No. for Admins and Masters -->
@@ -37,7 +37,7 @@
       <% end %>
       <tr>
         <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
-            <th class="center bottom-align">Employee</th>
+            <th class="bottom-align">Employee</th>
         <% end %>
         <th class="center bottom-align">For Dates</th>
         <th class="center bottom-align">Hours</th>

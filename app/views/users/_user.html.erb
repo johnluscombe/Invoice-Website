@@ -73,10 +73,18 @@
         <% else %> No
         <% end %>
       </td>
-      <td class="middle-align"><%= user.created_at.to_time.to_datetime.to_s[0..9] + " " +
-                                       user.created_at.to_time.to_datetime.to_s[11..18] %></td>
-      <td class="middle-align"><%= user.updated_at.to_time.to_datetime.to_s[0..9] + " " +
-                                       user.updated_at.to_time.to_datetime.to_s[11..18] %></td>
+      <% if user.created_at %>
+          <td class="middle-align"><%= user.created_at.to_time.to_datetime.to_s[0..9] + " " +
+                                           user.created_at.to_time.to_datetime.to_s[11..18] %></td>
+      <% else %>
+          <td class="middle-align">nil</td>
+      <% end %>
+      <% if user.updated_at %>
+          <td class="middle-align"><%= user.updated_at.to_time.to_datetime.to_s[0..9] + " " +
+                                           user.updated_at.to_time.to_datetime.to_s[11..18] %></td>
+      <% else %>
+          <td class="middle-align">nil</td>
+      <% end %>
   <% end %>
 
   <% if user.admin %>

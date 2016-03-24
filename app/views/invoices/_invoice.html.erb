@@ -1,6 +1,6 @@
 <tr>
   <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
-    <td class="middle-align center"><%= invoice.user.fullname %></td>
+    <td class="middle-align"><%= invoice.user.fullname %></td>
   <% end %>
 
   <% if invoice.start_date != nil and invoice.end_date != nil %>
@@ -71,10 +71,18 @@
   <% end %>
 
   <% if current_user.master %>
-      <td class="middle-align"><%= invoice.created_at.to_time.to_datetime.to_s[0..9] + " " +
-                                       invoice.created_at.to_time.to_datetime.to_s[11..18] %></td>
-      <td class="middle-align"><%= invoice.updated_at.to_time.to_datetime.to_s[0..9] + " " +
-                                       invoice.updated_at.to_time.to_datetime.to_s[11..18] %></td>
+      <% if invoice.created_at %>
+          <td class="middle-align"><%= invoice.created_at.to_time.to_datetime.to_s[0..9] + " " +
+                                           invoice.created_at.to_time.to_datetime.to_s[11..18] %></td>
+      <% else %>
+          <td class="middle-align">nil</td>
+      <% end %>
+      <% if invoice.created_at %>
+          <td class="middle-align"><%= invoice.updated_at.to_time.to_datetime.to_s[0..9] + " " +
+                                           invoice.updated_at.to_time.to_datetime.to_s[11..18] %></td>
+      <% else %>
+          <td class="middle-align">nil</td>
+      <% end %>
   <% end %>
 
   <% if current_user.admin == false %>
