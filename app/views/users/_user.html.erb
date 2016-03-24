@@ -1,7 +1,17 @@
 <tr>
+  <% if current_user.master %>
+      <td class="middle-align"><%= user.id %></td>
+  <% end %>
   <td class="middle-align"><%= user.fullname %></td>
+  <% if current_user.master %>
+      <td class="middle-align"><%= user.name %></td>
+  <% end %>
   <td class="middle-align"><%= user.email %></td>
-  <td class="middle-align right-align">$ <%= sprintf("%.2f", user.rate) %></td>
+  <% if user.rate == nil %>
+      <td class="middle-align right-align">N/A</td>
+  <% else %>
+      <td class="middle-align right-align">$ <%= sprintf("%.2f", user.rate) %></td>
+  <% end %>
 
   <% if user.invoices.where(:status => ["Started", "In Progress", "Pending"]).count > 0 %>
     <% @invoice = user.invoices.where(:status => ["Started", "In Progress", "Pending"]).last %>
@@ -39,6 +49,19 @@
     <% end %>
   <% else %>
       <td class="right-align middle-align"></td>
+  <% end %>
+
+  <% if current_user.master %>
+      <td class="center middle-align">
+        <% if user.admin %> Yes
+        <% else %> No
+        <% end %>
+      </td>
+      <td class="center middle-align">
+        <% if user.master %> Yes
+        <% else %> No
+        <% end %>
+      </td>
   <% end %>
 
   <td class="center">

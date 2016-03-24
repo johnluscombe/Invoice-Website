@@ -4,7 +4,11 @@ class UsersController < ApplicationController
   before_action :ensure_admin, only: [:index, :new, :create, :destroy]
 
   def index
-    @users = User.where(:admin => false)
+    if current_user.master
+      @users = User.all
+    else
+      @users = User.where(:admin => false)
+    end
   end
 
   def new

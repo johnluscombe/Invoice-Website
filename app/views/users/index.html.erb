@@ -2,17 +2,37 @@
 <br>
 <% if User.where(:admin => false).count > 0 %>
   <table class="table table-striped">
-    <col width="200">
-    <col width="200">
-    <col width="100">
-    <col width="100">
-    <col width="50">
-    <col width="50">
+    <% if current_user.master %>
+      <col width="50"> <!-- ID for Masters -->
+    <% end %>
+    <col width="200"> <!-- Employee Name -->
+    <% if current_user.master %>
+        <col width="200"> <!-- Username for Masters -->
+    <% end %>
+    <col width="200"> <!-- Email -->
+    <col width="100"> <!-- Hourly Rate -->
+    <col width="100"> <!-- Current Invoice -->
+    <% if current_user.master %>
+        <col width="50"> <!-- Manager? for Masters -->
+        <col width="50"> <!-- Admin? for Masters -->
+    <% end %>
+    <col width="50"> <!-- View Invoices Button -->
+    <col width="50"> <!-- Delete Button -->
     <tr>
+      <% if current_user.master %>
+          <th class="bottom-align">ID</th>
+      <% end %>
       <th class="bottom-align">Employee Name</th>
+      <% if current_user.master %>
+          <th class="bottom-align">Username</th>
+      <% end %>
       <th class="bottom-align">Email</th>
       <th class="bottom-align right-align">Hourly Rate</th>
       <th class="bottom-align right-align">Current Invoice</th>
+      <% if current_user.master %>
+          <th class="bottom-align">Manager?</th>
+          <th class="bottom-align">Admin?</th>
+      <% end %>
       <th></th>
       <th></th>
     </tr>

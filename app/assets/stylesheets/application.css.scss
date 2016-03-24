@@ -110,6 +110,12 @@ button > a {
   text-decoration: none !important;
 }
 
+@media (min-width: 1600px) {
+  .container {
+    width: 1560px;
+  }
+}
+
 * {
   font-family: "Candara", Sans-Serif;
 }
