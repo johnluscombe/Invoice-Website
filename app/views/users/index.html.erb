@@ -17,7 +17,10 @@
         <col width="50"> <!-- Admin? for Masters -->
     <% end %>
     <col width="50"> <!-- View Invoices Button -->
-    <col width="50"> <!-- Delete Button -->
+    <% if current_user.admin %>
+      <col width="50"> <!-- Edit User Button -->
+    <% end %>
+    <col width="50"> <!-- Delete User Button -->
     <tr>
       <% if current_user.master %>
           <th class="bottom-align">ID</th>
@@ -34,6 +37,9 @@
           <th class="bottom-align">Admin?</th>
       <% end %>
       <th></th>
+      <% if current_user.admin %>
+        <th></th>
+      <% end %>
       <th></th>
     </tr>
     <%= render @users %>

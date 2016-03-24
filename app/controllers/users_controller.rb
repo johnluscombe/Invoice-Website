@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def index
     if current_user.master
-      @users = User.all
+      @users = User.all.order(:fullname)
     else
       @users = User.where(:admin => false)
     end
@@ -63,6 +63,9 @@ class UsersController < ApplicationController
         redirect_to users_path
       end
       @user.first_time = false
+      if @user.master
+        @user.admin = true
+      end
       @user.save
     else
       flash[:danger] = "Unable to update profile"
@@ -80,8 +83,8 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:fullname, :name, :email, :rate, :password, :password_confirmation,
-                                 invoices_attributes: [:id, :start_date, :end_date, :status])
+    params.require(:user).permit(:fullname, :name, :email, :rate, :password, :password_confirmation, :admin, :master,
+                                 :first_time, invoices_attributes: [:id, :start_date, :end_date, :status])
   end
 
   def ensure_user_logged_in

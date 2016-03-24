@@ -1,6 +1,6 @@
 <table class="no-border">
-  <col width="100">
-  <col width="500">
+  <col width="150">
+  <col width="700">
   <tr>
     <td class="no-border right-align middle-align"><%= f.label "Full Name" %></td>
     <td class="no-border"><%= f.text_field :fullname %>
@@ -19,6 +19,29 @@
     <i class="glyphicon glyphicon-info-sign"></i> Optional. Email to receive invoice statements.</td>
   </tr>
 
+  <% if current_user.master %>
+      <tr class="empty_row"></tr>
+      <tr>
+        <td class="no-border right-align middle-align"><%= f.label "Manager?" %></td>
+        <td class="no-border">
+          <%= f.check_box :admin %>
+        </td>
+      </tr>
+      <tr>
+        <td class="no-border right-align middle-align"><%= f.label "Admin?" %></td>
+        <td class="no-border">
+          <%= f.check_box :master %>
+        </td>
+      </tr>
+      <tr>
+        <td class="no-border right-align middle-align"><%= f.label "Reset Profile?" %></td>
+        <td class="no-border">
+          <%= f.check_box :first_time %>
+        </td>
+      </tr>
+      <tr class="empty_row"></tr>
+  <% end %>
+
   <% if !current_user?(@user) and current_user.admin %>
       <tr>
         <td class="no-border right-align middle-align"><%= f.label :rate %></td>
@@ -27,16 +50,4 @@
       </tr>
   <% end %>
 
-  <% if current_user?(@user) %>
-      <tr>
-        <td class="no-border right-align middle-align"><%= f.label :password %></td>
-        <td class="no-border"><%= f.password_field :password %>
-        <i class="glyphicon glyphicon-info-sign"></i> Password you will use to log in.</td>
-      </tr>
-      <tr>
-        <td class="no-border right-align middle-align"><%= f.label :password_confirmation, 'Confirmation' %></td>
-        <td class="no-border"><%= f.password_field :password_confirmation %>
-        <i class="glyphicon glyphicon-info-sign"></i> Verify that you entered the correct password.</td>
-      </tr>
-  <% end %>
 </table><br>

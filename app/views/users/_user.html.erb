@@ -8,12 +8,16 @@
   <% end %>
   <td class="middle-align"><%= user.email %></td>
   <% if user.rate == nil %>
-      <td class="middle-align right-align">N/A</td>
+      <% if user.admin %>
+          <td class="middle-align right-align">N/A</td>
+      <% else %>
+          <td class="middle-align right-align">-</td>
+      <% end %>
   <% else %>
       <td class="middle-align right-align">$ <%= sprintf("%.2f", user.rate) %></td>
   <% end %>
 
-  <% if user.invoices.where(:status => ["Started", "In Progress", "Pending"]).count > 0 %>
+  <% if user.invoices.where(:status => ["Started", "In Progress", "Pending"]).count > 0 and !user.admin %>
     <% @invoice = user.invoices.where(:status => ["Started", "In Progress", "Pending"]).last %>
     <% if @invoice.net_pay == nil %>
         <% if @invoice.rate == nil %>
@@ -47,8 +51,10 @@
           <%= sprintf('%.2f', @invoice.net_pay) %>
         </td>
     <% end %>
+  <% elsif user.admin %>
+      <td class="right-align middle-align">N/A</td>
   <% else %>
-      <td class="right-align middle-align"></td>
+      <td class="right-align middle-align">-</td>
   <% end %>
 
   <% if current_user.master %>
@@ -64,11 +70,29 @@
       </td>
   <% end %>
 
-  <td class="center">
-    <%= link_to "View Invoices", user_invoices_path(user), class: "btn btn-primary" %>
-  </td>
+  <% if user.admin %>
+      <td class="center">
+        <%= link_to "View Invoices", user_invoices_path(user), class: "btn btn-primary disabled " %>
+      </td>
+  <% else %>
+    <td class="center">
+      <%= link_to "View Invoices", user_invoices_path(user), class: "btn btn-primary" %>
+    </td>
+  <% end %>
 
-  <td class="center">
-    <%= link_to "Delete", user_path(user), class: "btn btn-danger", method: :delete %>
-  </td>
+  <% if current_user.admin %>
+    <td class="center">
+      <%= link_to "Edit User", edit_user_path(user), class: "btn btn-primary" %>
+    </td>
+  <% end %>
+
+  <% if user.master %>
+      <td class="center">
+        <%= button_to "Delete User", user_path(user), class: "btn btn-danger disabled", method: :delete %>
+      </td>
+  <% else %>
+      <td class="center">
+        <%= button_to "Delete User", user_path(user), class: "btn btn-danger", method: :delete %>
+      </td>
+  <% end %>
 </tr>
