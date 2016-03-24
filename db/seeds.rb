@@ -217,9 +217,9 @@ Payment.create!([
   {date: "2016-03-01", description: "Invoice App", hours: 30.0, invoice_id: 78, daily_rate: nil}
 ])
 User.create!([
-  {password_digest: "$2a$10$Tz0cZcSXoQNhmJki5trOme1vVgexupDfz.HSTpBuXg1l1arHNnW/O", email: "", admin: true, name: "laurieluscombe", rate: nil, fullname: "Laurie Luscombe", first_time: false, master: false},
-  {password_digest: "$2a$10$aaTRcb2f8aIUvyWOlrb.ReaObGf9LD49uaM3/J9fs21kJ1jfJzJKy", email: "jluscombe96@gmail.com", admin: false, name: "johnluscombe", rate: 11.0, fullname: "John Luscombe", first_time: false, master: false},
-  {password_digest: "$2a$10$0Zxy/AFft5hWe7AIg8Jcw.fnv8YY5.nbvEwtYuMILlRhFs8ST3EY6", email: "cathryn.gibbons516@gmail.com", admin: false, name: "cathryn.gibbons", rate: 11.0, fullname: "Cathryn Gibbons", first_time: false, master: false},
-  {password_digest: "$2a$10$lA.Tag0WB9AxbtbVhu..b.UrKponxqg2RHO6tklZuS9dvDdji15yG", email: "bluscombe@aol.com", admin: true, name: "bluscombe", rate: nil, fullname: "Bill Luscombe", first_time: false, master: false},
-  {password_digest: "$2a$10$2fcbfXyyv9pg3kxCC0QBIec09140w3HpoZIBiQh4urtnARRukaBfK", email: "admin@example.com", admin: true, name: "admin", rate: nil, fullname: "Admin", first_time: false, master: true}
+  {password: "Communitas!6", password_confirmation: "Communitas!6", email: "", admin: true, name: "laurieluscombe", rate: nil, fullname: "Laurie Luscombe", first_time: false, master: false},
+  {password: "otis224jl0746*", password_confirmation: "otis224jl0746*", email: "jluscombe96@gmail.com", admin: false, name: "johnluscombe", rate: 11.0, fullname: "John Luscombe", first_time: false, master: false},
+  {password: "ptediumt", password_confirmation: "ptediumt", email: "cathryn.gibbons516@gmail.com", admin: false, name: "cathryn.gibbons", rate: 11.0, fullname: "Cathryn Gibbons", first_time: false, master: false},
+  {password: "enviii", password_confirmation: "enviii", email: "bluscombe@aol.com", admin: true, name: "bluscombe", rate: nil, fullname: "Bill Luscombe", first_time: false, master: false},
+  {password: "admin", password_confirmation: "admin", email: "admin@example.com", admin: true, name: "admin", rate: nil, fullname: "Admin", first_time: false, master: true}
 ])
