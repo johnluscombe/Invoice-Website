@@ -18,8 +18,8 @@
       <% if current_user.master %>
           <col width="50"> <!-- ID for Masters -->
       <% end %>
-      <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
-          <col width="200">
+      <% if @all or @pending_only %>
+          <col width="200"> <!-- Employee for All and Pending Only View for Admins and Masters -->
       <% end %>
       <col width="125"> <!-- For Dates -->
       <col width="50"> <!-- Hours -->
@@ -46,7 +46,7 @@
         <% if current_user.master %>
             <th class="bottom-align">ID</th>
         <% end %>
-        <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
+        <% if @all or @pending_only %>
             <th class="bottom-align">Employee</th>
         <% end %>
         <th class="center bottom-align">For Dates</th>

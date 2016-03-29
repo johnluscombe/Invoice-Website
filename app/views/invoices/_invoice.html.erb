@@ -2,7 +2,7 @@
   <% if current_user.master %>
       <td class="middle-align"><%= invoice.id %></td>
   <% end %>
-  <% if @user == nil and Invoice.where(:status => "Pending").count > 0 %>
+  <% if @all or @pending_only %>
       <td class="middle-align"><%= invoice.user.fullname %></td>
   <% end %>
 
