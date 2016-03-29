@@ -1,7 +1,6 @@
 class InvoicesController < ApplicationController
   before_action :ensure_user_logged_in
-  #before_action :ensure_correct_user, only: [:index]
-  #before_action :ensure_admin, only: [:index]
+  before_action :ensure_correct_user
 
   def index
     if params.has_key?(:all)
@@ -11,19 +10,28 @@ class InvoicesController < ApplicationController
       ensure_admin
       @invoices = Invoice.where(:status => "Pending")
     else
-      ensure_correct_user
       @user = User.find(params[:user_id])
+      if @user.admin
+        flash[:warning] = "User does not get paid hourly"
+        redirect_to users_path
+      end
       @invoices = @user.invoices.all.order(:start_date).reverse_order
     end
+  rescue
+    redirect
+  end
+
+  def show
+    redirect
   end
 
   def new
     @user = User.find(params[:user_id])
     if @user.rate == nil
       if @user.admin
-        flash[:danger] = "You have not set an hourly rate for this employee"
+        flash[:danger] = "You have not set an hourly rate for this employee."
       else
-        flash[:danger] = "You have not been assigned an hourly rate. Please contact your administrator."
+        flash[:danger] = "You have not been assigned an hourly rate. Please contact your manager."
       end
       redirect_to user_invoices_path(@user)
     else
@@ -109,33 +117,25 @@ class InvoicesController < ApplicationController
   end
 
   def ensure_correct_user
-    @user = User.find(params[:user_id])
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+    else
+      @invoice = Invoice.find(params[:id])
+      @user = @invoice.user
+    end
     unless current_user.admin or current_user?(@user)
-      if current_user.admin
-        flash[:danger] = "There has a been a problem loading the page, we're sorry for the inconvenience"
-        redirect_to users_path
-      else
-        flash[:danger] = "There has a been a problem loading the page, please contact your administrator"
-        redirect_to user_invoices_path(current_user)
-      end
+      flash[:danger] = "You do not have permission to view this page. Please contact your manager."
+      redirect
     end
+  rescue
+    redirect
   end
 
-  def ensure_admin
-    unless current_user.admin
-      flash[:danger] = "There has a been a problem loading the page, please contact your administrator"
+  def redirect
+    if current_user.admin
+      redirect_to users_path
+    else
       redirect_to user_invoices_path(current_user)
-    end
-  end
-
-  def ensure_master
-    unless current_user.master
-      flash[:danger] = "There has a been a problem loading the page, please contact your administrator"
-      if current_user.admin
-        redirect_to users_path
-      else
-        redirect_to user_invoices_path(current_user)
-      end
     end
   end
 end

@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :ensure_user_logged_in
-  #before_action :ensure_correct_user
-  before_action :ensure_admin, only: [:index, :new, :create, :destroy]
+  before_action :ensure_correct_user, only: [:edit, :update]
+  before_action :ensure_admin, only: [:index]
+  before_action :ensure_master, only: [:new, :create, :destroy]
 
   def index
     if current_user.master
@@ -9,6 +10,10 @@ class UsersController < ApplicationController
     else
       @users = User.where(:admin => false)
     end
+  end
+
+  def show
+    redirect
   end
 
   def new
@@ -26,10 +31,8 @@ class UsersController < ApplicationController
     end
     if @user.save
       if current_user?(@user)
-        flash[:success] = "Welcome to the site, #{@user.name}"
         redirect_to @user
       else
-        flash[:success] = "User successfully created"
         redirect_to users_path
       end
     else
@@ -55,14 +58,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update(user_params)
       if current_user?(@user)
-        flash[:success] = "Your profile has been modified"
-        if @user.admin
-          redirect_to users_path
-        else
-          redirect_to user_invoices_path(@user)
-        end
+        redirect
       else
-        flash[:success] = "User successfully updated"
         redirect_to users_path
       end
       if current_user?(@user)
@@ -81,7 +78,6 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    flash[:success] = "#{@user.fullname} removed from the site"
     redirect_to users_path
   end
 
@@ -99,22 +95,40 @@ class UsersController < ApplicationController
   end
 
   def ensure_correct_user
-    @user = User.find(params[:user_id])
-    unless current_user?(@user)
+    @user = User.find(params[:id])
+    #If the queried user does not match AND the current user is not an admin OR
+    #If the queried user does not match AND the current user is not a master AND the queried user is an admin
+    #Give an error
+    if (!current_user?(@user) and !current_user.admin) or (!current_user?(@user) and !current_user.master and @user.admin)
       if current_user.admin
-        flash[:danger] = "There has a been a problem loading the page, we're sorry for the inconvenience"
-        redirect_to users_path
+        flash[:danger] = "You do not have permission to perform this action. Please contact your administrator."
       else
-        flash[:danger] = "There has a been a problem loading the page, please contact your administrator"
-        redirect_to user_invoices_path(current_user)
+        flash[:danger] = "You do not have permission to perform this action. Please contact your manager."
       end
+      redirect
     end
   end
 
   def ensure_admin
     unless current_user.admin
-      flash[:danger] = "There has a been a problem loading the page, please contact your administrator"
+      flash[:danger] = "You do not have permission to perform this action. Please contact your manager."
       redirect_to user_invoices_path(current_user)
     end
   end
+
+  def ensure_master
+    unless current_user.master
+      flash[:danger] = "You do not have permission to perform this action. Please contact your administrator."
+      redirect
+    end
+  end
+
+  def redirect
+    if current_user.admin
+      redirect_to users_path
+    else
+      redirect_to user_invoices_path(current_user)
+    end
+  end
+
 end

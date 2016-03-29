@@ -1,12 +1,19 @@
 class PaymentsController < ApplicationController
-  #before_action :ensure_user_logged_in, only: [:edit, :update, :destroy]
-  #before_action :ensure_correct_user, only: [:edit, :update]
-  #before_action :ensure_admin, only: [:destroy]
+  before_action :ensure_user_logged_in
+  before_action :ensure_correct_user
 
   def index
     @invoice = Invoice.find(params[:invoice_id])
     @payments = @invoice.payments.all.order(:date)
     @user = @invoice.user
+  end
+
+  def show
+    if current_user.admin
+      redirect_to users_path
+    else
+      redirect_to user_invoices_path(current_user)
+    end
   end
 
   def new
@@ -33,15 +40,6 @@ class PaymentsController < ApplicationController
     else
       render 'new'
     end
-  end
-
-  def show
-    @invoice = Invoice.find(params[:invoice_id])
-    @payment = @invoice.payments.build(payment_params)
-    @user = @invoice.user
-  rescue
-    flash[:danger] = "Unable to find user"
-    redirect_to users_path
   end
 
   def update
@@ -72,35 +70,31 @@ class PaymentsController < ApplicationController
   end
 
   def ensure_user_logged_in
-    unless current_user #If no user is logged in
-      flash[:warning] = "Not logged in"
+    unless current_user
       redirect_to login_path
     end
   end
 
   def ensure_correct_user
-    @invoice = Invoice.find(params[:invoice_id])
-    @user = @invoice.user
-    unless current_user?(@user) #If the user does not match the one logged in
-      flash[:danger] = "Cannot edit other user's profiles"
-      redirect_to root_path
+    if params[:invoice_id]
+      @invoice = Invoice.find(params[:invoice_id])
+      @user = @invoice.user
+    else
+      @payment = Payment.find(params[:id])
+      @invoice = @payment.invoice
+      @user = @invoice.user
     end
-  rescue #If the user cannot be found
-    flash[:danger] = "Unable to find user"
-    redirect_to users_path
+    unless current_user.admin or current_user?(@user)
+      flash[:danger] = "You do not have permission to view this page. Please contact your manager."
+      redirect
+    end
   end
 
-  def ensure_admin
-    @invoice = Invoice.find(params[:invoice_id])
-    @user = @invoice.user
-    if (current_user.id == @user.id) #If admin tries to delete himself
-      flash[:danger] = 'Cannot delete yourself'
-      redirect_to root_path
+  def redirect
+    if current_user.admin
+      redirect_to users_path
     else
-      unless current_user.admin? #If the user is not admin
-        flash[:danger] = 'Only admins allowed to delete user'
-        redirect_to root_path
-      end
+      redirect_to user_invoices_path(current_user)
     end
   end
 end
