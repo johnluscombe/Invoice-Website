@@ -5,9 +5,11 @@ class InvoicesController < ApplicationController
   def index
     if params.has_key?(:all)
       ensure_master
+      @all = true
       @invoices = Invoice.all
     elsif params.has_key?(:pending_only)
       ensure_admin
+      @pending_only = true
       @invoices = Invoice.where(:status => "Pending")
     else
       ensure_correct_user
