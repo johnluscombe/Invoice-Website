@@ -5,5 +5,5 @@ class Invoice < ActiveRecord::Base
   validates :user, presence: true
   validates :status, presence: true
   validates :hours, :net_pay, :rate, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :check_no, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :check_no, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
 end
