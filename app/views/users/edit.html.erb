@@ -5,5 +5,10 @@
 <%= form_for @user do |form| %>
     <%= render partial: 'fields', locals: { f: form } %>
     <%= form.submit 'Update user profile', :class => "btn btn-success" %>
-    <%= link_to "Cancel", users_path, class: "btn btn-danger" %><br><br>
+    <% if current_user.admin %>
+        <%= link_to "Cancel", users_path, class: "btn btn-danger" %>
+    <% else %>
+        <%= link_to "Cancel", user_invoices_path(current_user), class: "btn btn-danger" %>
+    <% end %>
+    <br><br>
 <% end %>

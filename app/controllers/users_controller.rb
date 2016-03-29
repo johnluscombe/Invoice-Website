@@ -47,7 +47,7 @@ class UsersController < ApplicationController
       flash[:danger] = "Cannot edit other user's profiles"
       redirect_to users_path
     elsif current_user.first_time
-      flash[:info] = "Please update your profile information"
+      flash.now[:info] = "Please update your profile information"
     end
   rescue
     flash[:danger] = "Unable to find user"
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
       end
       @user.save
     else
-      flash[:danger] = "Unable to update profile"
+      flash.now[:danger] = "Unable to update profile"
       render 'edit'
     end
   end

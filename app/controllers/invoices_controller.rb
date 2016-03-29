@@ -1,6 +1,6 @@
 class InvoicesController < ApplicationController
   before_action :ensure_user_logged_in
-  before_action :ensure_correct_user
+  before_action :ensure_correct_user, except: :index
 
   def index
     if params.has_key?(:all)
@@ -10,6 +10,7 @@ class InvoicesController < ApplicationController
       ensure_admin
       @invoices = Invoice.where(:status => "Pending")
     else
+      ensure_correct_user
       @user = User.find(params[:user_id])
       if @user.admin
         flash[:warning] = "User does not get paid hourly"
@@ -129,6 +130,20 @@ class InvoicesController < ApplicationController
     end
   rescue
     redirect
+  end
+
+  def ensure_admin
+    unless current_user.admin
+      flash[:danger] = "You do not have permission to perform this action. Please contact your manager."
+      redirect_to user_invoices_path(current_user)
+    end
+  end
+
+  def ensure_master
+    unless current_user.master
+      flash[:danger] = "You do not have permission to perform this action. Please contact your administrator."
+      redirect
+    end
   end
 
   def redirect
