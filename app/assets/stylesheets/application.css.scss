@@ -110,6 +110,12 @@ button > a {
   text-decoration: none !important;
 }
 
+@media (min-width: 1400px) {
+  .container {
+    width: 1365px;
+  }
+}
+
 @media (min-width: 1600px) {
   .container {
     width: 1560px;

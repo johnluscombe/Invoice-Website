@@ -107,6 +107,9 @@ class UsersController < ApplicationController
       end
       redirect
     end
+  rescue
+    flash[:danger] = "Unable to find user"
+    redirect
   end
 
   def ensure_admin

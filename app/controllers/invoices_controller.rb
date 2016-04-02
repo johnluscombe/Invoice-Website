@@ -14,7 +14,7 @@ class InvoicesController < ApplicationController
     else
       ensure_correct_user
       @user = User.find(params[:user_id])
-      if @user.admin
+      if @user.admin and current_user.admin
         flash[:warning] = "User does not get paid hourly"
         redirect_to users_path
       end

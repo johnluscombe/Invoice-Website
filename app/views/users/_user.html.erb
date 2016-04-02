@@ -7,14 +7,15 @@
       <td class="middle-align"><%= user.name %></td>
   <% end %>
   <td class="middle-align"><%= user.email %></td>
-  <% if user.rate == nil %>
-      <% if user.admin %>
-          <td class="middle-align right-align">N/A</td>
-      <% else %>
-          <td class="middle-align right-align">-</td>
-      <% end %>
+
+  <% if user.admin %>
+      <td class="middle-align right-align">N/A</td>
   <% else %>
-      <td class="middle-align right-align">$ <%= sprintf("%.2f", user.rate) %></td>
+      <% if user.rate == nil %>
+          <td class="middle-align right-align">-</td>
+      <% else %>
+          <td class="middle-align right-align">$ <%= sprintf("%.2f", user.rate) %></td>
+      <% end %>
   <% end %>
 
   <% if user.invoices.where(:status => ["Started", "In Progress", "Pending"]).count > 0 and !user.admin %>
@@ -104,11 +105,11 @@
   <% if current_user.master %>
     <% if user.master %>
         <td class="center">
-          <%= button_to "Delete User", user_path(user), class: "btn btn-danger disabled", method: :delete %>
+          <%= link_to "Delete User", user_path(user), class: "btn btn-danger disabled", method: :delete %>
         </td>
     <% else %>
         <td class="center">
-          <%= button_to "Delete User", user_path(user), class: "btn btn-danger", method: :delete %>
+          <%= link_to "Delete User", user_path(user), class: "btn btn-danger", method: :delete %>
         </td>
     <% end %>
   <% end %>
