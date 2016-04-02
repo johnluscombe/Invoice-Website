@@ -21,4 +21,18 @@ FactoryGirl.define do
 
     first_time false
   end
+
+  factory :invoice do
+    user
+    start_date '2016-12-30'
+    end_date '2016-12-31'
+    status 'Started'
+  end
+
+  factory :payment do
+    invoice
+    date '2016-12-30'
+    description 'Testing'
+    hours 3
+  end
 end
