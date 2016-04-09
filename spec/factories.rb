@@ -25,7 +25,6 @@ FactoryGirl.define do
   factory :invoice do
     user
     start_date '2016-12-30'
-    end_date '2016-12-31'
     status 'Started'
   end
 

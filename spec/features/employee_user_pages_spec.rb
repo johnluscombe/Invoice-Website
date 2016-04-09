@@ -1,7 +1,7 @@
 require_relative '../rails_helper'
 require_relative '../support/login'
 
-describe 'User Pages' do
+describe 'Employee User Pages' do
   subject { page }
 
   describe 'employee' do
@@ -52,10 +52,12 @@ describe 'User Pages' do
           visit edit_user_path(employee)
         end
 
-        it { should have_field('user_fullname', with: employee.fullname) }
-        it { should have_field('user_name', with: employee.name) }
-        it { should have_field('user_email', with: employee.email) }
-        it { should have_field('user_password') }
+        it 'has the correct fields' do
+          should have_field('user_fullname', with: employee.fullname)
+          should have_field('user_name', with: employee.name)
+          should have_field('user_email', with: employee.email)
+          should have_field('user_password')
+        end
 
         describe 'with invalid information' do
           before do

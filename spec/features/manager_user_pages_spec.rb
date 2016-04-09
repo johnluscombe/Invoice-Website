@@ -1,7 +1,7 @@
 require_relative '../rails_helper'
 require_relative '../support/login'
 
-describe 'User Pages' do
+describe 'Manager User Pages' do
   subject { page }
 
   describe 'manager' do
@@ -21,6 +21,10 @@ describe 'User Pages' do
     describe 'list users' do
       it 'should show only employees' do
         User.all.each do |user|
+          should have_link('View Invoices')
+          should have_link('Edit User')
+          should_not have_link('Delete User')
+
           if user.master or user.admin
             should_not have_selector('tr', text: user.email)
           else
@@ -53,10 +57,12 @@ describe 'User Pages' do
           visit edit_user_path(manager)
         end
 
-        it { should have_field('user_fullname', with: manager.fullname) }
-        it { should have_field('user_name', with: manager.name) }
-        it { should have_field('user_email', with: manager.email) }
-        it { should have_field('user_password') }
+        it 'has the correct fields' do
+          should have_field('user_fullname', with: manager.fullname)
+          should have_field('user_name', with: manager.name)
+          should have_field('user_email', with: manager.email)
+          should have_field('user_password')
+        end
 
         describe 'with invalid information' do
           before do
@@ -117,10 +123,12 @@ describe 'User Pages' do
           visit edit_user_path(employee)
         end
 
-        it { should have_field('user_fullname', with: employee.fullname) }
-        it { should have_field('user_name', with: employee.name) }
-        it { should have_field('user_email', with: employee.email) }
-        it { should have_field('user_rate') }
+        it 'has the correct fields' do
+          should have_field('user_fullname', with: employee.fullname)
+          should have_field('user_name', with: employee.name)
+          should have_field('user_email', with: employee.email)
+          should have_field('user_rate')
+        end
 
         describe 'with invalid information' do
           before do

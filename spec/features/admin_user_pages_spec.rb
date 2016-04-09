@@ -1,7 +1,7 @@
 require_relative '../rails_helper'
 require_relative '../support/login'
 
-describe 'User Pages' do
+describe 'Admin User Pages' do
   subject { page }
 
   describe 'admin' do
@@ -14,7 +14,7 @@ describe 'User Pages' do
       login admin
     end
 
-    it 'should have 25 users' do
+    it 'should have 31 users' do
       expect(User.count).to eq(31)
     end
 
@@ -24,6 +24,9 @@ describe 'User Pages' do
           should have_selector('tr', text: user.id)
           should have_selector('tr', text: user.name)
           should have_selector('tr', text: user.email)
+          should have_link('View Invoices')
+          should have_link('Edit User')
+          should have_link('Delete User')
 
           if user.master
             should have_selector('tr', text: 'N/A N/A Yes Yes No')
@@ -138,6 +141,7 @@ describe 'User Pages' do
 
     describe 'editing users' do
       let(:submit) { 'Update user profile' }
+      let(:cancel) { 'Cancel' }
 
       describe 'own profile' do
         let!(:original_name) { admin.name }
@@ -146,10 +150,12 @@ describe 'User Pages' do
           visit edit_user_path(admin)
         end
 
-        it { should have_field('user_fullname', with: admin.fullname) }
-        it { should have_field('user_name', with: admin.name) }
-        it { should have_field('user_email', with: admin.email) }
-        it { should have_field('user_password') }
+        it 'has the correct fields' do
+          should have_field('user_fullname', with: admin.fullname)
+          should have_field('user_name', with: admin.name)
+          should have_field('user_email', with: admin.email)
+          should have_field('user_password')
+        end
 
         describe 'with invalid information' do
           before do
@@ -200,6 +206,17 @@ describe 'User Pages' do
             expect { click_button submit }.not_to change(User, :count)
           end
         end
+
+        describe 'clicking cancel' do
+          it 'does not add the user to the system' do
+            expect { click_link cancel }.not_to change(User, :count)
+          end
+
+          it 'redirects to users page' do
+            click_link cancel
+            should have_content 'Employees'
+          end
+        end
       end
 
       describe 'employee profile' do
@@ -210,13 +227,15 @@ describe 'User Pages' do
           visit edit_user_path(employee)
         end
 
-        it { should have_field('user_fullname', with: employee.fullname) }
-        it { should have_field('user_name', with: employee.name) }
-        it { should have_field('user_email', with: employee.email) }
-        it { should have_field('user_admin') }
-        it { should have_field('user_master') }
-        it { should have_field('user_first_time') }
-        it { should have_field('user_rate') }
+        it 'has the correct fields' do
+          should have_field('user_fullname', with: employee.fullname)
+          should have_field('user_name', with: employee.name)
+          should have_field('user_email', with: employee.email)
+          should have_field('user_admin')
+          should have_field('user_master')
+          should have_field('user_first_time')
+          should have_field('user_rate')
+        end
 
         describe 'with invalid information' do
           before do
@@ -315,12 +334,14 @@ describe 'User Pages' do
           visit edit_user_path(manager)
         end
 
-        it { should have_field('user_fullname', with: manager.fullname) }
-        it { should have_field('user_name', with: manager.name) }
-        it { should have_field('user_email', with: manager.email) }
-        it { should have_field('user_admin') }
-        it { should have_field('user_master') }
-        it { should have_field('user_first_time') }
+        it 'has the correct fields' do
+          should have_field('user_fullname', with: manager.fullname)
+          should have_field('user_name', with: manager.name)
+          should have_field('user_email', with: manager.email)
+          should have_field('user_admin')
+          should have_field('user_master')
+          should have_field('user_first_time')
+        end
 
         describe 'with valid information' do
           before do
@@ -381,12 +402,14 @@ describe 'User Pages' do
           visit edit_user_path(new_admin)
         end
 
-        it { should have_field('user_fullname', with: new_admin.fullname) }
-        it { should have_field('user_name', with: new_admin.name) }
-        it { should have_field('user_email', with: new_admin.email) }
-        it { should have_field('user_admin') }
-        it { should have_field('user_master') }
-        it { should have_field('user_first_time') }
+        it 'has the correct fields' do
+          should have_field('user_fullname', with: new_admin.fullname)
+          should have_field('user_name', with: new_admin.name)
+          should have_field('user_email', with: new_admin.email)
+          should have_field('user_admin')
+          should have_field('user_master')
+          should have_field('user_first_time')
+        end
 
         describe 'with valid information' do
           before do

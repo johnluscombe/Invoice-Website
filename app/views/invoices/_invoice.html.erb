@@ -29,7 +29,11 @@
   <% end %>
 
   <% if current_user.master %>
-      <td class="middle-align right-align"><%= sprintf('%.2f', invoice.user.rate) %></td>
+      <% if invoice.rate == nil %>
+          <td class="middle-align right-align"><%= sprintf('%.2f', invoice.user.rate) %></td>
+      <% else %>
+          <td class="override middle-align right-align"><%= sprintf('%.2f', invoice.rate) %></td>
+      <% end %>
   <% end %>
 
   <% if invoice.net_pay == nil %>
