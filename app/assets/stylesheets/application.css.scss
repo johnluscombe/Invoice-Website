@@ -16,62 +16,59 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-ul {
-  padding-right: 25px;
-}
-
-.center {
-  text-align: center;
-}
-
-.left-align {
-  text-align: left;
-}
-
-.right-align {
-  text-align: right;
-  padding-right: 5px;
-}
-
-.middle-align {
-  vertical-align: middle !important;
-}
-
-.bottom-align {
-  vertical-align: bottom !important;
-}
-
-.padding-top {
-  padding-top: 5px;
-}
-
-.no-border {
-  border: none;
-}
-
-.top-bottom-border {
-  border-left: none;
-  border-right: none;
-}
-
-.space-above {
-  margin-top: 10px;
-}
-
-.emphasized {
-  font-size: 1.5em;
+a.navbar-brand {
+  padding: 0;
 }
 
 .approve {
   color: green;
 }
 
-.decline {
-  color: red;
+.bottom-align {
+  vertical-align: bottom !important;
 }
 
-.override {
-  background-color: #FFA;
+button > a {
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.center {
+  text-align: center;
+}
+
+.description {
+  padding-left: 5px;
+}
+
+div.field_with_errors {
+  display: inline;
+}
+
+.emphasized {
+  font-size: 1.5em;
+}
+
+.empty_row {
+  height: 20px;
+}
+
+img.brand {
+  height: 100%;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.left-align {
+  text-align: left;
+}
+
+li > a {
+  color: white !important;
+}
+
+.middle-align {
+  margin-top: 5px;
 }
 
 nav {
@@ -83,31 +80,38 @@ nav {
   padding: 0;
 }
 
-li > a {
-  color: white !important;
+.new-user {
+  width: 200px;
 }
 
-img.brand {
-  height: 100%;
-  margin-left: 15px;
-  margin-right: 15px;
+.override {
+  background-color: #FFA;
 }
 
-a.navbar-brand {
-  padding: 0;
+.padding-top {
+  padding-top: 5px;
+}
+
+.right-align {
+  text-align: right;
+  padding-right: 5px;
+}
+
+.space-above {
+  margin-top: 10px;
+}
+
+.top-bottom-border {
+  border-left: none;
+  border-right: none;
+}
+
+ul {
+  padding-right: 25px;
 }
 
 td.login {
   height: 30px;
-}
-
-div.field_with_errors {
-  display: inline;
-}
-
-button > a {
-  color: white !important;
-  text-decoration: none !important;
 }
 
 @media (min-width: 1400px) {
@@ -126,10 +130,6 @@ button > a {
   .container {
     width: 1755px;
   }
-}
-
-.empty_row {
-  height: 20px;
 }
 
 * {
