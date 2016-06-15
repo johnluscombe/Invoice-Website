@@ -1,3 +1,7 @@
 // Place all the styles related to the logins controller here.
 // They will automatically be included in application.css.scss.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.username, .password {
+  display: inline !important;
+  width: 200px !important;
+}

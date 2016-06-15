@@ -1,13 +1,7 @@
-<h1>Sign In</h1>
+<h1 class="text-center">Log In</h1><br><br>
 
-<%= form_tag logins_path do %>
-    <table class="login">
-      <tr>
-        <td class="login"><%= text_field_tag :username, params[:username], class: 'form-control', placeholder: 'Username' %></td>
-      </tr>
-      <tr>
-        <td class="login"><%= password_field_tag :password, params[:password], class: 'form-control', placeholder: 'Password' %></td>
-        <td class="login"><%= submit_tag 'Log In', class: 'btn btn-default' %></td>
-      </tr>
-    </table>
+<%= form_tag logins_path, class: 'text-center' do %>
+    <p><%= text_field_tag :username, params[:username], class: 'form-control username', placeholder: 'Username' %></p>
+    <p><%= password_field_tag :password, params[:password], class: 'form-control password', placeholder: 'Password' %></p>
+    <%= submit_tag 'Log In', class: 'btn btn-default' %>
 <% end %>
