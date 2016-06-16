@@ -33,6 +33,36 @@ button > a {
   text-decoration: none !important;
 }
 
+.btn-danger.btn-outline {
+  background-color: #fff;
+  border-color: #d9534f;
+  color: #d9534f;
+}
+
+.btn-primary.btn-outline {
+  background-color: #fff;
+  border-color: #0275d8;
+  color: #0275d8;
+}
+
+.btn-success.btn-outline {
+  background-color: #fff;
+  border-color: #5cb85c;
+  color: #5cb85c;
+}
+
+.btn-danger {
+  border-color: #d9534f;
+}
+
+.btn-primary {
+  border-color: #0275d8;
+}
+
+.btn-success {
+  border-color: #5cb85c;
+}
+
 .center {
   text-align: center;
 }

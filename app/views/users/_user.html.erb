@@ -77,27 +77,23 @@
   <% end %>
 
   <% if user.admin %>
-      <td class="center">
-        <%= link_to "View Invoices", user_invoices_path(user), class: "btn btn-primary disabled " %>
-      </td>
+      <td class="center"></td>
   <% else %>
     <td class="center">
-      <%= link_to "View Invoices", user_invoices_path(user), class: "btn btn-primary" %>
+      <%= link_to "VIEW INVOICES", user_invoices_path(user), class: "btn btn-primary btn-outline btn-xs" %>
     </td>
   <% end %>
 
   <td class="center">
-    <%= link_to "Edit User", edit_user_path(user), class: "btn btn-primary" %>
+    <%= link_to "EDIT USER", edit_user_path(user), class: "btn btn-primary btn-outline btn-xs" %>
   </td>
 
   <% if current_user.master %>
     <% if user.master %>
-        <td class="center">
-          <%= link_to "Delete User", user_path(user), class: "btn btn-danger disabled", method: :delete %>
-        </td>
+        <td class="center"></td>
     <% else %>
         <td class="center">
-          <%= link_to "Delete User", user_path(user), class: "btn btn-danger", method: :delete %>
+          <%= link_to "DELETE USER", user_path(user), class: "btn btn-danger btn-outline btn-xs", method: :delete %>
         </td>
     <% end %>
   <% end %>

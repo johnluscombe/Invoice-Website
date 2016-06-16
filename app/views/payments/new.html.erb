@@ -5,7 +5,7 @@
 <%= form_for [@invoice, @payment] do |form| %>
     <%= render partial: 'fields', locals: { f: form } %>
 
-    <%= form.submit 'Create new payment', :class => "btn btn-success" %>
+    <%= form.submit 'CREATE NEW PAYMENT', :class => "btn btn-success" %>
 
-    <%= link_to "Cancel", invoice_payments_path(@invoice), class: "btn btn-danger" %>
+    <%= link_to "CANCEL", invoice_payments_path(@invoice), class: "btn btn-danger btn-outline" %>
 <% end %>

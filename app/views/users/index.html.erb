@@ -48,14 +48,14 @@
   </table>
     <% if current_user.master %>
       <td>
-        <%= link_to "New User", new_user_path, class: "btn btn-success" %>
+        <%= link_to "NEW USER", new_user_path, class: "btn btn-success" %>
       </td>
     <% end %>
 <% else %>
     <% if current_user.master %>
       <p>There are no employees yet.</p>
       <td>
-        <%= link_to "New User", new_user_path, class: "btn btn-success" %>
+        <%= link_to "NEW USER", new_user_path, class: "btn btn-success" %>
       </td>
     <% else %>
       <p>You do not have any employees yet.</p>
