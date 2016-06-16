@@ -25,10 +25,6 @@
       <col width="200"> <!-- Description -->
       <col width="100"> <!-- Hours -->
       <col width="100"> <!-- Daily Rate -->
-      <% if current_user.master %>
-          <col width="200"> <!-- Created At for Masters -->
-          <col width="200"> <!-- Updated At for Masters -->
-      <% end %>
       <col width="50"> <!-- Edit Button -->
       <col width="50"> <!-- Delete Button -->
       <tr>
@@ -39,10 +35,6 @@
         <th>Description</th>
         <th>Hours</th>
         <th>Daily Rate</th>
-        <% if current_user.master %>
-            <th>Created At</th>
-            <th>Updated At</th>
-        <% end %>
         <th></th>
         <th></th>
       </tr>
@@ -58,10 +50,6 @@
             <td class="middle-align"><strong><%= sprintf('%.2f', @invoice.payments.sum(:hours)) %></strong></td>
         <% else %>
             <td class="override middle-align"><strong><%= sprintf('%.2f', @invoice.hours) %></strong></td>
-        <% end %>
-
-        <% if current_user.master %>
-            <td colspan="2"></td>
         <% end %>
 
         <% if @invoice.net_pay == nil %>

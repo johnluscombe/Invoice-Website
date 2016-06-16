@@ -31,10 +31,6 @@
       <% if current_user.admin %>
           <col width="75"> <!-- Check No. for Admins and Masters -->
       <% end %>
-      <% if current_user.master %>
-          <col width="125"> <!-- Created At for Masters -->
-          <col width="125"> <!-- Updated At for Masters -->
-      <% end %>
       <col width="50"> <!-- Button 1 -->
       <col width="50"> <!-- Button 2 -->
       <col width="50"> <!-- Button 3 -->
@@ -58,10 +54,6 @@
         <th class="center bottom-align">Status</th>
         <% if current_user.admin %>
             <th class="center bottom-align">Check No.</th>
-        <% end %>
-        <% if current_user.master %>
-            <th class="bottom-align">Created At</th>
-            <th class="bottom-align">Updated At</th>
         <% end %>
         <th></th>
         <th></th>
