@@ -1,66 +1,79 @@
-<table>
+<table class="fields">
   <col width="150">
   <col width="200">
   <tr>
-    <td class="right-align"><%= f.label "Full Name", class: 'middle-align' %></td>
+    <td class="text-right"><%= f.label "Full Name", class: 'middle-align' %></td>
     <td><%= f.text_field :fullname, class: 'form-control' %></td>
     <td class="description"><i class="glyphicon glyphicon-info-sign"></i> First and last name</td>
   </tr>
 
   <tr>
-    <td class="right-align"><%= f.label "Username", class: 'middle-align' %></td>
+    <td class="text-right"><%= f.label "Username", class: 'middle-align' %></td>
     <td><%= f.text_field :name, class: 'form-control' %></td>
     <td class="description"><i class="glyphicon glyphicon-info-sign"></i> Username you will use to log in</td>
   </tr>
 
   <tr>
-    <td class="right-align"><%= f.label :email, class: 'middle-align' %></td>
+    <td class="text-right"><%= f.label :email, class: 'middle-align' %></td>
     <td><%= f.text_field :email, class: 'form-control' %></td>
-    <td class="description"><i class="glyphicon glyphicon-info-sign"></i> Optional. Email to receive invoice statements.</td>
+    <td class="description"><i class="glyphicon glyphicon-info-sign"></i> Optional. Email to receive invoice statements.
+    </td>
   </tr>
+</table><br>
 
-  <% if current_user.master and !current_user?(@user) %>
-      <tr class="empty_row"></tr>
+<% if current_user.master and !current_user?(@user) %>
+    <table>
+      <col width="150">
+      <col width="200">
       <tr>
-        <td class="right-align"><%= f.label "Manager?" %></td>
+        <td class="text-right"><%= f.label "Manager?" %></td>
         <td>
           <%= f.check_box :admin %>
         </td>
       </tr>
       <tr>
-        <td class="right-align"><%= f.label "Admin?" %></td>
+        <td class="text-right"><%= f.label "Admin?" %></td>
         <td>
           <%= f.check_box :master %>
         </td>
       </tr>
       <tr>
-        <td class="right-align"><%= f.label "Reset Profile?" %></td>
+        <td class="text-right"><%= f.label "Reset Profile?" %></td>
         <td>
           <%= f.check_box :first_time %>
         </td>
       </tr>
-      <tr class="empty_row"></tr>
-  <% end %>
+    </table><br>
+<% end %>
 
-  <% if !current_user?(@user) and current_user.admin and !@user.admin and !@user.master %>
+<% if !current_user?(@user) and current_user.admin and !@user.admin and !@user.master %>
+    <table>
+      <col width="150">
+      <col width="200">
       <tr>
-        <td class="right-align"><%= f.label :rate, class: 'middle-align' %></td>
+        <td class="text-right"><%= f.label :rate, class: 'middle-align' %></td>
         <td><%= f.text_field :rate, class: 'form-control' %></td>
         <td class="description"><i class="glyphicon glyphicon-info-sign"></i> Hourly rate to pay employee.</td>
       </tr>
-  <% end %>
+    </table>
+<% end %>
 
-  <% if current_user?(@user) %>
+<% if current_user?(@user) %>
+    <table class="fields">
+      <col width="150">
+      <col width="200">
       <tr>
-        <td class="right-align"><%= f.label :password, class: 'middle-align' %></td>
+        <td class="text-right"><%= f.label :password, class: 'middle-align' %></td>
         <td><%= f.password_field :password, class: 'form-control new-user' %></td>
         <td class="description"><i class="glyphicon glyphicon-info-sign"></i> Password you will use to log in.</td>
       </tr>
       <tr>
-        <td class="right-align"><%= f.label "Confirmation", class: 'middle-align' %></td>
+        <td class="text-right"><%= f.label "Confirmation", class: 'middle-align' %></td>
         <td><%= f.password_field :password_confirmation, class: 'form-control new-user' %></td>
-        <td class="description"><i class="glyphicon glyphicon-info-sign"></i> Verify that the password you entered is correct.</td>
+        <td class="description"><i class="glyphicon glyphicon-info-sign"></i> Verify that the password you entered is
+          correct.
+        </td>
       </tr>
-  <% end %>
-
-</table><br>
+    </table>
+<% end %>
+<br>

@@ -1,34 +1,34 @@
-<table>
+<table class="fields">
   <col width="100">
   <col width="300">
   <tr>
-    <td class="right-align padding-top"><%= f.label :date %></td>
+    <td class="text-right"><%= f.label :date %></td>
     <td><%= f.date_field :date, class: 'form-control' %></td>
   </tr>
   <tr>
-    <td class="right-align middle-align"><%= f.label :description %></td>
+    <td class="text-right"><%= f.label :description %></td>
     <td><%= f.text_area :description, :cols => 50, :rows => 3, class: 'form-control' %></td>
   </tr>
   <tr>
-    <td class="right-align padding-top"><%= f.label :hours %></td>
+    <td class="text-right"><%= f.label :hours %></td>
     <td><%= f.text_field :hours, class: 'form-control' %></td>
   </tr>
 </table><br>
 <table>
   <col width="100">
-  <col width="200">
+  <col width="300">
   <% if current_user.admin %>
       <tr>
-        <td colspan="2" class="top-bottom-border center"><strong>Overrides</strong></td>
+        <td colspan="2" class="text-center"><strong>Overrides</strong></td>
       </tr>
   <% end %>
 </table>
-<table class="space-above">
+<table class="fields">
   <col width="100">
   <col width="300">
   <% if current_user.admin %>
       <tr>
-        <td class="right-align padding-top"><%= f.label :daily_rate %></td>
+        <td class="text-right"><%= f.label :daily_rate %></td>
         <td><%= f.text_field :daily_rate, class: 'form-control' %></td>
       </tr>
   <% end %>

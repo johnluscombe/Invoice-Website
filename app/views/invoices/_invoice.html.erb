@@ -7,15 +7,15 @@
   <% end %>
 
   <% if invoice.start_date != nil and invoice.end_date != nil %>
-      <td class="center">
+      <td class="text-center">
         <%= invoice.start_date.strftime("%m/%d/%y") %> - <%= invoice.end_date.strftime("%m/%d/%y") %>
       </td>
   <% elsif invoice.start_date == nil and invoice.end_date != nil %>
-      <td class="center">
+      <td class="text-center">
         Ended <%= invoice.end_date.strftime("%m/%d/%y") %>
       </td>
   <% elsif invoice.start_date != nil and invoice.end_date == nil %>
-      <td class="center">
+      <td class="text-center">
         Started <%= invoice.start_date.strftime("%m/%d/%y") %>
       </td>
   <% else %>
@@ -23,16 +23,16 @@
   <% end %>
 
   <% if invoice.hours == nil %>
-      <td class="right-align"><%= sprintf('%.2f', invoice.payments.sum(:hours)) %></td>
+      <td class="text-right"><%= sprintf('%.2f', invoice.payments.sum(:hours)) %></td>
   <% else %>
-      <td class="override right-align"><%= sprintf('%.2f', invoice.hours) %></td>
+      <td class="override text-right"><%= sprintf('%.2f', invoice.hours) %></td>
   <% end %>
 
   <% if current_user.master %>
       <% if invoice.rate == nil %>
-          <td class="right-align"><%= sprintf('%.2f', invoice.user.rate) %></td>
+          <td class="text-right"><%= sprintf('%.2f', invoice.user.rate) %></td>
       <% else %>
-          <td class="override right-align"><%= sprintf('%.2f', invoice.rate) %></td>
+          <td class="override text-right"><%= sprintf('%.2f', invoice.rate) %></td>
       <% end %>
   <% end %>
 
@@ -40,41 +40,41 @@
       <% if invoice.rate == nil %>
           <% if invoice.hours == nil %>
             <!-- No overrides -->
-            <td class="right-align">$
+            <td class="text-right">$
               <%= sprintf('%.2f', invoice.payments.where(:daily_rate => nil).sum(:hours) * invoice.user.rate + invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) %>
             </td>
           <% else %>
             <!-- Hours override -->
-            <td class="right-align">$
+            <td class="text-right">$
               <%= sprintf('%.2f', invoice.hours * invoice.user.rate + invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) %>
             </td>
           <% end %>
       <% else %>
           <% if invoice.hours == nil %>
             <!-- Rate override -->
-            <td class="right-align">$
+            <td class="text-right">$
               <%= sprintf('%.2f', invoice.payments.where(:daily_rate => nil).sum(:hours) * invoice.rate + invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) %>
             </td>
           <% else %>
             <!-- Rate and hours override -->
-            <td class="right-align">$
+            <td class="text-right">$
               <%= sprintf('%.2f', invoice.hours * invoice.rate + invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) %>
             </td>
           <% end %>
       <% end %>
   <% else %>
       <!-- Net pay override -->
-      <td class="override right-align">$ <%= sprintf('%.2f', invoice.net_pay) %></td>
+      <td class="override text-right">$ <%= sprintf('%.2f', invoice.net_pay) %></td>
   <% end %>
 
   <% if invoice.status == "Paid" %>
-      <td class="approve center"><strong><%= invoice.status %></strong></td>
+      <td class="approve text-center"><strong><%= invoice.status %></strong></td>
   <% else %>
-      <td class="center"><%= invoice.status %></td>
+      <td class="text-center"><%= invoice.status %></td>
   <% end %>
 
   <% if current_user.admin %>
-      <td class="right-align"><%= invoice.check_no %></td>
+      <td class="text-right"><%= invoice.check_no %></td>
   <% end %>
 
   <% if current_user.admin == false %>

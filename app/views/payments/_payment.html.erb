@@ -1,33 +1,33 @@
 <tr>
   <% if current_user.master %>
-      <td class="middle-align"><%= payment.id %></td>
+      <td><%= payment.id %></td>
   <% end %>
 
   <% if payment.date != nil %>
-      <td class="middle-align"><%= payment.date.strftime("%m-%d-%Y") %></td>
+      <td><%= payment.date.strftime("%m-%d-%Y") %></td>
   <% else %>
       <td></td>
   <% end %>
 
-  <td class="middle-align"><%= payment.description %></td>
+  <td><%= payment.description %></td>
 
   <% if payment.hours != nil %>
-    <td class="middle-align"><%= sprintf("%.2f", payment.hours) %></td>
+    <td><%= sprintf("%.2f", payment.hours) %></td>
 
     <% if payment.daily_rate == nil %>
-      <td class="middle-align">$ <%= sprintf("%.2f", payment.hours * payment.invoice.user.rate) %></td>
+      <td>$ <%= sprintf("%.2f", payment.hours * payment.invoice.user.rate) %></td>
     <% else %>
-      <td class="override middle-align">$ <%= sprintf("%.2f", payment.daily_rate) %></td>
+      <td class="override">$ <%= sprintf("%.2f", payment.daily_rate) %></td>
     <% end %>
   <% else %>
-      <td class="middle-align">0.00</td>
-      <td class="middle-align">$ 0.00</td>
+      <td>0.00</td>
+      <td>$ 0.00</td>
   <% end %>
 
-  <td class="center">
+  <td class="text-center">
     <%= link_to "EDIT", edit_payment_path(payment), class: "btn btn-primary btn-outline btn-xs" %>
   </td>
-  <td class="center">
+  <td class="text-center">
     <%= link_to "DELETE", payment_path(payment), class: "btn btn-danger btn-outline btn-xs", method: :delete %>
   </td>
 </tr>
