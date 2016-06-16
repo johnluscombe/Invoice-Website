@@ -3,24 +3,24 @@
 <% if (User.where(:admin => false).count > 0 and !current_user.master) || (User.count > 0 and current_user.master) %>
   <table class="table table-striped">
     <% if current_user.master %>
-      <col width="50"> <!-- ID for Masters -->
+      <col width="5%"> <!-- ID for Masters -->
     <% end %>
-    <col width="200"> <!-- Employee Name -->
+    <col width="20%"> <!-- Employee Name -->
     <% if current_user.master %>
-        <col width="200"> <!-- Username for Masters -->
+        <col width="20%"> <!-- Username for Masters -->
     <% end %>
-    <col width="200"> <!-- Email -->
-    <col width="100"> <!-- Hourly Rate -->
-    <col width="100"> <!-- Current Invoice -->
+    <col width="20%"> <!-- Email -->
+    <col width="10%"> <!-- Hourly Rate -->
+    <col width="10%"> <!-- Current Invoice -->
     <% if current_user.master %>
-        <col width="50"> <!-- Manager? for Masters -->
-        <col width="50"> <!-- Admin? for Masters -->
-        <col width="50"> <!-- Reset Profile? for Masters -->
+        <col width="5%"> <!-- Manager? for Masters -->
+        <col width="5%"> <!-- Admin? for Masters -->
+        <col width="5%"> <!-- Reset Profile? for Masters -->
     <% end %>
-    <col width="50"> <!-- View Invoices Button -->
-    <col width="50"> <!-- Edit User Button -->
+    <col width="5%"> <!-- View Invoices Button -->
+    <col width="5%"> <!-- Edit User Button -->
     <% if current_user.master %>
-      <col width="50"> <!-- Delete User Button -->
+      <col width="5%"> <!-- Delete User Button -->
     <% end %>
     <tr>
       <% if current_user.master %>

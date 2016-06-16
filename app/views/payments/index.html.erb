@@ -19,14 +19,14 @@
 <% if @invoice.payments.count > 0 %>
     <table class="table table-striped">
       <% if current_user.master %>
-          <col width="50"> <!-- ID for Masters -->
+          <col width="5%"> <!-- ID for Masters -->
       <% end %>
-      <col width="100"> <!-- Date -->
-      <col width="200"> <!-- Description -->
-      <col width="100"> <!-- Hours -->
-      <col width="100"> <!-- Daily Rate -->
-      <col width="50"> <!-- Edit Button -->
-      <col width="50"> <!-- Delete Button -->
+      <col width="10%"> <!-- Date -->
+      <col width="55%"> <!-- Description -->
+      <col width="10%"> <!-- Hours -->
+      <col width="10%"> <!-- Daily Rate -->
+      <col width="5%"> <!-- Edit Button -->
+      <col width="5%"> <!-- Delete Button -->
       <tr>
         <% if current_user.master %>
             <th>ID</th>

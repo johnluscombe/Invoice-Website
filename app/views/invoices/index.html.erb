@@ -16,27 +16,27 @@
     (@user == nil and @pending_only and @invoices.count > 0) %>
     <table class="table table-striped">
       <% if current_user.master %>
-          <col width="50"> <!-- ID for Masters -->
+          <col width="5%"> <!-- ID for Masters -->
       <% end %>
       <% if @all or @pending_only %>
           <col width="200"> <!-- Employee for All and Pending Only View for Admins and Masters -->
       <% end %>
-      <col width="125"> <!-- For Dates -->
-      <col width="50"> <!-- Hours -->
+      <col width="20%"> <!-- For Dates -->
+      <col width="7%"> <!-- Hours -->
       <% if current_user.master %>
-        <col width="50"> <!-- Rate for Masters -->
+        <col width="7%"> <!-- Rate for Masters -->
       <% end %>
-      <col width="75"> <!-- Net Pay -->
-      <col width="100"> <!-- Status -->
+      <col width="11%"> <!-- Net Pay -->
+      <col width="15%"> <!-- Status -->
       <% if current_user.admin %>
-          <col width="75"> <!-- Check No. for Admins and Masters -->
+          <col width="10%"> <!-- Check No. for Admins and Masters -->
       <% end %>
-      <col width="50"> <!-- Button 1 -->
-      <col width="50"> <!-- Button 2 -->
-      <col width="50"> <!-- Button 3 -->
-      <col width="50"> <!-- Button 4 -->
+      <col width="5%"> <!-- Button 1 -->
+      <col width="5%"> <!-- Button 2 -->
+      <col width="5%"> <!-- Button 3 -->
+      <col width="5%"> <!-- Button 4 -->
       <% if current_user.admin %>
-          <col width="50"> <!-- Button 5 for Admins and Masters -->
+          <col width="5%"> <!-- Button 5 for Admins and Masters -->
       <% end %>
       <tr>
         <% if current_user.master %>
@@ -46,11 +46,11 @@
             <th class="bottom-align">Employee</th>
         <% end %>
         <th class="text-center bottom-align">For Dates</th>
-        <th class="text-center bottom-align">Hours</th>
+        <th class="text-right bottom-align">Hours</th>
         <% if current_user.master %>
-          <th class="text-center bottom-align">Rate</th>
+          <th class="text-right bottom-align">Rate</th>
         <% end %>
-        <th class="text-center bottom-align">Net Pay</th>
+        <th class="text-right bottom-align">Net Pay</th>
         <th class="text-center bottom-align">Status</th>
         <% if current_user.admin %>
             <th class="text-center bottom-align">Check No.</th>
