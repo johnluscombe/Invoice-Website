@@ -24,7 +24,5 @@ module Untitled
     config.active_record.raise_in_transactional_callbacks = true
     config.time_zone = 'Eastern Time (US & Canada)'
     config.active_record.default_timezone = 'Eastern Time (US & Canada)'
-
-    config.consider_all_requests_local = true
   end
 end
