@@ -14,7 +14,7 @@ describe 'Manager User Pages' do
       login manager
     end
 
-    it 'should have 25 users' do
+    it 'should have 31 users' do
       expect(User.count).to eq(31)
     end
 
@@ -28,7 +28,8 @@ describe 'Manager User Pages' do
           if user.master or user.admin
             should_not have_selector('tr', text: user.email)
           else
-            should have_selector('tr', text: user.email)
+            should_not have_selector('tr', text: user.id.to_s + ' ' + user.fullname + ' ' + user.name + ' ' + user.email)
+            should have_selector('tr', text: user.fullname + ' ' + user.name + ' ' + user.email)
             should have_selector('tr', text: '$ 10.00 -')
           end
         end

@@ -21,9 +21,7 @@ describe 'Admin User Pages' do
     describe 'list users' do
       it 'should show all users' do
         User.all.each do |user|
-          should have_selector('tr', text: user.id)
-          should have_selector('tr', text: user.name)
-          should have_selector('tr', text: user.email)
+          should have_selector('tr', text: user.id.to_s + ' ' + user.fullname + ' ' + user.name + ' ' + user.email)
           should have_link('VIEW INVOICES')
           should have_link('EDIT')
           should have_link('DELETE')
