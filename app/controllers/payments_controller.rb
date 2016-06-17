@@ -34,7 +34,7 @@ class PaymentsController < ApplicationController
     @user = @invoice.user
 
     if @payment.save
-      @invoice.status = "In Progress"
+      @invoice.status = 'In Progress'
       @invoice.save
       redirect_to invoice_payments_path(:invoice_id => @invoice.id)
     else
@@ -85,7 +85,7 @@ class PaymentsController < ApplicationController
       @user = @invoice.user
     end
     unless current_user.admin or current_user?(@user)
-      flash[:danger] = "You do not have permission to view this page. Please contact your manager."
+      flash[:danger] = 'You do not have permission to view this page. Please contact your manager.'
       redirect
     end
   end

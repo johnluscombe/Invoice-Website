@@ -23,8 +23,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.password_digest==nil
-      @user.password = "password"
-      @user.password_confirmation = "password"
+      @user.password = 'password'
+      @user.password_confirmation = 'password'
     end
     if @user.master
       @user.admin = true
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
         redirect_to users_path
       end
     else
-      flash.now[:danger] = "Unable to create new user"
+      flash.now[:danger] = 'Unable to create new user'
       render 'new'
     end
   end
@@ -47,10 +47,10 @@ class UsersController < ApplicationController
       flash[:danger] = "Cannot edit other user's profiles"
       redirect_to users_path
     elsif current_user.first_time
-      flash.now[:info] = "Please update your profile information"
+      flash.now[:info] = 'Please update your profile information'
     end
   rescue
-    flash[:danger] = "Unable to find user"
+    flash[:danger] = 'Unable to find user'
     redirect_to users_path
   end
 
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
       end
       @user.save
     else
-      flash.now[:danger] = "Unable to update profile"
+      flash.now[:danger] = 'Unable to update profile'
       render 'edit'
     end
   end
@@ -101,27 +101,27 @@ class UsersController < ApplicationController
     #Give an error
     if (!current_user?(@user) and !current_user.admin) or (!current_user?(@user) and !current_user.master and @user.admin)
       if current_user.admin
-        flash[:danger] = "You do not have permission to perform this action. Please contact your administrator."
+        flash[:danger] = 'You do not have permission to perform this action. Please contact your administrator.'
       else
-        flash[:danger] = "You do not have permission to perform this action. Please contact your manager."
+        flash[:danger] = 'You do not have permission to perform this action. Please contact your manager.'
       end
       redirect
     end
   rescue
-    flash[:danger] = "Unable to find user"
+    flash[:danger] = 'Unable to find user'
     redirect
   end
 
   def ensure_admin
     unless current_user.admin
-      flash[:danger] = "You do not have permission to perform this action. Please contact your manager."
+      flash[:danger] = 'You do not have permission to perform this action. Please contact your manager.'
       redirect_to user_invoices_path(current_user)
     end
   end
 
   def ensure_master
     unless current_user.master
-      flash[:danger] = "You do not have permission to perform this action. Please contact your administrator."
+      flash[:danger] = 'You do not have permission to perform this action. Please contact your administrator.'
       redirect
     end
   end
