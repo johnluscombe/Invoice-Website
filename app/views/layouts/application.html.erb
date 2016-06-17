@@ -17,17 +17,17 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <% if current_user and current_user.admin %>
-        <%= link_to image_tag("logo.png", :class => "brand"), users_path, :class => "navbar-brand" %>
+    <% if current_user&.admin %>
+        <%= link_to image_tag('logo.png', :class => 'brand'), users_path, :class => 'navbar-brand' %>
     <% elsif current_user %>
-        <%= link_to image_tag("logo.png", :class => "brand"), user_invoices_path(current_user), :class => "navbar-brand"  %>
+        <%= link_to image_tag('logo.png', :class => 'brand'), user_invoices_path(current_user), :class => 'navbar-brand' %>
     <% else %>
-        <%= link_to image_tag("logo.png", :class => "brand"), root_path, :class => "navbar-brand" %>
+        <%= link_to image_tag('logo.png', :class => 'brand'), root_path, :class => 'navbar-brand' %>
     <% end %>
   </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-      <% if current_user and current_user.admin %>
+      <% if current_user&.admin %>
           <li><%= link_to 'Users', users_path %></li>
           <% if current_user.master %>
               <li><%= link_to 'All Invoices', invoices_path(:all => true) %></li>
@@ -36,8 +36,8 @@
       <% elsif current_user %>
           <li><%= link_to 'Invoices', user_invoices_path(current_user) %></li>
           <% if Invoice.where(:user_id => current_user.id).count > 0 %>
-              <% if Invoice.where(:user_id => current_user.id).where(status: ["Started","In Progress"]).count > 0 %>
-                  <li><%= link_to 'Current Invoice', invoice_payments_path(Invoice.where(:user_id => current_user.id).where(status: ["Started","In Progress"]).last) %></li>
+              <% if Invoice.where(:user_id => current_user.id).where(status: %w(Started In\ Progress)).count > 0 %>
+                  <li><%= link_to 'Current Invoice', invoice_payments_path(Invoice.where(:user_id => current_user.id).where(status: %w(Started In\ Progress)).last) %></li>
               <% else %>
                   <li><%= link_to 'Current Invoice', invoice_payments_path(Invoice.where(:user_id => current_user.id).order(:start_date).last) %></li>
               <% end %>
@@ -46,12 +46,12 @@
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <% if current_user %>
-          <% if current_user.fullname == "" %>
-              <li><%= link_to "Welcome, " + current_user.name, edit_user_path(current_user) %></li>
+          <% if current_user.fullname == '' %>
+              <li><%= link_to 'Welcome, ' + current_user.name, edit_user_path(current_user) %></li>
           <% else %>
-              <li><%= link_to "Welcome, " + current_user.fullname, edit_user_path(current_user) %></li>
+              <li><%= link_to 'Welcome, ' + current_user.fullname, edit_user_path(current_user) %></li>
           <% end %>
-          <li><%= link_to "Edit Profile", edit_user_path(current_user) %></li>
+          <li><%= link_to 'Edit Profile', edit_user_path(current_user) %></li>
       <% end %>
       <% if logged_in? %>
           <li><%= link_to 'Log Out', logout_path, method: :delete %></li>

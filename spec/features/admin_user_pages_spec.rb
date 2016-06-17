@@ -24,9 +24,9 @@ describe 'Admin User Pages' do
           should have_selector('tr', text: user.id)
           should have_selector('tr', text: user.name)
           should have_selector('tr', text: user.email)
-          should have_link('View Invoices')
-          should have_link('Edit User')
-          should have_link('Delete User')
+          should have_link('VIEW INVOICES')
+          should have_link('EDIT')
+          should have_link('DELETE')
 
           if user.master
             should have_selector('tr', text: 'N/A N/A Yes Yes No')
@@ -40,8 +40,8 @@ describe 'Admin User Pages' do
     end
 
     describe 'new user' do
-      let(:submit) { 'Create new user' }
-      let(:cancel) { 'Cancel' }
+      let(:submit) { 'CREATE NEW USER' }
+      let(:cancel) { 'CANCEL' }
 
       before { visit new_user_path }
 
@@ -140,8 +140,8 @@ describe 'Admin User Pages' do
     end
 
     describe 'editing users' do
-      let(:submit) { 'Update user profile' }
-      let(:cancel) { 'Cancel' }
+      let(:submit) { 'UPDATE USER PROFILE' }
+      let(:cancel) { 'CANCEL' }
 
       describe 'own profile' do
         let!(:original_name) { admin.name }
@@ -472,22 +472,22 @@ describe 'Admin User Pages' do
         visit users_path
       end
 
-      it { should have_link('Delete User', href: user_path(employee)) }
+      it { should have_link('DELETE', href: user_path(employee)) }
 
       it 'redirects properly' do
-        click_link('Delete User', href: user_path(employee))
+        click_link('DELETE', href: user_path(employee))
         should have_content 'Employees'
       end
 
       it 'removes an employee from the system' do
         expect do
-          click_link('Delete User', href: user_path(employee))
+          click_link('DELETE', href: user_path(employee))
         end.to change(User, :count).by(-1)
       end
 
       it 'removes a manager from the system' do
         expect do
-          click_link('Delete User', href: user_path(manager))
+          click_link('DELETE', href: user_path(manager))
         end.to change(User, :count).by(-1)
       end
     end

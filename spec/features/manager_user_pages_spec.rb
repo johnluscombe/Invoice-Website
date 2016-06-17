@@ -21,9 +21,9 @@ describe 'Manager User Pages' do
     describe 'list users' do
       it 'should show only employees' do
         User.all.each do |user|
-          should have_link('View Invoices')
-          should have_link('Edit User')
-          should_not have_link('Delete User')
+          should have_link('VIEW INVOICES')
+          should have_link('EDIT')
+          should_not have_link('DELETE')
 
           if user.master or user.admin
             should_not have_selector('tr', text: user.email)
@@ -48,7 +48,7 @@ describe 'Manager User Pages' do
     end
 
     describe 'editing users' do
-      let(:submit) { 'Update user profile' }
+      let(:submit) { 'UPDATE USER PROFILE' }
 
       describe 'own profile' do
         let!(:original_name) { manager.name }

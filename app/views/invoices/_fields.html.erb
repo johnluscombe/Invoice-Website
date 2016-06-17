@@ -13,12 +13,12 @@
       <tr>
         <td class="text-right"><%= f.label :status %></td>
         <td>
-          <%= f.select :status, [['Started', 'Started'], ['In Progress', 'In Progress'], ['Pending', 'Pending'],
-                                 ['Paid', 'Paid']], {}, class: 'form-control' %>
+          <%= f.select :status, [%w(Started Started), %w(In\ Progress In\ Progress), %w(Pending Pending),
+                                 %w(Paid Paid)], {}, class: 'form-control' %>
         </td>
       </tr>
       <tr>
-        <td class="text-right"><%= f.label "Check #" %></td>
+        <td class="text-right"><%= f.label 'Check #' %></td>
         <td><%= f.text_field :check_no, class: 'form-control' %></td>
       </tr>
 <% end %>
@@ -41,7 +41,7 @@
         <td><%= f.text_field :hours, class: 'form-control' %></td>
       </tr>
       <tr>
-        <td class="text-right"><%= f.label "Hourly Rate" %></td>
+        <td class="text-right"><%= f.label 'Hourly Rate' %></td>
         <td><%= f.text_field :rate, class: 'form-control' %></td>
       </tr>
       <tr>

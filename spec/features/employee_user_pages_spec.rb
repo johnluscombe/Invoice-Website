@@ -43,7 +43,7 @@ describe 'Employee User Pages' do
     end
 
     describe 'editing users' do
-      let(:submit) { 'Update user profile' }
+      let(:submit) { 'UPDATE USER PROFILE' }
 
       describe 'own profile' do
         let!(:original_name) { employee.name }

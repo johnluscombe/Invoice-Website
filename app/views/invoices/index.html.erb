@@ -6,7 +6,7 @@
     <% else %>
         <h1>Invoices for <%= @user.fullname %></h1>
     <% end %>
-    <%= link_to "BACK", users_path(@user), class: "btn btn-primary btn-outline btn-xs" %><br>
+    <%= link_to 'BACK', users_path(@user), class: 'btn btn-primary btn-outline btn-xs' %><br>
 <% else %>
     <h1>Invoices</h1>
 <% end %>
@@ -31,12 +31,12 @@
       <% if current_user.admin %>
           <col width="10%"> <!-- Check No. for Admins and Masters -->
       <% end %>
-      <col width="5%"> <!-- Button 1 -->
-      <col width="5%"> <!-- Button 2 -->
-      <col width="5%"> <!-- Button 3 -->
-      <col width="5%"> <!-- Button 4 -->
+      <col width="1%"> <!-- Button 1 -->
+      <col width="1%"> <!-- Button 2 -->
+      <col width="1%"> <!-- Button 3 -->
+      <col width="1%"> <!-- Button 4 -->
       <% if current_user.admin %>
-          <col width="5%"> <!-- Button 5 for Admins and Masters -->
+          <col width="1%"> <!-- Button 5 for Admins and Masters -->
       <% end %>
       <tr>
         <% if current_user.master %>
@@ -67,13 +67,13 @@
     </table>
     <% if @user %>
       <td>
-        <%= link_to "NEW INVOICE", new_user_invoice_path(@user), class: "btn btn-success" %>
+        <%= link_to 'NEW INVOICE', new_user_invoice_path(@user), class: 'btn btn-success' %>
       </td>
     <% end %>
 <% elsif @user %>
     <p>You do not have any invoices yet.</p>
     <td>
-      <%= link_to "NEW INVOICE", new_user_invoice_path(@user), class: "btn btn-success" %>
+      <%= link_to 'NEW INVOICE', new_user_invoice_path(@user), class: 'btn btn-success' %>
     </td>
 <% elsif @pending_only %>
     <p>There are no pending invoices.</p>

@@ -28,18 +28,18 @@ describe 'Admin Invoice Pages' do
           should have_selector('tr', text: '$ 0.00')
           should have_selector('tr', text: 'Started')
           should have_selector('tr', text: invoice.check_no)
-          should have_link('View Payments')
-          should have_link('Edit')
-          should have_link('Delete')
-          should_not have_link('Submit')
-          should_not have_link('Reset')
-          should_not have_link('Mark as Paid')
+          should have_link('VIEW PAYMENTS')
+          should have_link('EDIT')
+          should have_link('DELETE')
+          should_not have_link('SUBMIT')
+          should_not have_link('RESET')
+          should_not have_link('MARK AS PAID')
         end
       end
     end
 
     describe 'new invoice' do
-      let(:submit) { 'New Invoice' }
+      let(:submit) { 'NEW INVOICE' }
 
       before { visit user_invoices_path(employee) }
 
@@ -53,8 +53,8 @@ describe 'Admin Invoice Pages' do
     end
 
     describe 'editing invoices' do
-      let(:submit) { 'Update invoice' }
-      let(:cancel) { 'Cancel' }
+      let(:submit) { 'UPDATE INVOICE' }
+      let(:cancel) { 'CANCEL' }
       let(:invoice) { FactoryGirl.create(:invoice, user: employee) }
 
       before do
@@ -133,16 +133,16 @@ describe 'Admin Invoice Pages' do
         visit user_invoices_path(employee)
       end
 
-      it { should have_link('Delete', href: invoice_path(invoice)) }
+      it { should have_link('DELETE', href: invoice_path(invoice)) }
 
       it 'redirects properly' do
-        click_link('Delete', href: invoice_path(invoice))
+        click_link('DELETE', href: invoice_path(invoice))
         should have_content 'Invoices for'
       end
 
       it 'removes the invoice from the system' do
         expect do
-          click_link('Delete', href: invoice_path(invoice))
+          click_link('DELETE', href: invoice_path(invoice))
         end.to change(Invoice, :count).by(-1)
       end
     end

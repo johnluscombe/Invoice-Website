@@ -4,8 +4,8 @@
 <%= form_for @user do |form| %>
 <%= render partial: 'fields', locals: { f: form } %>
 
-<%= form.submit 'CREATE NEW USER', :class => "btn btn-success" %>
+<%= form.submit 'CREATE NEW USER', :class => 'btn btn-success' %>
 
-<%= link_to "CANCEL", users_path(@user), class: "btn btn-danger btn-outline" %>
+<%= link_to 'CANCEL', users_path(@user), class: 'btn btn-danger btn-outline' %>
 
 <% end %>

@@ -14,12 +14,12 @@
       <% if user.rate == nil %>
           <td class="text-right">-</td>
       <% else %>
-          <td class="text-right">$ <%= sprintf("%.2f", user.rate) %></td>
+          <td class="text-right">$ <%= sprintf('%.2f', user.rate) %></td>
       <% end %>
   <% end %>
 
-  <% if user.invoices.where(:status => ["Started", "In Progress", "Pending"]).count > 0 and !user.admin %>
-    <% @invoice = user.invoices.where(:status => ["Started", "In Progress", "Pending"]).last %>
+  <% if user.invoices.where(:status => %w(Started In\ Progress Pending)).count > 0 and !user.admin %>
+    <% @invoice = user.invoices.where(:status => %w(Started In\ Progress Pending)).last %>
     <% if @invoice.net_pay == nil %>
         <% if @invoice.rate == nil %>
             <% if @invoice.hours == nil %>
@@ -80,12 +80,12 @@
       <td class="text-center"></td>
   <% else %>
     <td class="text-center">
-      <%= link_to "VIEW INVOICES", user_invoices_path(user), class: "btn btn-primary btn-outline btn-xs" %>
+      <%= link_to 'VIEW INVOICES', user_invoices_path(user), class: 'btn btn-primary btn-outline btn-xs' %>
     </td>
   <% end %>
 
   <td class="text-center">
-    <%= link_to "EDIT", edit_user_path(user), class: "btn btn-primary btn-outline btn-xs" %>
+    <%= link_to 'EDIT', edit_user_path(user), class: 'btn btn-primary btn-outline btn-xs' %>
   </td>
 
   <% if current_user.master %>
@@ -93,7 +93,7 @@
         <td class="text-center"></td>
     <% else %>
         <td class="text-center">
-          <%= link_to "DELETE", user_path(user), class: "btn btn-danger btn-outline btn-xs", method: :delete %>
+          <%= link_to 'DELETE', user_path(user), class: 'btn btn-danger btn-outline btn-xs', method: :delete %>
         </td>
     <% end %>
   <% end %>

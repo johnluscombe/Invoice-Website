@@ -1,16 +1,16 @@
 <% if @invoice.start_date != nil and @invoice.end_date != nil %>
-    <h1>Payments for Invoice <%= @invoice.start_date.strftime("%m-%d-%Y") %> - <%= @invoice.end_date.strftime("%m-%d-%Y") %></h1>
+    <h1>Payments for Invoice <%= @invoice.start_date.strftime('%m-%d-%Y') %> - <%= @invoice.end_date.strftime('%m-%d-%Y') %></h1>
 <% elsif @invoice.start_date != nil and @invoice.end_date == nil %>
-    <h1>Payments for Invoice Starting <%= @invoice.start_date.strftime("%m-%d-%Y") %></h1>
+    <h1>Payments for Invoice Starting <%= @invoice.start_date.strftime('%m-%d-%Y') %></h1>
 <% elsif @invoice.start_date == nil and @invoice.end_date != nil %>
-    <h1>Payments for Invoice Ending <%= @invoice.end_date.strftime("%m-%d-%Y") %></h1>
+    <h1>Payments for Invoice Ending <%= @invoice.end_date.strftime('%m-%d-%Y') %></h1>
 <% else %>
     <h1>Payments</h1>
 <% end %>
 
-<%= link_to "BACK", user_invoices_path(@user), class: "btn btn-primary btn-outline btn-xs" %><br><br>
+<%= link_to 'BACK', user_invoices_path(@user), class: 'btn btn-primary btn-outline btn-xs' %><br><br>
 
-<% if @invoice.status == "Paid" %>
+<% if @invoice.status == 'Paid' %>
     <p class="emphasized"><strong>Status: <span class="approve"><%= @invoice.status %></span></strong></p>
 <% else %>
     <p class="emphasized"><strong>Status: <%= @invoice.status %></strong></p>
@@ -25,8 +25,8 @@
       <col width="55%"> <!-- Description -->
       <col width="10%"> <!-- Hours -->
       <col width="10%"> <!-- Daily Rate -->
-      <col width="5%"> <!-- Edit Button -->
-      <col width="5%"> <!-- Delete Button -->
+      <col width="1%"> <!-- Edit Button -->
+      <col width="1%"> <!-- Delete Button -->
       <tr>
         <% if current_user.master %>
             <th>ID</th>
@@ -90,25 +90,25 @@
       <col width="135">
       <col width="135">
       <tr>
-        <% if @invoice.status == "Started" or @invoice.status == "In Progress" %>
+        <% if @invoice.status == 'Started' or @invoice.status == 'In Progress' %>
             <td>
-              <%= link_to "NEW PAYMENT", new_invoice_payment_path(@invoice), class: "btn btn-success" %>
+              <%= link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success' %>
             </td>
         <% end %>
-        <% if @invoice.status == "In Progress" %>
+        <% if @invoice.status == 'In Progress' %>
             <td>
-              <%= link_to "SUBMIT INVOICE", edit_invoice_path(@invoice, :submit => true, :from_payments => true), class: "btn btn-primary btn-outline" %>
+              <%= link_to 'SUBMIT INVOICE', edit_invoice_path(@invoice, :submit => true, :from_payments => true), class: 'btn btn-primary btn-outline' %>
             </td>
-        <% elsif @invoice.status == "Pending" %>
+        <% elsif @invoice.status == 'Pending' %>
             <td>
-              <%= link_to "RESET INVOICE", edit_invoice_path(@invoice, :reset => true, :from_payments => true), class: "btn btn-primary btn-outline" %>
+              <%= link_to 'RESET INVOICE', edit_invoice_path(@invoice, :reset => true, :from_payments => true), class: 'btn btn-primary btn-outline' %>
             </td>
         <% end %>
       </tr>
     </table><br>
 <% else %>
     <p>There are no payments under this invoice yet.</p>
-    <% if @invoice.status == "Started" or @invoice.status == "In Progress" %>
-        <%= link_to "NEW PAYMENT", new_invoice_payment_path(@invoice), class: "btn btn-success" %>
+    <% if @invoice.status == 'Started' or @invoice.status == 'In Progress' %>
+        <%= link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success' %>
     <% end %>
 <% end %>
