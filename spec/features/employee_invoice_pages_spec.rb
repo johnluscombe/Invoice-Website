@@ -1,16 +1,15 @@
 require_relative '../rails_helper'
 require_relative '../support/login'
 
-describe 'Manager Invoice Pages' do
+describe 'Employee Invoice Pages' do
   subject { page }
 
-  describe 'manager' do
-    let(:manager) { FactoryGirl.create(:manager) }
+  describe 'employee' do
     let(:employee) { FactoryGirl.create(:employee) }
 
     before do
       10.times { FactoryGirl.create(:invoice, user: employee) }
-      login manager
+      login employee
       visit user_invoices_path(employee)
     end
 
@@ -25,7 +24,7 @@ describe 'Manager Invoice Pages' do
           should have_selector('tr', text: invoice.start_date.strftime("%m/%d/%y"))
           should_not have_selector('tr', text: employee.rate)
           should have_selector('tr', text: '0.00 $ 0.00 Started')
-          should have_selector('tr', text: invoice.check_no)
+          should_not have_selector('tr', text: invoice.check_no)
           should have_link('VIEW PAYMENTS')
           should have_link('EDIT')
           should have_link('DELETE')
@@ -46,7 +45,7 @@ describe 'Manager Invoice Pages' do
       end
 
       it 'shows the invoices page' do
-        should have_content 'Invoices for'
+        should have_content 'Invoices'
       end
     end
 
@@ -62,23 +61,18 @@ describe 'Manager Invoice Pages' do
       it 'has the correct fields' do
         should have_field('invoice_start_date', with: invoice.start_date)
         should have_field('invoice_end_date')
-        should have_field('invoice_status', with: invoice.status)
-        should have_field('invoice_check_no')
-        should have_content('Overrides')
-        should have_field('invoice_hours')
-        should have_field('invoice_rate')
-        should have_field('invoice_net_pay')
+        should_not have_field('invoice_status', with: invoice.status)
+        should_not have_field('invoice_check_no')
+        should_not have_content('Overrides')
+        should_not have_field('invoice_hours')
+        should_not have_field('invoice_rate')
+        should_not have_field('invoice_net_pay')
       end
 
       describe 'with valid information' do
         before do
           fill_in 'invoice_start_date', with: '2016-12-30'
           fill_in 'invoice_end_date', with: '2016-12-31'
-          select 'In Progress', from: 'invoice_status'
-          fill_in 'invoice_check_no', with: '1234'
-          fill_in 'invoice_hours', with: 1
-          fill_in 'invoice_rate', with: 5
-          fill_in 'invoice_net_pay', with: 15
         end
 
         describe 'changes the data' do
@@ -86,17 +80,12 @@ describe 'Manager Invoice Pages' do
 
           specify { expect(invoice.reload.start_date).to eq('2016-12-30'.to_date) }
           specify { expect(invoice.reload.end_date).to eq('2016-12-31'.to_date) }
-          specify { expect(invoice.reload.status).to eq('In Progress') }
-          specify { expect(invoice.reload.check_no).to eq(1234) }
-          specify { expect(invoice.reload.hours).to eq(1) }
-          specify { expect(invoice.reload.rate).to eq(5) }
-          specify { expect(invoice.reload.net_pay).to eq(15) }
         end
 
         it 'redirects back to invoices page and shows invoice' do
           click_button submit
-          should have_content 'Invoices for'
-          should have_selector('tr', text: '12/30/16 - 12/31/16 1.00 $ 15.00 In Progress 1234')
+          should have_content 'Invoices'
+          should have_selector('tr', text: '12/30/16 - 12/31/16 0.00 $ 0.00 Started')
         end
 
         it 'does not add a new invoice to the system' do
@@ -111,7 +100,7 @@ describe 'Manager Invoice Pages' do
 
         it 'redirects to invoice page' do
           click_link cancel
-          should have_content 'Invoices for'
+          should have_content 'Invoices'
         end
       end
 
@@ -135,7 +124,7 @@ describe 'Manager Invoice Pages' do
 
       it 'redirects properly' do
         click_link('DELETE', href: invoice_path(invoice))
-        should have_content 'Invoices for'
+        should have_content 'Invoices'
       end
 
       it 'removes the invoice from the system' do
