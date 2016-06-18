@@ -21,13 +21,13 @@ describe 'Manager Invoice Pages' do
     describe 'list invoices' do
       it 'should show all invoices' do
         Invoice.all.each do |invoice|
-          should_not have_selector('tr', text: invoice.id)
+          should_not have_selector('tr', text: invoice.id.to_s + ' Started')
           should have_selector('tr', text: 'Started ' + invoice.start_date.strftime("%m/%d/%y"))
           should have_selector('tr', text: '0.00')
           should_not have_selector('tr', text: employee.rate)
           should have_selector('tr', text: '$ 0.00')
           should have_selector('tr', text: 'Started')
-          should_not have_selector('tr', text: invoice.check_no)
+          should have_selector('tr', text: invoice.check_no)
           should have_link('VIEW PAYMENTS')
           should have_link('EDIT')
           should have_link('DELETE')

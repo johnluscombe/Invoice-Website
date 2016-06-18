@@ -28,8 +28,8 @@ describe 'Manager User Pages' do
           if user.master or user.admin
             should_not have_selector('tr', text: user.email)
           else
-            should_not have_selector('tr', text: user.id.to_s + ' ' + user.fullname + ' ' + user.name + ' ' + user.email)
-            should have_selector('tr', text: user.fullname + ' ' + user.name + ' ' + user.email)
+            should_not have_selector('tr', text: user.id.to_s + ' User')
+            should have_selector('tr', text: user.fullname + ' ' + user.email)
             should have_selector('tr', text: '$ 10.00 -')
           end
         end
