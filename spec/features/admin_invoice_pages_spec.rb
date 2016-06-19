@@ -119,7 +119,7 @@ describe 'Admin Invoice Pages' do
 
       describe 'non-existant' do
         before do
-          visit edit_user_path(-1)
+          visit edit_invoice_path(-1)
         end
 
         it { should have_content('Unable') }

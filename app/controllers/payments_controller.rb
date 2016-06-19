@@ -26,6 +26,9 @@ class PaymentsController < ApplicationController
     @payment = Payment.find(params[:id])
     @invoice = @payment.invoice
     @user = @invoice.user
+  rescue
+    flash[:danger] = 'Unable to find payment'
+    redirect
   end
 
   def create
@@ -88,6 +91,9 @@ class PaymentsController < ApplicationController
       flash[:danger] = 'You do not have permission to view this page. Please contact your manager.'
       redirect
     end
+  rescue
+    flash[:danger] = 'Unable to find payment'
+    redirect
   end
 
   def redirect

@@ -85,6 +85,9 @@ class InvoicesController < ApplicationController
         redirect_to user_invoices_path(@user)
       end
     end
+  rescue
+    flash[:danger] = 'Unable to find invoice'
+    redirect
   end
 
   def update
@@ -131,6 +134,7 @@ class InvoicesController < ApplicationController
       redirect
     end
   rescue
+    flash[:danger] = 'Unable to find invoice'
     redirect
   end
 
