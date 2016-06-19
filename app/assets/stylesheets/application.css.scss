@@ -33,34 +33,64 @@ button > a {
   text-decoration: none !important;
 }
 
-.btn-danger.btn-outline {
+.btn.btn-danger.btn-outline,
+.btn.btn-danger.btn-outline:active,
+.btn.btn-danger.btn-outline:focus,
+.btn.btn-danger.btn-outline:hover {
   background-color: #fff;
   border-color: #d9534f;
+  box-shadow: none;
   color: #d9534f;
 }
 
-.btn-primary.btn-outline {
+.btn.btn-primary.btn-outline,
+.btn.btn-primary.btn-outline:active,
+.btn.btn-primary.btn-outline:focus,
+.btn.btn-primary.btn-outline:hover {
   background-color: #fff;
   border-color: #0275d8;
+  box-shadow: none;
   color: #0275d8;
 }
 
-.btn-success.btn-outline {
+.btn.btn-success.btn-outline,
+.btn.btn-success.btn-outline:active,
+.btn.btn-success.btn-outline:focus,
+.btn.btn-success.btn-outline:hover {
   background-color: #fff;
   border-color: #5cb85c;
+  box-shadow: none;
   color: #5cb85c;
 }
 
-.btn-danger {
+.btn.btn-danger,
+.btn.btn-danger:active,
+.btn.btn-danger:focus,
+.btn.btn-danger:hover {
+  background-color: #d9534f;
   border-color: #d9534f;
+  box-shadow: none;
+  color: #fff;
 }
 
-.btn-primary {
+.btn.btn-primary,
+.btn.btn-primary:active,
+.btn.btn-primary:focus,
+.btn.btn-primary:hover {
+  background-color: #0275d8;
   border-color: #0275d8;
+  box-shadow: none;
+  color: #fff;
 }
 
-.btn-success {
+.btn.btn-success,
+.btn.btn-success:active,
+.btn.btn-success:focus,
+.btn.btn-success:hover {
+  background-color: #5cb85c;
   border-color: #5cb85c;
+  box-shadow: none;
+  color: #fff;
 }
 
 div.field_with_errors {
