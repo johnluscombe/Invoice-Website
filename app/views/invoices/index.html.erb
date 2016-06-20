@@ -6,7 +6,7 @@
     <% else %>
         <h1>Invoices for <%= @user.fullname %></h1>
     <% end %>
-    <%= link_to 'BACK', users_path(@user), class: 'btn btn-primary btn-outline btn-xs' %><br>
+    <%= link_to 'BACK', users_path, class: 'btn btn-primary btn-outline btn-xs' %><br>
 <% else %>
     <h1>Invoices</h1>
 <% end %>

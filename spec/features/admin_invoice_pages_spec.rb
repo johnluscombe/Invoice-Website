@@ -19,6 +19,10 @@ describe 'Admin Invoice Pages' do
     end
 
     describe 'list invoices' do
+      it 'should have a back button' do
+        should have_link('BACK', href: users_path)
+      end
+
       it 'should show all invoices' do
         Invoice.all.each do |invoice|
           should have_selector('tr', text: invoice.id)
@@ -35,6 +39,10 @@ describe 'Admin Invoice Pages' do
           should_not have_link('RESET')
           should_not have_link('MARK AS PAID')
         end
+      end
+
+      it 'should have a new invoice button' do
+        should have_link('NEW INVOICE', href: new_user_invoice_path(employee))
       end
     end
 
@@ -144,6 +152,86 @@ describe 'Admin Invoice Pages' do
         expect do
           click_link('DELETE', href: invoice_path(invoice))
         end.to change(Invoice, :count).by(-1)
+      end
+    end
+
+    describe 'all invoices link' do
+      before { click_link('All Invoices', href: invoices_path(:all => true)) }
+
+      it 'should have back button' do
+        should have_link('BACK', href: users_path)
+      end
+
+      Invoice.all.each do |invoice|
+        should have_selector('tr', text: invoice.id)
+        should have_selector('tr', text: invoice.user.fullname)
+        should have_selector('tr', text: 'Started ' + invoice.start_date.strftime("%m/%d/%y"))
+        should have_selector('tr', text: '0.00')
+        should have_selector('tr', text: employee.rate)
+        should have_selector('tr', text: '$ 0.00')
+        should have_selector('tr', text: 'Started')
+        should have_selector('tr', text: invoice.check_no)
+        should have_link('VIEW PAYMENTS')
+        should have_link('EDIT')
+        should have_link('DELETE')
+        should_not have_link('SUBMIT')
+        should_not have_link('RESET')
+        should_not have_link('MARK AS PAID')
+      end
+
+      it 'should not have new invoice button' do
+        should_not have_link('NEW EMPLOYEE', href: new_user_invoice_path(employee))
+      end
+    end
+
+    describe 'pending invoices link with no pending invoices' do
+      before { click_link('Pending Invoices', href: invoices_path(:pending_only => true)) }
+
+      it 'should have back button' do
+        should have_link('BACK', href: users_path)
+      end
+
+      it 'should have no invoices' do
+        should have_selector('p', text: 'There are no pending invoices.')
+      end
+
+      it 'should not have new invoice button' do
+        should_not have_link('NEW EMPLOYEE', href: new_user_invoice_path(employee))
+      end
+    end
+
+    describe 'pending invoices link with a pending invoice' do
+      let(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
+
+      it 'should have back button' do
+        should have_link('BACK', href: users_path)
+      end
+
+      it 'should only show one invoice' do
+        Invoice.all.each do |invoice|
+          if invoice.status == 'Pending'
+            should have_selector('tr', text: invoice.id)
+            should have_selector('tr', text: invoice.user.fullname)
+            should have_selector('tr', text: 'Started ' + invoice.start_date.strftime("%m/%d/%y"))
+            should have_selector('tr', text: '0.00')
+            should have_selector('tr', text: employee.rate)
+            should have_selector('tr', text: '$ 0.00')
+            should have_selector('tr', text: 'Started')
+            should have_selector('tr', text: invoice.check_no)
+            should have_link('VIEW INVOICE')
+            should have_link('MARK AS PAID')
+            should have_link('RESET')
+            should have_link('EDIT')
+            should have_link('DELETE')
+            should_not have_link('SUBMIT')
+          else
+            should have_selector('tr', text: invoice.id)
+          end
+        end
+      end
+
+      it 'should not have new invoice button' do
+        should_not have_link('NEW EMPLOYEE', href: new_user_invoice_path(employee))
       end
     end
   end
