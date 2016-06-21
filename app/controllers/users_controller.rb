@@ -5,15 +5,7 @@ class UsersController < ApplicationController
   before_action :ensure_master, only: [:new, :create, :destroy]
 
   def index
-    if current_user.master
-      @users = User.all.order(:fullname)
-    else
-      @users = User.where(:admin => false)
-    end
-  end
-
-  def show
-    redirect
+    @users = User.get_users(current_user)
   end
 
   def new
@@ -30,11 +22,7 @@ class UsersController < ApplicationController
       @user.admin = true
     end
     if @user.save
-      if current_user?(@user)
-        redirect_to @user
-      else
-        redirect_to users_path
-      end
+      redirect_to users_path
     else
       flash.now[:danger] = 'Unable to create new user'
       render 'new'
@@ -133,5 +121,4 @@ class UsersController < ApplicationController
       redirect_to user_invoices_path(current_user)
     end
   end
-
 end

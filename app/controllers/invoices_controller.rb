@@ -24,10 +24,6 @@ class InvoicesController < ApplicationController
     redirect
   end
 
-  def show
-    redirect
-  end
-
   def new
     @user = User.find(params[:user_id])
     if @user.rate == nil

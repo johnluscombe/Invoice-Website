@@ -8,14 +8,6 @@ class PaymentsController < ApplicationController
     @user = @invoice.user
   end
 
-  def show
-    if current_user.admin
-      redirect_to users_path
-    else
-      redirect_to user_invoices_path(current_user)
-    end
-  end
-
   def new
     @invoice = Invoice.find(params[:invoice_id])
     @payment = @invoice.payments.build
