@@ -15,7 +15,7 @@ Rails.application.routes.draw do
    resources :users, shallow: true, except: :show do
      resources :invoices, except: :show
    end
-   resources :invoices, shallow: true, execpt: :show do
+   resources :invoices, shallow: true, except: :show do
      resources :payments, except: :show
    end
 
