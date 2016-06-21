@@ -203,6 +203,8 @@ describe 'Admin Invoice Pages' do
     describe 'pending invoices link with a pending invoice' do
       let(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
 
+      before { click_link('Pending Invoices', href: invoices_path(:pending_only => true)) }
+
       it 'should have back button' do
         should have_link('BACK', href: users_path)
       end
@@ -212,11 +214,11 @@ describe 'Admin Invoice Pages' do
           if invoice.status == 'Pending'
             should have_selector('tr', text: invoice.id)
             should have_selector('tr', text: invoice.user.fullname)
-            should have_selector('tr', text: 'Started ' + invoice.start_date.strftime("%m/%d/%y"))
+            should have_selector('tr', text: invoice.start_date.strftime("%m/%d/%y") + invoice.end_date.strftime("%m/%d/%y"))
             should have_selector('tr', text: '0.00')
             should have_selector('tr', text: employee.rate)
             should have_selector('tr', text: '$ 0.00')
-            should have_selector('tr', text: 'Started')
+            should have_selector('tr', text: 'Pending')
             should have_selector('tr', text: invoice.check_no)
             should have_link('VIEW INVOICE')
             should have_link('MARK AS PAID')
@@ -224,10 +226,9 @@ describe 'Admin Invoice Pages' do
             should have_link('EDIT')
             should have_link('DELETE')
             should_not have_link('SUBMIT')
-          else
-            should have_selector('tr', text: invoice.id)
           end
         end
+        should_not have_content('Started')
       end
 
       it 'should not have new invoice button' do

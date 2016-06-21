@@ -144,5 +144,58 @@ describe 'Manager Invoice Pages' do
         end.to change(Invoice, :count).by(-1)
       end
     end
+
+
+    describe 'pending invoices link with no pending invoices' do
+      before { click_link('Pending Invoices', href: invoices_path(:pending_only => true)) }
+
+      it 'should have back button' do
+        should have_link('BACK', href: users_path)
+      end
+
+      it 'should have no invoices' do
+        should have_selector('p', text: 'There are no pending invoices.')
+      end
+
+      it 'should not have new invoice button' do
+        should_not have_link('NEW EMPLOYEE', href: new_user_invoice_path(employee))
+      end
+    end
+
+    describe 'pending invoices link with a pending invoice' do
+      let(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
+
+      before { click_link('Pending Invoices', href: invoices_path(:pending_only => true)) }
+
+      it 'should have back button' do
+        should have_link('BACK', href: users_path)
+      end
+
+      it 'should only show one invoice' do
+        Invoice.all.each do |invoice|
+          if invoice.status == 'Pending'
+            should_not have_selector('tr', text: invoice.id)
+            should have_selector('tr', text: invoice.user.fullname)
+            should have_selector('tr', text: invoice.start_date.strftime("%m/%d/%y") + invoice.end_date.strftime("%m/%d/%y"))
+            should have_selector('tr', text: '0.00')
+            should_not have_selector('tr', text: employee.rate)
+            should have_selector('tr', text: '$ 0.00')
+            should have_selector('tr', text: 'Pending')
+            should have_selector('tr', text: invoice.check_no)
+            should have_link('VIEW INVOICE')
+            should have_link('MARK AS PAID')
+            should have_link('RESET')
+            should have_link('EDIT')
+            should have_link('DELETE')
+            should_not have_link('SUBMIT')
+          end
+        end
+        should_not have_content('Started')
+      end
+
+      it 'should not have new invoice button' do
+        should_not have_link('NEW EMPLOYEE', href: new_user_invoice_path(employee))
+      end
+    end
   end
 end
