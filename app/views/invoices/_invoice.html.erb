@@ -2,7 +2,7 @@
   <% if current_user.master %>
       <td><%= invoice.id %></td>
   <% end %>
-  <% if @all or @pending_only %>
+  <% if params.has_key?(:all) or params.has_key?(:pending_only) %>
       <td><%= invoice.user.fullname %></td>
   <% end %>
 

@@ -1,7 +1,7 @@
 <% if current_user.admin %>
-    <% if @all %>
+    <% if params.has_key?(:all) %>
         <h1>All Invoices</h1>
-    <% elsif @pending_only %>
+    <% elsif params.has_key?(:pending_only) %>
         <h1>Pending Invoices</h1>
     <% else %>
         <h1>Invoices for <%= @user.fullname %></h1>
@@ -12,13 +12,13 @@
 <% end %>
 <br>
 <% if (@user and @user.invoices.count > 0) or
-    (@user == nil and @all and @invoices.count > 0) or
-    (@user == nil and @pending_only and @invoices.count > 0) %>
+    (@user == nil and params.has_key?(:all) and @invoices.count > 0) or
+    (@user == nil and params.has_key?(:pending_only) and @invoices.count > 0) %>
     <table class="table table-striped">
       <% if current_user.master %>
           <col width="5%"> <!-- ID for Masters -->
       <% end %>
-      <% if @all or @pending_only %>
+      <% if params.has_key?(:all) or params.has_key?(:pending_only) %>
           <col width="200"> <!-- Employee for All and Pending Only View for Admins and Masters -->
       <% end %>
       <col width="20%"> <!-- For Dates -->
@@ -42,7 +42,7 @@
         <% if current_user.master %>
             <th class="bottom-align">ID</th>
         <% end %>
-        <% if @all or @pending_only %>
+        <% if params.has_key?(:all) or params.has_key?(:pending_only) %>
             <th class="bottom-align">Employee</th>
         <% end %>
         <th class="text-center bottom-align">For Dates</th>
@@ -75,9 +75,9 @@
     <td>
       <%= link_to 'NEW INVOICE', new_user_invoice_path(@user), class: 'btn btn-success' %>
     </td>
-<% elsif @pending_only %>
+<% elsif params.has_key?(:pending_only) %>
     <p>There are no pending invoices.</p>
-<% elsif @all %>
+<% elsif params.has_key?(:all) %>
     <p>There are no invoices.</p>
 <% end %>
 <br><br>

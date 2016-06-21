@@ -5,11 +5,9 @@ class InvoicesController < ApplicationController
   def index
     if params.has_key?(:all)
       ensure_master
-      @all = true
       @invoices = Invoice.all.order(:start_date).reverse_order
     elsif params.has_key?(:pending_only)
       ensure_admin
-      @pending_only = true
       @invoices = Invoice.where(:status => 'Pending').order(:start_date).reverse_order
     else
       ensure_correct_user
