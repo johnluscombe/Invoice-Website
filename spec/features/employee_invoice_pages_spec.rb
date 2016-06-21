@@ -133,5 +133,69 @@ describe 'Employee Invoice Pages' do
         end.to change(Invoice, :count).by(-1)
       end
     end
+
+    describe "invoices with 'Started' status" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
+
+      before { visit user_invoices_path(employee) }
+
+      it 'shows the correct buttons' do
+        should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
+        should_not have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
+        should_not have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
+        should_not have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should have_link('EDIT', href: edit_invoice_path(invoice))
+        should have_link('DELETE', href: invoice_path(invoice))
+        should_not have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+      end
+    end
+
+    describe "invoices with 'In Progress' status" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'In Progress') }
+
+      before { visit user_invoices_path(employee) }
+
+      it 'shows the correct buttons' do
+        should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
+        should_not have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
+        should_not have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
+        should_not have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should have_link('EDIT', href: edit_invoice_path(invoice))
+        should have_link('DELETE', href: invoice_path(invoice))
+        should have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+      end
+    end
+
+    describe "invoices with 'Pending' status" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
+
+      before { visit user_invoices_path(employee) }
+
+      it 'shows the correct buttons' do
+        should_not have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
+        should have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
+        should_not have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
+        should have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should_not have_link('EDIT', href: edit_invoice_path(invoice))
+        should_not have_link('DELETE', href: invoice_path(invoice))
+        should_not have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+      end
+    end
+
+    describe "invoices with 'Paid' status" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Paid') }
+
+      before { visit user_invoices_path(employee) }
+
+      it 'shows the correct buttons' do
+        should_not have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
+        should have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
+        should_not have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
+        should_not have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should_not have_link('EDIT', href: edit_invoice_path(invoice))
+        should_not have_link('DELETE', href: invoice_path(invoice))
+        should_not have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+      end
+    end
   end
 end
