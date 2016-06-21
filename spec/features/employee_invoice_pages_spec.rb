@@ -21,7 +21,7 @@ describe 'Employee Invoice Pages' do
       it 'should show all invoices' do
         Invoice.all.each do |invoice|
           should_not have_selector('tr', text: invoice.id.to_s + ' Started')
-          should have_selector('tr', text: invoice.start_date.strftime("%m/%d/%y"))
+          should have_selector('tr', text: invoice.start_date.strftime('%m/%d/%y'))
           should_not have_selector('tr', text: employee.rate)
           should have_selector('tr', text: '0.00 $ 0.00 Started')
           should_not have_selector('tr', text: invoice.check_no)

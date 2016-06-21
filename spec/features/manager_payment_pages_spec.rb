@@ -22,7 +22,7 @@ describe 'Manager Invoice Pages' do
     describe 'list payments' do
       it 'should show all payments' do
         Payment.all.each do |payment|
-          should_not have_selector('tr', text: payment.id.to_s + ' ' + payment.date.strftime("%m-%d-%Y"))
+          should_not have_selector('tr', text: payment.id.to_s + ' ' + payment.date.strftime('%m-%d-%Y'))
           should have_selector('tr', text: payment.description)
           should have_selector('tr', text: '3.00 $ 30.00')
           should have_link('EDIT')

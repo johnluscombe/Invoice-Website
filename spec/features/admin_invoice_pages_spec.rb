@@ -26,7 +26,7 @@ describe 'Admin Invoice Pages' do
       it 'should show all invoices' do
         Invoice.all.each do |invoice|
           should have_selector('tr', text: invoice.id)
-          should have_selector('tr', text: 'Started ' + invoice.start_date.strftime("%m/%d/%y"))
+          should have_selector('tr', text: 'Started ' + invoice.start_date.strftime('%m/%d/%y'))
           should have_selector('tr', text: '0.00')
           should have_selector('tr', text: employee.rate)
           should have_selector('tr', text: '$ 0.00')
@@ -165,7 +165,7 @@ describe 'Admin Invoice Pages' do
       Invoice.all.each do |invoice|
         should have_selector('tr', text: invoice.id)
         should have_selector('tr', text: invoice.user.fullname)
-        should have_selector('tr', text: 'Started ' + invoice.start_date.strftime("%m/%d/%y"))
+        should have_selector('tr', text: 'Started ' + invoice.start_date.strftime('%m/%d/%y'))
         should have_selector('tr', text: '0.00')
         should have_selector('tr', text: employee.rate)
         should have_selector('tr', text: '$ 0.00')
@@ -201,9 +201,15 @@ describe 'Admin Invoice Pages' do
     end
 
     describe 'pending invoices link with a pending invoice' do
-      let(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
 
-      before { click_link('Pending Invoices', href: invoices_path(:pending_only => true)) }
+      before do
+        visit new_invoice_payment_path(invoice)
+        click_button('CREATE NEW PAYMENT')
+        visit user_invoices_path(employee)
+        click_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+        click_link('Pending Invoices', href: invoices_path(:pending_only => true))
+      end
 
       it 'should have back button' do
         should have_link('BACK', href: users_path)
@@ -212,9 +218,8 @@ describe 'Admin Invoice Pages' do
       it 'should only show one invoice' do
         Invoice.all.each do |invoice|
           if invoice.status == 'Pending'
-            should have_selector('tr', text: invoice.id)
-            should have_selector('tr', text: invoice.user.fullname)
-            should have_selector('tr', text: invoice.start_date.strftime("%m/%d/%y") + invoice.end_date.strftime("%m/%d/%y"))
+            should have_selector('tr', text: invoice.id.to_s + ' ' + invoice.user.fullname)
+            should have_selector('tr', text: invoice.start_date.strftime('%m/%d/%y') + ' - ' + invoice.end_date.strftime('%m/%d/%y'))
             should have_selector('tr', text: '0.00')
             should have_selector('tr', text: employee.rate)
             should have_selector('tr', text: '$ 0.00')
