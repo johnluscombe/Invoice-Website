@@ -27,11 +27,11 @@ describe 'Admin User Pages' do
           should have_link('DELETE')
 
           if user.profile == 3
-            should have_selector('tr', text: 'N/A N/A Yes Yes No')
+            should have_selector('tr', text: 'N/A N/A Administrator No')
           elsif user.profile >= 2
-            should have_selector('tr', text: 'N/A N/A Yes No No')
+            should have_selector('tr', text: 'N/A N/A Manager No')
           else
-            should have_selector('tr', text: '$ 10.00 - No No No')
+            should have_selector('tr', text: '$ 10.00 - Employee No')
           end
         end
       end
@@ -74,7 +74,7 @@ describe 'Admin User Pages' do
           it 'redirects to users page and shows new user' do
             click_button submit
             should have_content 'Employees'
-            should have_selector('tr', text: 'New Name newname new.name@example.com $ 10.00 - No No Yes')
+            should have_selector('tr', text: 'New Name newname new.name@example.com $ 10.00 - Employee Yes')
           end
         end
 
@@ -97,7 +97,7 @@ describe 'Admin User Pages' do
           it 'redirects to users page and shows new user' do
             click_button submit
             should have_content 'Employees'
-            should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Yes No Yes')
+            should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Manager Yes')
           end
         end
 
@@ -120,7 +120,7 @@ describe 'Admin User Pages' do
           it 'redirects to users page and shows new user' do
             click_button submit
             should have_content 'Employees'
-            should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Yes Yes Yes')
+            should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Administrator Yes')
           end
         end
       end
@@ -197,7 +197,7 @@ describe 'Admin User Pages' do
           it 'redirects back to users page and shows user' do
             click_button submit
             should have_content 'Employees'
-            should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Yes Yes No')
+            should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Administrator No')
           end
 
           it 'does not add a new user to the system' do
@@ -290,7 +290,7 @@ describe 'Admin User Pages' do
           it 'redirects back to users page and shows user' do
             click_button submit
             should have_content 'Employees'
-            should have_selector('tr', text: 'New Name newname new.name@example.com $ 11.00 - No No No')
+            should have_selector('tr', text: 'New Name newname new.name@example.com $ 11.00 - Employee No')
           end
 
           it 'does not add a new user to the system' do
@@ -305,7 +305,7 @@ describe 'Admin User Pages' do
             it 'redirects back to users page and shows user' do
               click_button submit
               should have_content 'Employees'
-              should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Yes No No')
+              should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Manager No')
             end
           end
 
@@ -317,7 +317,7 @@ describe 'Admin User Pages' do
             it 'redirects back to users page and shows user' do
               click_button submit
               should have_content 'Employees'
-              should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Yes Yes No')
+              should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Administrator No')
             end
           end
         end
@@ -357,7 +357,7 @@ describe 'Admin User Pages' do
           it 'redirects back to users page and shows user' do
             click_button submit
             should have_content 'Employees'
-            should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Yes No No')
+            should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Manager No')
           end
 
           it 'does not add a new user to the system' do
@@ -372,7 +372,7 @@ describe 'Admin User Pages' do
             it 'redirects back to users page and shows user' do
               click_button submit
               should have_content 'Employees'
-              should have_selector('tr', text: 'New Name newname new.name@example.com - - No No No')
+              should have_selector('tr', text: 'New Name newname new.name@example.com - - Employee No')
             end
           end
 
@@ -384,7 +384,7 @@ describe 'Admin User Pages' do
             it 'redirects back to users page and shows user' do
               click_button submit
               should have_content 'Employees'
-              should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Yes Yes No')
+              should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Administrator No')
             end
           end
         end
@@ -424,7 +424,7 @@ describe 'Admin User Pages' do
           it 'redirects back to users page and shows user' do
             click_button submit
             should have_content 'Employees'
-            should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Yes Yes No')
+            should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Administrator No')
           end
 
           it 'does not add a new user to the system' do
@@ -439,7 +439,7 @@ describe 'Admin User Pages' do
             it 'redirects back to users page and shows user' do
               click_button submit
               should have_content 'Employees'
-              should have_selector('tr', text: 'New Name newname new.name@example.com - - No No No')
+              should have_selector('tr', text: 'New Name newname new.name@example.com - - Employee No')
             end
           end
 
@@ -451,7 +451,7 @@ describe 'Admin User Pages' do
             it 'redirects back to users page and shows user' do
               click_button submit
               should have_content 'Employees'
-              should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Yes No No')
+              should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Manager No')
             end
           end
         end

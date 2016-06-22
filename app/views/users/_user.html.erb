@@ -60,13 +60,9 @@
 
   <% if current_user.profile == 3 %>
       <td class="text-center">
-        <% if user.profile >= 2 %> Yes
-        <% else %> No
-        <% end %>
-      </td>
-      <td class="text-center">
-        <% if user.profile == 3 %> Yes
-        <% else %> No
+        <% if user.profile == 3 %> Administrator
+        <% elsif user.profile == 2 %> Manager
+        <% else %> Employee
         <% end %>
       </td>
       <td class="text-center">

@@ -13,8 +13,7 @@
     <col width="10%"> <!-- Hourly Rate -->
     <col width="10%"> <!-- Current Invoice -->
     <% if current_user.profile == 3 %>
-        <col width="1%"> <!-- Manager? for Masters -->
-        <col width="1%"> <!-- Admin? for Masters -->
+        <col width="10%"> <!-- Profile for Masters -->
         <col width="1%"> <!-- Reset Profile? for Masters -->
     <% end %>
     <col width="1%"> <!-- View Invoices Button -->
@@ -34,8 +33,7 @@
       <th class="bottom-align text-right">Hourly Rate</th>
       <th class="bottom-align text-right">Current Invoice</th>
       <% if current_user.profile == 3 %>
-          <th class="bottom-align text-center">Manager?</th>
-          <th class="bottom-align text-center">Admin?</th>
+          <th class="bottom-align text-center">Profile</th>
           <th class="bottom-align text-center">Reset Profile?</th>
       <% end %>
       <th></th>
