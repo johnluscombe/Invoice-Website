@@ -1,14 +1,14 @@
 <tr>
-  <% if current_user.master %>
+  <% if current_user.profile == 3 %>
       <td><%= user.id %></td>
   <% end %>
   <td><%= user.fullname %></td>
-  <% if current_user.master %>
+  <% if current_user.profile == 3 %>
       <td><%= user.name %></td>
   <% end %>
   <td><%= user.email %></td>
 
-  <% if user.admin %>
+  <% if user.profile >= 2 %>
       <td class="text-right">N/A</td>
   <% else %>
       <% if user.rate == nil %>
@@ -18,7 +18,7 @@
       <% end %>
   <% end %>
 
-  <% if user.invoices.where(:status => %w(Started In\ Progress Pending)).count > 0 and !user.admin %>
+  <% if user.invoices.where(:status => %w(Started In\ Progress Pending)).count > 0 and user.profile == 1 %>
     <% @invoice = user.invoices.where(:status => %w(Started In\ Progress Pending)).last %>
     <% if @invoice.net_pay == nil %>
         <% if @invoice.rate == nil %>
@@ -52,20 +52,20 @@
           <%= sprintf('%.2f', @invoice.net_pay) %>
         </td>
     <% end %>
-  <% elsif user.admin %>
+  <% elsif user.profile >= 2 %>
       <td class="text-right">N/A</td>
   <% else %>
       <td class="text-right">-</td>
   <% end %>
 
-  <% if current_user.master %>
+  <% if current_user.profile == 3 %>
       <td class="text-center">
-        <% if user.admin %> Yes
+        <% if user.profile >= 2 %> Yes
         <% else %> No
         <% end %>
       </td>
       <td class="text-center">
-        <% if user.master %> Yes
+        <% if user.profile == 3 %> Yes
         <% else %> No
         <% end %>
       </td>
@@ -76,7 +76,7 @@
       </td>
   <% end %>
 
-  <% if user.admin %>
+  <% if user.profile >= 2 %>
       <td class="text-center"></td>
   <% else %>
     <td class="text-center">
@@ -88,8 +88,8 @@
     <%= link_to 'EDIT', edit_user_path(user), class: 'btn btn-primary btn-outline btn-xs' %>
   </td>
 
-  <% if current_user.master %>
-    <% if user.master %>
+  <% if current_user.profile == 3 %>
+    <% if user.profile == 3 %>
         <td class="text-center"></td>
     <% else %>
         <td class="text-center">

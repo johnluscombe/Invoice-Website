@@ -12,7 +12,7 @@ class InvoicesController < ApplicationController
     else
       ensure_correct_user
       @user = User.find(params[:user_id])
-      if @user.admin and current_user.admin
+      if @user.profile >= 2 and current_user.profile >= 2
         flash[:warning] = 'User does not get paid hourly'
         redirect_to users_path
       end
@@ -25,7 +25,7 @@ class InvoicesController < ApplicationController
   def new
     @user = User.find(params[:user_id])
     if @user.rate == nil
-      if @user.admin
+      if @user.profile >= 2
         flash[:danger] = 'You have not set an hourly rate for this employee.'
       else
         flash[:danger] = 'You have not been assigned an hourly rate. Please contact your manager.'
@@ -71,7 +71,7 @@ class InvoicesController < ApplicationController
           redirect_to user_invoices_path(@user)
         end
       end
-    elsif current_user.admin and params.has_key?(:approve)
+    elsif current_user.profile >= 2 and params.has_key?(:approve)
       @invoice.update(:status => 'Paid')
       if params.has_key?(:from_pending)
         redirect_to invoices_path(:pending_only => true)
@@ -123,7 +123,7 @@ class InvoicesController < ApplicationController
       @invoice = Invoice.find(params[:id])
       @user = @invoice.user
     end
-    unless current_user.admin or current_user?(@user)
+    unless current_user.profile >= 2 or current_user?(@user)
       flash[:danger] = 'You do not have permission to view this page. Please contact your manager.'
       redirect
     end
@@ -133,21 +133,21 @@ class InvoicesController < ApplicationController
   end
 
   def ensure_admin
-    unless current_user.admin
+    unless current_user.profile >= 2
       flash[:danger] = 'You do not have permission to perform this action. Please contact your manager.'
       redirect_to user_invoices_path(current_user)
     end
   end
 
   def ensure_master
-    unless current_user.master
+    unless current_user.profile == 3
       flash[:danger] = 'You do not have permission to perform this action. Please contact your administrator.'
       redirect
     end
   end
 
   def redirect
-    if current_user.admin
+    if current_user.profile >= 2
       redirect_to users_path
     else
       redirect_to user_invoices_path(current_user)

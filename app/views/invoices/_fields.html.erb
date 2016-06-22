@@ -9,7 +9,7 @@
     <td class="text-right"><%= f.label :end_date %></td>
     <td><%= f.date_field :end_date, class: 'form-control' %></td>
   </tr>
-<% if current_user.admin %>
+<% if current_user.profile >= 2 %>
       <tr>
         <td class="text-right"><%= f.label :status %></td>
         <td>
@@ -26,7 +26,7 @@
 <table>
   <col width="100">
   <col width="200">
-  <% if current_user.admin %>
+  <% if current_user.profile >= 2 %>
       <tr>
         <td colspan="2" class="text-center"><strong>Overrides</strong></td>
       </tr>
@@ -35,7 +35,7 @@
 <table class="fields">
   <col width="100">
   <col width="200">
-  <% if current_user.admin %>
+  <% if current_user.profile >= 2 %>
       <tr>
         <td class="text-right"><%= f.label :hours %></td>
         <td><%= f.text_field :hours, class: 'form-control' %></td>

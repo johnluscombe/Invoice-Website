@@ -1,58 +1,58 @@
 <h1>Employees</h1>
 <br>
-<% if (User.where(:admin => false).count > 0 and !current_user.master) || (User.count > 0 and current_user.master) %>
+<% if (User.where('profile >= ?', 2).count > 0 and current_user.profile < 3) || (User.count > 0 and current_user.profile == 3) %>
   <table class="table table-striped">
-    <% if current_user.master %>
+    <% if current_user.profile == 3 %>
       <col width="5%"> <!-- ID for Masters -->
     <% end %>
     <col width="20%"> <!-- Employee Name -->
-    <% if current_user.master %>
+    <% if current_user.profile == 3 %>
         <col width="20%"> <!-- Username for Masters -->
     <% end %>
     <col width="20%"> <!-- Email -->
     <col width="10%"> <!-- Hourly Rate -->
     <col width="10%"> <!-- Current Invoice -->
-    <% if current_user.master %>
+    <% if current_user.profile == 3 %>
         <col width="1%"> <!-- Manager? for Masters -->
         <col width="1%"> <!-- Admin? for Masters -->
         <col width="1%"> <!-- Reset Profile? for Masters -->
     <% end %>
     <col width="1%"> <!-- View Invoices Button -->
     <col width="1%"> <!-- Edit User Button -->
-    <% if current_user.master %>
+    <% if current_user.profile == 3 %>
       <col width="1%"> <!-- Delete User Button -->
     <% end %>
     <tr>
-      <% if current_user.master %>
+      <% if current_user.profile == 3 %>
           <th class="bottom-align">ID</th>
       <% end %>
       <th class="bottom-align">Employee Name</th>
-      <% if current_user.master %>
+      <% if current_user.profile == 3 %>
           <th class="bottom-align">Username</th>
       <% end %>
       <th class="bottom-align">Email</th>
       <th class="bottom-align text-right">Hourly Rate</th>
       <th class="bottom-align text-right">Current Invoice</th>
-      <% if current_user.master %>
+      <% if current_user.profile == 3 %>
           <th class="bottom-align text-center">Manager?</th>
           <th class="bottom-align text-center">Admin?</th>
           <th class="bottom-align text-center">Reset Profile?</th>
       <% end %>
       <th></th>
       <th></th>
-      <% if current_user.master %>
+      <% if current_user.profile == 3 %>
         <th></th>
       <% end %>
     </tr>
     <%= render @users %>
   </table>
-    <% if current_user.master %>
+    <% if current_user.profile == 3 %>
       <td>
         <%= link_to 'NEW USER', new_user_path, class: 'btn btn-success' %>
       </td>
     <% end %>
 <% else %>
-    <% if current_user.master %>
+    <% if current_user.profile == 3 %>
       <p>There are no employees yet.</p>
       <td>
         <%= link_to 'NEW USER', new_user_path, class: 'btn btn-success' %>

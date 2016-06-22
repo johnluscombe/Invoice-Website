@@ -26,9 +26,9 @@ describe 'Admin User Pages' do
           should have_link('EDIT')
           should have_link('DELETE')
 
-          if user.master
+          if user.profile == 3
             should have_selector('tr', text: 'N/A N/A Yes Yes No')
-          elsif user.admin
+          elsif user.profile >= 2
             should have_selector('tr', text: 'N/A N/A Yes No No')
           else
             should have_selector('tr', text: '$ 10.00 - No No No')
@@ -83,7 +83,7 @@ describe 'Admin User Pages' do
             fill_in 'user_fullname', with: 'New Name'
             fill_in 'user_name', with: 'newname'
             fill_in 'user_email', with: 'new.name@example.com'
-            check 'user_admin'
+            select 'Manager', from: 'user_profile'
           end
 
           it 'allows the user to fill in the fields' do
@@ -106,7 +106,7 @@ describe 'Admin User Pages' do
             fill_in 'user_fullname', with: 'New Name'
             fill_in 'user_name', with: 'newname'
             fill_in 'user_email', with: 'new.name@example.com'
-            check 'user_master'
+            select 'Administrator', from: 'user_profile'
           end
 
           it 'allows the user to fill in the fields' do
@@ -229,8 +229,7 @@ describe 'Admin User Pages' do
           should have_field('user_fullname', with: employee.fullname)
           should have_field('user_name', with: employee.name)
           should have_field('user_email', with: employee.email)
-          should have_field('user_admin')
-          should have_field('user_master')
+          should have_field('user_profile')
           should have_field('user_first_time')
           should have_field('user_rate')
         end
@@ -300,7 +299,7 @@ describe 'Admin User Pages' do
 
           describe 'upgrade to manager' do
             before do
-              check 'user_admin'
+              select 'Manager', from: 'user_profile'
             end
 
             it 'redirects back to users page and shows user' do
@@ -312,7 +311,7 @@ describe 'Admin User Pages' do
 
           describe 'upgrade to admin' do
             before do
-              check 'user_master'
+              select 'Administrator', from: 'user_profile'
             end
 
             it 'redirects back to users page and shows user' do
@@ -336,8 +335,7 @@ describe 'Admin User Pages' do
           should have_field('user_fullname', with: manager.fullname)
           should have_field('user_name', with: manager.name)
           should have_field('user_email', with: manager.email)
-          should have_field('user_admin')
-          should have_field('user_master')
+          should have_field('user_profile')
           should have_field('user_first_time')
         end
 
@@ -368,7 +366,7 @@ describe 'Admin User Pages' do
 
           describe 'downgrade to employee' do
             before do
-              uncheck 'user_admin'
+              select 'Employee', from: 'user_profile'
             end
 
             it 'redirects back to users page and shows user' do
@@ -380,7 +378,7 @@ describe 'Admin User Pages' do
 
           describe 'upgrade to admin' do
             before do
-              check 'user_master'
+              select 'Administrator', from: 'user_profile'
             end
 
             it 'redirects back to users page and shows user' do
@@ -404,8 +402,7 @@ describe 'Admin User Pages' do
           should have_field('user_fullname', with: new_admin.fullname)
           should have_field('user_name', with: new_admin.name)
           should have_field('user_email', with: new_admin.email)
-          should have_field('user_admin')
-          should have_field('user_master')
+          should have_field('user_profile')
           should have_field('user_first_time')
         end
 
@@ -436,8 +433,7 @@ describe 'Admin User Pages' do
 
           describe 'downgrade to employee' do
             before do
-              uncheck 'user_admin'
-              uncheck 'user_master'
+              select 'Employee', from: 'user_profile'
             end
 
             it 'redirects back to users page and shows user' do
@@ -449,7 +445,7 @@ describe 'Admin User Pages' do
 
           describe 'downgrade to manager' do
             before do
-              uncheck 'user_master'
+              select 'Manager', from: 'user_profile'
             end
 
             it 'redirects back to users page and shows user' do

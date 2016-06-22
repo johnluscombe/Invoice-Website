@@ -25,7 +25,7 @@ describe 'Manager User Pages' do
           should have_link('EDIT')
           should_not have_link('DELETE')
 
-          if user.master or user.admin
+          if user.profile >= 2
             should_not have_selector('tr', text: user.email)
           else
             should_not have_selector('tr', text: user.id.to_s + ' User')

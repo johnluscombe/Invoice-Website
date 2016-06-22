@@ -1,4 +1,4 @@
-<% if current_user.admin %>
+<% if current_user.profile >= 2 %>
     <% if params.has_key?(:all) %>
         <h1>All Invoices</h1>
     <% elsif params.has_key?(:pending_only) %>
@@ -15,7 +15,7 @@
     (@user == nil and params.has_key?(:all) and @invoices.count > 0) or
     (@user == nil and params.has_key?(:pending_only) and @invoices.count > 0) %>
     <table class="table table-striped">
-      <% if current_user.master %>
+      <% if current_user.profile == 3 %>
           <col width="5%"> <!-- ID for Masters -->
       <% end %>
       <% if params.has_key?(:all) or params.has_key?(:pending_only) %>
@@ -23,23 +23,23 @@
       <% end %>
       <col width="20%"> <!-- For Dates -->
       <col width="7%"> <!-- Hours -->
-      <% if current_user.master %>
+      <% if current_user.profile == 3 %>
         <col width="7%"> <!-- Rate for Masters -->
       <% end %>
       <col width="11%"> <!-- Net Pay -->
       <col width="15%"> <!-- Status -->
-      <% if current_user.admin %>
+      <% if current_user.profile >= 2 %>
           <col width="10%"> <!-- Check No. for Admins and Masters -->
       <% end %>
       <col width="1%"> <!-- Button 1 -->
       <col width="1%"> <!-- Button 2 -->
       <col width="1%"> <!-- Button 3 -->
       <col width="1%"> <!-- Button 4 -->
-      <% if current_user.admin %>
+      <% if current_user.profile >= 2 %>
           <col width="1%"> <!-- Button 5 for Admins and Masters -->
       <% end %>
       <tr>
-        <% if current_user.master %>
+        <% if current_user.profile == 3 %>
             <th class="bottom-align">ID</th>
         <% end %>
         <% if params.has_key?(:all) or params.has_key?(:pending_only) %>
@@ -47,19 +47,19 @@
         <% end %>
         <th class="text-center bottom-align">For Dates</th>
         <th class="text-right bottom-align">Hours</th>
-        <% if current_user.master %>
+        <% if current_user.profile == 3 %>
           <th class="text-right bottom-align">Rate</th>
         <% end %>
         <th class="text-right bottom-align">Net Pay</th>
         <th class="text-center bottom-align">Status</th>
-        <% if current_user.admin %>
+        <% if current_user.profile >= 2 %>
             <th class="text-center bottom-align">Check No.</th>
         <% end %>
         <th></th>
         <th></th>
         <th></th>
         <th></th>
-        <% if current_user.admin %>
+        <% if current_user.profile >= 2 %>
           <th></th>
         <% end %>
       </tr>

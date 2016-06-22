@@ -9,7 +9,7 @@ class LoginsController < ApplicationController
       if user.first_time
         redirect_to edit_user_path(user)
       else
-        if user.admin
+        if user.profile >= 2
           redirect_to users_path
         else
           redirect_to user_invoices_path(user)

@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160305010413) do
+ActiveRecord::Schema.define(version: 20160622000111) do
 
   create_table "invoices", force: :cascade do |t|
     t.date     "start_date"
     t.date     "end_date"
     t.string   "status"
+    t.integer  "user_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.integer  "user_id"
     t.float    "hours"
     t.float    "net_pay"
     t.boolean  "status_override"
@@ -42,16 +42,15 @@ ActiveRecord::Schema.define(version: 20160305010413) do
   add_index "payments", ["invoice_id"], name: "index_payments_on_invoice_id"
 
   create_table "users", force: :cascade do |t|
+    t.string   "name"
     t.string   "password_digest"
     t.string   "email"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.boolean  "admin",           default: false
-    t.string   "name"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.float    "rate"
     t.string   "fullname"
     t.boolean  "first_time",      default: true
-    t.boolean  "master",          default: false
+    t.integer  "profile",         default: 1
   end
 
 end

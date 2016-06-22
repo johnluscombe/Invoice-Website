@@ -8,15 +8,15 @@ FactoryGirl.define do
 
     factory :employee do
       rate 10
+      profile 1
     end
 
     factory :manager do
-      admin true
+      profile 2
     end
 
     factory :admin do
-      admin true
-      master true
+      profile 3
     end
 
     first_time false

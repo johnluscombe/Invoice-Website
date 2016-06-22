@@ -7,10 +7,10 @@ class User < ActiveRecord::Base
   validates :rate, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
   def self.get_users(current_user)
-    if current_user.master
+    if current_user.profile == 3
       User.all.order(:fullname)
     else
-      User.where(:admin => false)
+      User.where(:profile => 1)
     end
   end
 end

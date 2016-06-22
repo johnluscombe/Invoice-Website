@@ -1,5 +1,5 @@
 <tr>
-  <% if current_user.master %>
+  <% if current_user.profile == 3 %>
       <td><%= invoice.id %></td>
   <% end %>
   <% if params.has_key?(:all) or params.has_key?(:pending_only) %>
@@ -28,7 +28,7 @@
       <td class="override text-right"><%= sprintf('%.2f', invoice.hours) %></td>
   <% end %>
 
-  <% if current_user.master %>
+  <% if current_user.profile == 3 %>
       <% if invoice.rate == nil %>
           <td class="text-right"><%= sprintf('%.2f', invoice.user.rate) %></td>
       <% else %>
@@ -73,11 +73,11 @@
       <td class="text-center"><%= invoice.status %></td>
   <% end %>
 
-  <% if current_user.admin %>
+  <% if current_user.profile >= 2 %>
       <td class="text-right"><%= invoice.check_no %></td>
   <% end %>
 
-  <% if !current_user.admin %>
+  <% if current_user.profile == 1 %>
     <% if invoice.status == 'Started' %>
         <td class="text-center">
           <%= link_to 'VIEW PAYMENTS', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs' %>

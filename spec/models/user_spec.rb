@@ -13,12 +13,11 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:first_time) }
-  it { should respond_to(:admin) }
-  it { should respond_to(:master) }
+  it { should respond_to(:profile) }
   it { should respond_to(:invoices) }
 
   it { should be_valid }
-  it { should_not be_admin }
+  specify { expect(user.profile).to eq(1) }
 
   describe 'empty username' do
     before { user.name = '' }
@@ -56,18 +55,6 @@ describe User do
     it { should be_valid }
   end
 
-  describe 'accepts blank admin' do
-    before { user.admin = '' }
-
-    it { should be_valid }
-  end
-
-  describe 'accepts blank master' do
-    before { user.master = '' }
-
-    it { should be_valid }
-  end
-
   describe 'duplicate name' do
     let(:duplicate) do
       d = user
@@ -84,12 +71,12 @@ describe User do
   describe 'manager account' do
     let (:manager) { FactoryGirl.create(:manager) }
 
-    specify { expect(manager).to be_admin }
+    specify { expect(manager.profile).to eq(2) }
   end
 
   describe 'administrator account' do
     let (:admin) { FactoryGirl.create(:admin) }
 
-    specify { expect(admin).to be_master }
+    specify { expect(admin.profile).to eq(3) }
   end
 end

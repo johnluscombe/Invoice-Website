@@ -18,9 +18,6 @@ class UsersController < ApplicationController
       @user.password = 'password'
       @user.password_confirmation = 'password'
     end
-    if @user.master
-      @user.admin = true
-    end
     if @user.save
       redirect_to users_path
     else
@@ -31,15 +28,15 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    if !current_user?(@user) and !current_user.admin
+    if !current_user?(@user) and current_user.profile == 1
       flash[:danger] = "Cannot edit other user's profiles"
       redirect_to users_path
     elsif current_user.first_time
       flash.now[:info] = 'Please update your profile information'
     end
-  rescue
-    flash[:danger] = 'Unable to find user'
-    redirect_to users_path
+  # rescue
+  #   flash[:danger] = 'Unable to find user'
+  #   redirect_to users_path
   end
 
   def update
@@ -52,9 +49,6 @@ class UsersController < ApplicationController
       end
       if current_user?(@user)
         @user.first_time = false
-      end
-      if @user.master
-        @user.admin = true
       end
       @user.save
     else
@@ -72,7 +66,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:fullname, :name, :email, :rate, :password, :password_confirmation, :admin, :master,
+    params.require(:user).permit(:fullname, :name, :email, :rate, :password, :password_confirmation, :profile,
                                  :first_time, invoices_attributes: [:id, :start_date, :end_date, :status])
   end
 
@@ -87,8 +81,8 @@ class UsersController < ApplicationController
     #If the queried user does not match AND the current user is not an admin OR
     #If the queried user does not match AND the current user is not a master AND the queried user is an admin
     #Give an error
-    if (!current_user?(@user) and !current_user.admin) or (!current_user?(@user) and !current_user.master and @user.admin)
-      if current_user.admin
+    if (!current_user?(@user) and current_user.profile == 1) or (!current_user?(@user) and current_user.profile < 3 and @user.profile >= 2)
+      if current_user.profile >= 2
         flash[:danger] = 'You do not have permission to perform this action. Please contact your administrator.'
       else
         flash[:danger] = 'You do not have permission to perform this action. Please contact your manager.'
@@ -101,21 +95,21 @@ class UsersController < ApplicationController
   end
 
   def ensure_admin
-    unless current_user.admin
+    unless current_user.profile >= 2
       flash[:danger] = 'You do not have permission to perform this action. Please contact your manager.'
       redirect_to user_invoices_path(current_user)
     end
   end
 
   def ensure_master
-    unless current_user.master
+    unless current_user.profile == 3
       flash[:danger] = 'You do not have permission to perform this action. Please contact your administrator.'
       redirect
     end
   end
 
   def redirect
-    if current_user.admin
+    if current_user.profile >= 2
       redirect_to users_path
     else
       redirect_to user_invoices_path(current_user)

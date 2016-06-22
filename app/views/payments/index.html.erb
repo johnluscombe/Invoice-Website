@@ -18,7 +18,7 @@
 
 <% if @invoice.payments.count > 0 %>
     <table class="table table-striped">
-      <% if current_user.master %>
+      <% if current_user.profile == 3 %>
           <col width="5%"> <!-- ID for Masters -->
       <% end %>
       <col width="10%"> <!-- Date -->
@@ -28,7 +28,7 @@
       <col width="1%"> <!-- Edit Button -->
       <col width="1%"> <!-- Delete Button -->
       <tr>
-        <% if current_user.master %>
+        <% if current_user.profile == 3 %>
             <th>ID</th>
         <% end %>
         <th>Date</th>
@@ -40,7 +40,7 @@
       </tr>
       <%= render @payments %>
       <tr>
-        <% if current_user.master %>
+        <% if current_user.profile == 3 %>
             <td class="middle-align text-right" colspan="3"><strong>Total:</strong></td>
         <% else %>
             <td class="middle-align text-right" colspan="2"><strong>Total:</strong></td>
