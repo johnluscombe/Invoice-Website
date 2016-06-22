@@ -137,21 +137,10 @@ ul {
   padding-right: 25px;
 }
 
-@media (min-width: 1400px) {
-  .container {
-    width: 1365px;
-  }
-}
-
-@media (min-width: 1600px) {
-  .container {
-    width: 1560px;
-  }
-}
-
-@media (min-width: 1800px) {
-  .container {
-    width: 1755px;
+@media (min-width: 1200px) {
+  .container-fluid {
+    margin-left: 120px;
+    margin-right: 120px;
   }
 }
 
