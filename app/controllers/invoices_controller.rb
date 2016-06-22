@@ -106,7 +106,7 @@ class InvoicesController < ApplicationController
   private
 
   def invoice_params
-    params.require(:invoice).permit(:start_date, :end_date, :status, :hours, :net_pay, :rate, :check_no,
+    params.require(:invoice).permit(:start_date, :end_date, :status, :hours, :net_pay, :rate, :check_no, :transfer_date,
                                     payments_attributes: [:id, :date, :description, :hours])
   end
 

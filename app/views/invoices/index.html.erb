@@ -30,6 +30,7 @@
       <col width="15%"> <!-- Status -->
       <% if current_user.profile >= 2 %>
           <col width="10%"> <!-- Check No. for Admins and Masters -->
+          <col width="10%"> <!-- Transfer Date for Admins and Masters -->
       <% end %>
       <col width="1%"> <!-- Button 1 -->
       <col width="1%"> <!-- Button 2 -->
@@ -54,6 +55,7 @@
         <th class="text-center bottom-align">Status</th>
         <% if current_user.profile >= 2 %>
             <th class="text-center bottom-align">Check No.</th>
+            <th class="text-center bottom-align">Transfer Date</th>
         <% end %>
         <th></th>
         <th></th>
