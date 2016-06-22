@@ -76,7 +76,7 @@
   <% if current_user.profile >= 2 %>
       <td class="text-right"><%= invoice.check_no %></td>
       <% if invoice.transfer_date == nil %>
-          <td class="text-center">-</td>
+          <td class="text-center"></td>
       <% else %>
           <td class="text-center"><%= invoice.transfer_date.strftime('%m/%d/%y') %></td>
       <% end %>
