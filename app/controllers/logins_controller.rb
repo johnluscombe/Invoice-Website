@@ -1,5 +1,12 @@
 class LoginsController < ApplicationController
   def new
+    if current_user
+      if current_user.profile >= 2
+        redirect_to users_path
+      else
+        redirect_to user_invoices_path(current_user)
+      end
+    end
   end
 
   def create

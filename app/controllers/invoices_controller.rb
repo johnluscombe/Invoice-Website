@@ -72,7 +72,7 @@ class InvoicesController < ApplicationController
         end
       end
     elsif current_user.profile >= 2 and params.has_key?(:approve)
-      @invoice.update(:status => 'Paid')
+      @invoice.update(:status => 'Paid', :transfer_date => Date.today)
       if params.has_key?(:from_pending)
         redirect_to invoices_path(:pending_only => true)
       else
