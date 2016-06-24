@@ -1,5 +1,5 @@
-require_relative '../rails_helper'
-require_relative '../support/login'
+require_relative '../../rails_helper'
+require_relative '../../support/login'
 
 describe 'Admin User Pages' do
   subject { page }

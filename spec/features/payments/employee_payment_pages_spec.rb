@@ -1,17 +1,16 @@
-require_relative '../rails_helper'
-require_relative '../support/login'
+require_relative '../../rails_helper'
+require_relative '../../support/login'
 
-describe 'Admin Invoice Pages' do
+describe 'Employee Invoice Pages' do
   subject { page }
 
-  describe 'admin' do
-    let(:admin) { FactoryGirl.create(:admin) }
+  describe 'employee' do
     let(:employee) { FactoryGirl.create(:employee) }
     let(:invoice) { FactoryGirl.create(:invoice, user: employee)}
 
     before do
       10.times { FactoryGirl.create(:payment, invoice: invoice) }
-      login admin
+      login employee
       visit invoice_payments_path(invoice)
     end
 
@@ -22,7 +21,7 @@ describe 'Admin Invoice Pages' do
     describe 'list payments' do
       it 'should show all payments' do
         Payment.all.each do |payment|
-          should have_selector('tr', text: payment.id.to_s + ' ' + payment.date.strftime('%m-%d-%Y'))
+          should_not have_selector('tr', text: payment.id.to_s + ' ' + payment.date.strftime('%m-%d-%Y'))
           should have_selector('tr', text: payment.description)
           should have_selector('tr', text: '3.00 $ 30.00')
           should have_link('EDIT')
@@ -85,7 +84,7 @@ describe 'Admin Invoice Pages' do
         should have_field('payment_date', with: payment.date)
         should have_field('payment_description', with: payment.description)
         should have_field('payment_hours', with: payment.hours)
-        should have_field('payment_daily_rate')
+        should_not have_field('payment_daily_rate')
       end
 
       describe 'with valid information' do
@@ -93,7 +92,6 @@ describe 'Admin Invoice Pages' do
           fill_in 'payment_date', with: '2016-12-31'
           fill_in 'payment_description', with: 'Changed Description'
           fill_in 'payment_hours', with: 4
-          fill_in 'payment_daily_rate', with: 15
         end
 
         describe 'changes the data' do
@@ -102,13 +100,12 @@ describe 'Admin Invoice Pages' do
           specify { expect(payment.reload.date).to eq('2016-12-31'.to_date) }
           specify { expect(payment.reload.description).to eq('Changed Description') }
           specify { expect(payment.reload.hours).to eq(4) }
-          specify { expect(payment.reload.daily_rate).to eq(15) }
         end
 
         it 'redirects back to payments page and shows payment' do
           click_button submit
           should have_content 'Payments for Invoice'
-          should have_selector('tr', text: payment.id.to_s + ' 12-31-2016 Changed Description 4.00 $ 15.00')
+          should have_selector('tr', text: '12-31-2016 Changed Description 4.00 $ 40.00')
         end
 
         it 'does not add a new payment to the system' do

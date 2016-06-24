@@ -13,6 +13,7 @@ describe User do
   it { should respond_to(:status_override) }
   it { should respond_to(:rate) }
   it { should respond_to(:check_no) }
+  it { should respond_to(:transfer_date) }
   it { should respond_to(:user) }
   it { should respond_to(:payments) }
 
@@ -68,6 +69,12 @@ describe User do
 
   describe 'accepts blank check no' do
     before { invoice.check_no = '' }
+
+    it { should be_valid }
+  end
+
+  describe 'accepts blank transfer date' do
+    before { invoice.transfer_date = '' }
 
     it { should be_valid }
   end

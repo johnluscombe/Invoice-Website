@@ -1,17 +1,17 @@
-require_relative '../rails_helper'
-require_relative '../support/login'
+require_relative '../../rails_helper'
+require_relative '../../support/login'
 
-describe 'Manager Invoice Pages' do
+describe 'Admin Invoice Pages' do
   subject { page }
 
-  describe 'manager' do
-    let(:manager) { FactoryGirl.create(:manager) }
+  describe 'admin' do
+    let(:admin) { FactoryGirl.create(:admin) }
     let(:employee) { FactoryGirl.create(:employee) }
     let(:invoice) { FactoryGirl.create(:invoice, user: employee)}
 
     before do
       10.times { FactoryGirl.create(:payment, invoice: invoice) }
-      login manager
+      login admin
       visit invoice_payments_path(invoice)
     end
 
@@ -22,7 +22,7 @@ describe 'Manager Invoice Pages' do
     describe 'list payments' do
       it 'should show all payments' do
         Payment.all.each do |payment|
-          should_not have_selector('tr', text: payment.id.to_s + ' ' + payment.date.strftime('%m-%d-%Y'))
+          should have_selector('tr', text: payment.id.to_s + ' ' + payment.date.strftime('%m-%d-%Y'))
           should have_selector('tr', text: payment.description)
           should have_selector('tr', text: '3.00 $ 30.00')
           should have_link('EDIT')
@@ -108,7 +108,7 @@ describe 'Manager Invoice Pages' do
         it 'redirects back to payments page and shows payment' do
           click_button submit
           should have_content 'Payments for Invoice'
-          should have_selector('tr', text: '12-31-2016 Changed Description 4.00 $ 15.00')
+          should have_selector('tr', text: payment.id.to_s + ' 12-31-2016 Changed Description 4.00 $ 15.00')
         end
 
         it 'does not add a new payment to the system' do
