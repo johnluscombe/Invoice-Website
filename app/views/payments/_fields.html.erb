@@ -3,7 +3,7 @@
   <col width="300">
   <tr>
     <td class="text-right"><%= f.label :date %></td>
-    <td><%= f.date_field :date, class: 'form-control' %></td>
+    <td><%= f.date_field :date, class: 'form-control', :value => Date.today.strftime('%Y-%m-%d') %></td>
   </tr>
   <tr>
     <td class="text-right"><%= f.label :description %></td>

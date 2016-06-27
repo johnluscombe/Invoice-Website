@@ -1,21 +1,19 @@
-<% if current_user.profile >= 2 %>
-    <% if params.has_key?(:all) %>
-        <h1>All Invoices</h1>
-    <% elsif params.has_key?(:pending_only) %>
-        <h1>Pending Invoices</h1>
-    <% else %>
-        <h1>Invoices for <%= @user.fullname %></h1>
-    <% end %>
-    <%= link_to 'BACK', users_path, class: 'btn btn-primary btn-outline btn-xs' %><br>
-<% else %>
-    <h1>Invoices</h1>
-<% end %>
-<br>
-<% if (@user and @user.invoices.count > 0) or
-    (@user == nil and params.has_key?(:all) and @invoices.count > 0) or
-    (@user == nil and params.has_key?(:pending_only) and @invoices.count > 0) %>
-    <table class="table table-striped">
-      <% if current_user.profile == 3 %>
+- if current_user.profile >= 2
+    - if params.has_key?(:all)
+        %h1 All Invoices
+    - elsif params.has_key?(:pending_only)
+        %h1 Pending Invoices
+    - else
+        %h1= "Invoices for #{@user.fullname}"
+    = link_to 'BACK', users_path, class: 'btn btn-primary btn-outline btn-xs'
+    %br
+- else
+    %h1 Invoices
+%br
+- if (@user and @user.invoices.count > 0) or (@user == nil and params.has_key?(:all) and @invoices.count > 0) or (@user == nil and params.has_key?(:pending_only) and @invoices.count > 0) %>
+    %table.table table-striped
+    - if current_user.profile == 3
+      %col
           <col width="5%"> <!-- ID for Masters -->
       <% end %>
       <% if params.has_key?(:all) or params.has_key?(:pending_only) %>
