@@ -3,7 +3,11 @@
   <col width="300">
   <tr>
     <td class="text-right"><%= f.label :date %></td>
-    <td><%= f.date_field :date, class: 'form-control', :value => Date.today.strftime('%Y-%m-%d') %></td>
+    <% if @payment.date == nil %>
+        <td><%= f.date_field :date, class: 'form-control', :value => Date.today.strftime('%Y-%m-%d') %></td>
+    <% else %>
+        <td><%= f.date_field :date, class: 'form-control' %></td>
+    <% end %>
   </tr>
   <tr>
     <td class="text-right"><%= f.label :description %></td>

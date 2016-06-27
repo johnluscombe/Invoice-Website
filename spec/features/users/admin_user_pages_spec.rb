@@ -144,9 +144,7 @@ describe 'Admin User Pages' do
       describe 'own profile' do
         let!(:original_name) { admin.name }
 
-        before do
-          visit edit_user_path(admin)
-        end
+        before { visit edit_user_path(admin) }
 
         it 'has the correct fields' do
           should have_field('user_fullname', with: admin.fullname)
@@ -221,9 +219,7 @@ describe 'Admin User Pages' do
         let(:employee) { FactoryGirl.create(:employee) }
         let!(:original_name) { employee.name }
 
-        before do
-          visit edit_user_path(employee)
-        end
+        before { visit edit_user_path(employee) }
 
         it 'has the correct fields' do
           should have_field('user_fullname', with: employee.fullname)
@@ -259,9 +255,7 @@ describe 'Admin User Pages' do
         end
 
         describe 'non-existant' do
-          before do
-            visit edit_user_path(-1)
-          end
+          before { visit edit_user_path(-1) }
 
           it 'redirects back to users page' do
             should have_current_path(users_path)
@@ -298,9 +292,7 @@ describe 'Admin User Pages' do
           end
 
           describe 'upgrade to manager' do
-            before do
-              select 'Manager', from: 'user_profile'
-            end
+            before { select 'Manager', from: 'user_profile' }
 
             it 'redirects back to users page and shows user' do
               click_button submit
@@ -310,9 +302,7 @@ describe 'Admin User Pages' do
           end
 
           describe 'upgrade to admin' do
-            before do
-              select 'Administrator', from: 'user_profile'
-            end
+            before { select 'Administrator', from: 'user_profile' }
 
             it 'redirects back to users page and shows user' do
               click_button submit
@@ -327,9 +317,7 @@ describe 'Admin User Pages' do
         let(:manager) { FactoryGirl.create(:manager) }
         let!(:original_name) { manager.name }
 
-        before do
-          visit edit_user_path(manager)
-        end
+        before { visit edit_user_path(manager) }
 
         it 'has the correct fields' do
           should have_field('user_fullname', with: manager.fullname)
@@ -365,9 +353,7 @@ describe 'Admin User Pages' do
           end
 
           describe 'downgrade to employee' do
-            before do
-              select 'Employee', from: 'user_profile'
-            end
+            before { select 'Employee', from: 'user_profile' }
 
             it 'redirects back to users page and shows user' do
               click_button submit
@@ -377,9 +363,7 @@ describe 'Admin User Pages' do
           end
 
           describe 'upgrade to admin' do
-            before do
-              select 'Administrator', from: 'user_profile'
-            end
+            before { select 'Administrator', from: 'user_profile' }
 
             it 'redirects back to users page and shows user' do
               click_button submit
@@ -394,9 +378,7 @@ describe 'Admin User Pages' do
         let(:new_admin) { FactoryGirl.create(:admin) }
         let!(:original_name) { new_admin.name }
 
-        before do
-          visit edit_user_path(new_admin)
-        end
+        before { visit edit_user_path(new_admin) }
 
         it 'has the correct fields' do
           should have_field('user_fullname', with: new_admin.fullname)
@@ -432,9 +414,7 @@ describe 'Admin User Pages' do
           end
 
           describe 'downgrade to employee' do
-            before do
-              select 'Employee', from: 'user_profile'
-            end
+            before { select 'Employee', from: 'user_profile' }
 
             it 'redirects back to users page and shows user' do
               click_button submit
@@ -444,9 +424,7 @@ describe 'Admin User Pages' do
           end
 
           describe 'downgrade to manager' do
-            before do
-              select 'Manager', from: 'user_profile'
-            end
+            before { select 'Manager', from: 'user_profile' }
 
             it 'redirects back to users page and shows user' do
               click_button submit
@@ -462,9 +440,7 @@ describe 'Admin User Pages' do
       let!(:employee) { FactoryGirl.create(:employee) }
       let!(:manager) { FactoryGirl.create(:manager) }
 
-      before do
-        visit users_path
-      end
+      before { visit users_path }
 
       it { should have_link('DELETE', href: user_path(employee)) }
 

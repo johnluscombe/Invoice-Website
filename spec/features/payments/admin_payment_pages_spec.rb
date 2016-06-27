@@ -35,12 +35,14 @@ describe 'Admin Invoice Pages' do
       let(:submit) { 'NEW PAYMENT' }
       let(:cancel) { 'CANCEL' }
 
-      before { visit new_invoice_payment_path(invoice) }
-
       before do
-        fill_in 'payment_date', with: '2016-01-01'
+        visit new_invoice_payment_path(invoice)
         fill_in 'payment_description', with: 'Test Description'
         fill_in 'payment_hours', with: 3
+      end
+
+      it "has the date filled in with today's date" do
+        should have_field('payment_date', with: Date.today.strftime('%Y-%m-%d'))
       end
 
       describe 'with valid information' do
@@ -55,7 +57,7 @@ describe 'Admin Invoice Pages' do
         it 'redirects to payments page and shows new payment' do
           click_button submit
           should have_current_path(invoice_payments_path(invoice))
-          should have_selector('tr', text: '01-01-2016 Test Description 3.00 $ 30.00')
+          should have_selector('tr', text: Date.today.strftime('%m-%d-%Y') + ' Test Description 3.00 $ 30.00')
         end
       end
 
@@ -77,9 +79,7 @@ describe 'Admin Invoice Pages' do
       let(:invoice) { FactoryGirl.create(:invoice, user: employee) }
       let(:payment) { FactoryGirl.create(:payment, invoice: invoice) }
 
-      before do
-        visit edit_payment_path(payment)
-      end
+      before { visit edit_payment_path(payment) }
 
       it 'has the correct fields' do
         should have_field('payment_date', with: payment.date)
@@ -128,9 +128,7 @@ describe 'Admin Invoice Pages' do
       end
 
       describe 'non-existant' do
-        before do
-          visit edit_payment_path(-1)
-        end
+        before { visit edit_payment_path(-1) }
 
         it { should have_content('Unable') }
       end
@@ -140,9 +138,7 @@ describe 'Admin Invoice Pages' do
       let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
       let!(:payment) { FactoryGirl.create(:payment, invoice: invoice) }
 
-      before do
-        visit invoice_payments_path(invoice)
-      end
+      before { visit invoice_payments_path(invoice) }
 
       it { should have_link('DELETE', href: payment_path(payment)) }
 

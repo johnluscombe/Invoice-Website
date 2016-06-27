@@ -54,9 +54,7 @@ describe 'Employee Invoice Pages' do
       let(:cancel) { 'CANCEL' }
       let(:invoice) { FactoryGirl.create(:invoice, user: employee) }
 
-      before do
-        visit edit_invoice_path(invoice)
-      end
+      before { visit edit_invoice_path(invoice) }
 
       it 'has the correct fields' do
         should have_field('invoice_start_date', with: invoice.start_date)
@@ -105,9 +103,7 @@ describe 'Employee Invoice Pages' do
       end
 
       describe 'non-existant' do
-        before do
-          visit edit_user_path(-1)
-        end
+        before { visit edit_user_path(-1) }
 
         it { should have_content('Unable') }
       end
@@ -116,9 +112,7 @@ describe 'Employee Invoice Pages' do
     describe 'delete invoices' do
       let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
 
-      before do
-        visit user_invoices_path(employee)
-      end
+      before { visit user_invoices_path(employee) }
 
       it { should have_link('DELETE', href: invoice_path(invoice)) }
 

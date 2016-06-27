@@ -7,9 +7,7 @@ describe 'Navbar' do
   describe 'admin' do
     let(:admin) { FactoryGirl.create(:admin) }
 
-    before do
-      login admin
-    end
+    before { login admin }
 
     it 'should have the right links' do
       should have_link('Users', href: users_path)
@@ -58,9 +56,7 @@ describe 'Navbar' do
   describe 'manager' do
     let(:manager) { FactoryGirl.create(:manager) }
 
-    before do
-      login manager
-    end
+    before { login manager }
 
     it 'should have the right links' do
       should have_link('Users', href: users_path)
@@ -108,9 +104,7 @@ describe 'Navbar' do
   describe 'employee without any invoices' do
     let(:employee) { FactoryGirl.create(:employee) }
 
-    before do
-      login employee
-    end
+    before { login employee }
 
     it 'should have the right links' do
       should_not have_link('Users', href: users_path)
@@ -162,9 +156,7 @@ describe 'Navbar' do
     let(:employee) { FactoryGirl.create(:employee) }
     let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
 
-    before do
-      login employee
-    end
+    before { login employee }
 
     it 'should have the right links' do
       should_not have_link('Users', href: users_path)

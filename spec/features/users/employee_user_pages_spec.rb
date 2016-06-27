@@ -48,9 +48,7 @@ describe 'Employee User Pages' do
       describe 'own profile' do
         let!(:original_name) { employee.name }
 
-        before do
-          visit edit_user_path(employee)
-        end
+        before { visit edit_user_path(employee) }
 
         it 'has the correct fields' do
           should have_field('user_fullname', with: employee.fullname)
@@ -128,9 +126,7 @@ describe 'Employee User Pages' do
       describe 'manager profile' do
         let(:new_manager) { FactoryGirl.create(:manager) }
 
-        before do
-          visit edit_user_path(new_manager)
-        end
+        before { visit edit_user_path(new_manager) }
 
         it 'redirects to the invoices page' do
           should have_current_path(user_invoices_path(employee))
@@ -144,9 +140,7 @@ describe 'Employee User Pages' do
       describe 'admin profile' do
         let(:admin) { FactoryGirl.create(:admin) }
 
-        before do
-          visit edit_user_path(admin)
-        end
+        before { visit edit_user_path(admin) }
 
         it 'redirects to the invoices page' do
           should have_current_path(user_invoices_path(employee))

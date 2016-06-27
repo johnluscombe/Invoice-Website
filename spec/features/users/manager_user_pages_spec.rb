@@ -54,9 +54,7 @@ describe 'Manager User Pages' do
       describe 'own profile' do
         let!(:original_name) { manager.name }
 
-        before do
-          visit edit_user_path(manager)
-        end
+        before { visit edit_user_path(manager) }
 
         it 'has the correct fields' do
           should have_field('user_fullname', with: manager.fullname)
@@ -120,9 +118,7 @@ describe 'Manager User Pages' do
         let(:employee) { FactoryGirl.create(:employee) }
         let!(:original_name) { employee.name }
 
-        before do
-          visit edit_user_path(employee)
-        end
+        before { visit edit_user_path(employee) }
 
         it 'has the correct fields' do
           should have_field('user_fullname', with: employee.fullname)
@@ -156,9 +152,7 @@ describe 'Manager User Pages' do
         end
 
         describe 'non-existant' do
-          before do
-            visit edit_user_path(-1)
-          end
+          before { visit edit_user_path(-1) }
 
           it 'redirects back to users page' do
             should have_current_path(users_path)
@@ -199,9 +193,7 @@ describe 'Manager User Pages' do
       describe 'manager profile' do
         let(:new_manager) { FactoryGirl.create(:manager) }
 
-        before do
-          visit edit_user_path(new_manager)
-        end
+        before { visit edit_user_path(new_manager) }
 
         it 'redirects to the users page' do
           should have_current_path(users_path)
@@ -215,9 +207,7 @@ describe 'Manager User Pages' do
       describe 'admin profile' do
         let(:admin) { FactoryGirl.create(:admin) }
 
-        before do
-          visit edit_user_path(admin)
-        end
+        before { visit edit_user_path(admin) }
 
         it 'redirects to the users page' do
           should have_current_path(users_path)
@@ -232,9 +222,7 @@ describe 'Manager User Pages' do
     describe 'delete users' do
       let!(:employee) { FactoryGirl.create(:employee) }
 
-      before do
-        visit users_path
-      end
+      before { visit users_path }
 
       it { should_not have_link('Delete User', href: user_path(employee)) }
     end
