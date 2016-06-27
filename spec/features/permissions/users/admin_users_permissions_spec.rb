@@ -1,7 +1,7 @@
-require_relative '../../rails_helper'
-require_relative '../../support/login'
+require_relative '../../../rails_helper'
+require_relative '../../../support/login'
 
-describe 'Admin Permissions' do
+describe 'Admin Users Permissions' do
   subject { page }
 
   describe 'admin' do

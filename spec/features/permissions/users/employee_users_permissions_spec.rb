@@ -1,23 +1,23 @@
-require_relative '../../rails_helper'
-require_relative '../../support/login'
+require_relative '../../../rails_helper'
+require_relative '../../../support/login'
 
-describe 'Manager Permissions' do
+describe 'Employee Users Permissions' do
   subject { page }
 
-  describe 'manager' do
+  describe 'employee' do
     let(:admin) { FactoryGirl.create(:admin) }
     let(:manager) { FactoryGirl.create(:manager) }
-    let(:other_manager) { FactoryGirl.create(:manager) }
     let(:employee) { FactoryGirl.create(:employee) }
+    let(:other_employee) { FactoryGirl.create(:employee) }
 
-    before { login manager }
+    before { login employee }
 
     describe 'users index' do
       before { visit users_path }
 
-      it 'should load the page without error' do
-        should have_content 'Employees'
-        should_not have_content 'You do not have permission to perform this action.'
+      it 'should give a permissions error' do
+        should_not have_content 'Employees'
+        should have_content 'You do not have permission to perform this action.'
         should_not have_content 'Unable'
       end
     end
@@ -33,7 +33,7 @@ describe 'Manager Permissions' do
     end
 
     describe 'user edit for self' do
-      before { visit edit_user_path(manager) }
+      before { visit edit_user_path(employee) }
 
       it 'should load the page without error' do
         should have_content 'Edit profile'
@@ -53,7 +53,7 @@ describe 'Manager Permissions' do
     end
 
     describe 'user edit for manager' do
-      before { visit edit_user_path(other_manager) }
+      before { visit edit_user_path(manager) }
 
       it 'should give a permissions error' do
         should_not have_content 'Edit profile'
@@ -63,20 +63,21 @@ describe 'Manager Permissions' do
     end
 
     describe 'user edit for employee' do
-      before { visit edit_user_path(employee) }
+      before { visit edit_user_path(other_employee) }
 
-      it 'should load the page without error' do
-        should have_content 'Edit profile'
-        should_not have_content 'You do not have permission to perform this action.'
+      it 'should give a permissions error' do
+        should_not have_content 'Edit profile'
+        should have_content 'You do not have permission to perform this action.'
         should_not have_content 'Unable'
       end
     end
 
     describe 'user delete for self' do
-      before { page.driver.submit :delete, user_path(manager), {} }
+      before { page.driver.submit :delete, user_path(employee), {} }
 
       it 'should give a permissions error' do
-        should have_content 'Employees'
+        should have_content 'Invoices'
+        should_not have_content 'Employees'
         should have_content 'You do not have permission to perform this action.'
         should_not have_content 'Unable'
         should_not have_content 'You cannot delete yourself'
@@ -87,7 +88,8 @@ describe 'Manager Permissions' do
       before { page.driver.submit :delete, user_path(admin), {} }
 
       it 'should give a permissions error' do
-        should have_content 'Employees'
+        should have_content 'Invoices'
+        should_not have_content 'Employees'
         should have_content 'You do not have permission to perform this action.'
         should_not have_content 'Unable'
         should_not have_content 'You cannot delete yourself'
@@ -95,10 +97,11 @@ describe 'Manager Permissions' do
     end
 
     describe 'user delete for manager' do
-      before { page.driver.submit :delete, user_path(other_manager), {} }
+      before { page.driver.submit :delete, user_path(manager), {} }
 
       it 'should give a permissions error' do
-        should have_content 'Employees'
+        should have_content 'Invoices'
+        should_not have_content 'Employees'
         should have_content 'You do not have permission to perform this action.'
         should_not have_content 'Unable'
         should_not have_content 'You cannot delete yourself'
@@ -106,10 +109,11 @@ describe 'Manager Permissions' do
     end
 
     describe 'user delete for employee' do
-      before { page.driver.submit :delete, user_path(employee), {} }
+      before { page.driver.submit :delete, user_path(other_employee), {} }
 
       it 'should give a permissions error' do
-        should have_content 'Employees'
+        should have_content 'Invoices'
+        should_not have_content 'Employees'
         should have_content 'You do not have permission to perform this action.'
         should_not have_content 'Unable'
         should_not have_content 'You cannot delete yourself'
