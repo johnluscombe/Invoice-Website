@@ -40,7 +40,7 @@ describe 'Manager User Pages' do
       before { visit new_user_path }
 
       it 'redirects to the users page' do
-        should have_content('Employees')
+        should have_current_path(users_path)
       end
 
       it 'produces an error message' do
@@ -106,7 +106,7 @@ describe 'Manager User Pages' do
 
           it 'redirects back to users page and shows user' do
             click_button submit
-            should have_content 'Employees'
+            should have_current_path(users_path)
             should_not have_selector('tr', text: manager.fullname)
           end
 
@@ -161,7 +161,7 @@ describe 'Manager User Pages' do
           end
 
           it 'redirects back to users page' do
-            should have_content 'Employees'
+            should have_current_path(users_path)
           end
 
           it { should have_content('Unable') }
@@ -186,7 +186,7 @@ describe 'Manager User Pages' do
 
           it 'redirects back to users page and shows user' do
             click_button submit
-            should have_content 'Employees'
+            should have_current_path(users_path)
             should have_selector('tr', text: 'New Name new.name@example.com $ 11.00 -')
           end
 
@@ -204,7 +204,7 @@ describe 'Manager User Pages' do
         end
 
         it 'redirects to the users page' do
-          should have_content('Employees')
+          should have_current_path(users_path)
         end
 
         it 'produces an error message' do
@@ -220,7 +220,7 @@ describe 'Manager User Pages' do
         end
 
         it 'redirects to the users page' do
-          should have_content('Employees')
+          should have_current_path(users_path)
         end
 
         it 'produces an error message' do

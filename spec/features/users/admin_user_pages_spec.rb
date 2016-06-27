@@ -73,7 +73,7 @@ describe 'Admin User Pages' do
 
           it 'redirects to users page and shows new user' do
             click_button submit
-            should have_content 'Employees'
+            should have_current_path(users_path)
             should have_selector('tr', text: 'New Name newname new.name@example.com $ 10.00 - Employee Yes')
           end
         end
@@ -96,7 +96,7 @@ describe 'Admin User Pages' do
 
           it 'redirects to users page and shows new user' do
             click_button submit
-            should have_content 'Employees'
+            should have_current_path(users_path)
             should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Manager Yes')
           end
         end
@@ -119,7 +119,7 @@ describe 'Admin User Pages' do
 
           it 'redirects to users page and shows new user' do
             click_button submit
-            should have_content 'Employees'
+            should have_current_path(users_path)
             should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Administrator Yes')
           end
         end
@@ -132,7 +132,7 @@ describe 'Admin User Pages' do
 
         it 'redirects to users page' do
           click_link cancel
-          should have_content 'Employees'
+          should have_current_path(users_path)
         end
       end
     end
@@ -196,7 +196,7 @@ describe 'Admin User Pages' do
 
           it 'redirects back to users page and shows user' do
             click_button submit
-            should have_content 'Employees'
+            should have_current_path(users_path)
             should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Administrator No')
           end
 
@@ -212,7 +212,7 @@ describe 'Admin User Pages' do
 
           it 'redirects to users page' do
             click_link cancel
-            should have_content 'Employees'
+            should have_current_path(users_path)
           end
         end
       end
@@ -264,7 +264,7 @@ describe 'Admin User Pages' do
           end
 
           it 'redirects back to users page' do
-            should have_content 'Employees'
+            should have_current_path(users_path)
           end
 
           it { should have_content('Unable') }
@@ -304,7 +304,7 @@ describe 'Admin User Pages' do
 
             it 'redirects back to users page and shows user' do
               click_button submit
-              should have_content 'Employees'
+              should have_current_path(users_path)
               should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Manager No')
             end
           end
@@ -316,7 +316,7 @@ describe 'Admin User Pages' do
 
             it 'redirects back to users page and shows user' do
               click_button submit
-              should have_content 'Employees'
+              should have_current_path(users_path)
               should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Administrator No')
             end
           end
@@ -356,7 +356,7 @@ describe 'Admin User Pages' do
 
           it 'redirects back to users page and shows user' do
             click_button submit
-            should have_content 'Employees'
+            should have_current_path(users_path)
             should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Manager No')
           end
 
@@ -371,7 +371,7 @@ describe 'Admin User Pages' do
 
             it 'redirects back to users page and shows user' do
               click_button submit
-              should have_content 'Employees'
+              should have_current_path(users_path)
               should have_selector('tr', text: 'New Name newname new.name@example.com - - Employee No')
             end
           end
@@ -383,7 +383,7 @@ describe 'Admin User Pages' do
 
             it 'redirects back to users page and shows user' do
               click_button submit
-              should have_content 'Employees'
+              should have_current_path(users_path)
               should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Administrator No')
             end
           end
@@ -423,7 +423,7 @@ describe 'Admin User Pages' do
 
           it 'redirects back to users page and shows user' do
             click_button submit
-            should have_content 'Employees'
+            should have_current_path(users_path)
             should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Administrator No')
           end
 
@@ -438,7 +438,7 @@ describe 'Admin User Pages' do
 
             it 'redirects back to users page and shows user' do
               click_button submit
-              should have_content 'Employees'
+              should have_current_path(users_path)
               should have_selector('tr', text: 'New Name newname new.name@example.com - - Employee No')
             end
           end
@@ -450,7 +450,7 @@ describe 'Admin User Pages' do
 
             it 'redirects back to users page and shows user' do
               click_button submit
-              should have_content 'Employees'
+              should have_current_path(users_path)
               should have_selector('tr', text: 'New Name newname new.name@example.com N/A N/A Manager No')
             end
           end
@@ -470,7 +470,7 @@ describe 'Admin User Pages' do
 
       it 'redirects properly' do
         click_link('DELETE', href: user_path(employee))
-        should have_content 'Employees'
+        should have_current_path(users_path)
       end
 
       it 'removes an employee from the system' do

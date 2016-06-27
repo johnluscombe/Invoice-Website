@@ -56,7 +56,7 @@ describe 'Admin Invoice Pages' do
       end
 
       it 'shows the invoices page' do
-        should have_content 'Invoices for'
+        should have_current_path(user_invoices_path(employee))
       end
     end
 
@@ -105,7 +105,7 @@ describe 'Admin Invoice Pages' do
 
         it 'redirects back to invoices page and shows invoice' do
           click_button submit
-          should have_content 'Invoices for'
+          should have_current_path(user_invoices_path(employee))
           should have_selector('tr', text: '12/30/16 - 12/31/16 1.00 5.00 $ 15.00 In Progress 1234')
         end
 
@@ -121,7 +121,7 @@ describe 'Admin Invoice Pages' do
 
         it 'redirects to invoice page' do
           click_link cancel
-          should have_content 'Invoices for'
+          should have_current_path(user_invoices_path(employee))
         end
       end
 
@@ -145,7 +145,7 @@ describe 'Admin Invoice Pages' do
 
       it 'redirects properly' do
         click_link('DELETE', href: invoice_path(invoice))
-        should have_content 'Invoices for'
+        should have_current_path(user_invoices_path(employee))
       end
 
       it 'removes the invoice from the system' do

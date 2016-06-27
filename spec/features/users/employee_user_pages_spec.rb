@@ -22,7 +22,7 @@ describe 'Employee User Pages' do
       before { visit new_user_path }
 
       it 'redirects to the invoices page' do
-        should have_content('Invoices')
+        should have_current_path(user_invoices_path(employee))
       end
 
       it 'produces an error message' do
@@ -34,7 +34,7 @@ describe 'Employee User Pages' do
       before { visit new_user_path }
 
       it 'redirects to the invoices page' do
-        should have_content('Invoices')
+        should have_current_path(user_invoices_path(employee))
       end
 
       it 'produces an error message' do
@@ -100,7 +100,7 @@ describe 'Employee User Pages' do
 
           it 'redirects back to invoices page' do
             click_button submit
-            should have_content 'Invoices'
+            should have_current_path(user_invoices_path(employee))
             should_not have_selector('tr', text: employee.fullname)
           end
 
@@ -117,7 +117,7 @@ describe 'Employee User Pages' do
         before { visit edit_user_path(new_employee) }
 
         it 'redirects to the invoices page' do
-          should have_content('Invoices')
+          should have_current_path(user_invoices_path(employee))
         end
 
         it 'produces an error message' do
@@ -133,7 +133,7 @@ describe 'Employee User Pages' do
         end
 
         it 'redirects to the invoices page' do
-          should have_content('Invoices')
+          should have_current_path(user_invoices_path(employee))
         end
 
         it 'produces an error message' do
@@ -149,7 +149,7 @@ describe 'Employee User Pages' do
         end
 
         it 'redirects to the invoices page' do
-          should have_content('Invoices')
+          should have_current_path(user_invoices_path(employee))
         end
 
         it 'produces an error message' do

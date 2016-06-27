@@ -53,7 +53,7 @@ describe 'Employee Invoice Pages' do
 
         it 'redirects to payments page and shows new payment' do
           click_button submit
-          should have_content 'Payments for Invoice'
+          should have_current_path(invoice_payments_path(invoice))
           should have_selector('tr', text: '01-01-2016 Test Description 3.00 $ 30.00')
         end
       end
@@ -65,7 +65,7 @@ describe 'Employee Invoice Pages' do
 
         it 'redirects to payments page' do
           click_link cancel
-          should have_content 'Payments for Invoice'
+          should have_current_path(invoice_payments_path(invoice))
         end
       end
     end
@@ -104,7 +104,7 @@ describe 'Employee Invoice Pages' do
 
         it 'redirects back to payments page and shows payment' do
           click_button submit
-          should have_content 'Payments for Invoice'
+          should have_current_path(invoice_payments_path(invoice))
           should have_selector('tr', text: '12-31-2016 Changed Description 4.00 $ 40.00')
         end
 
@@ -120,7 +120,7 @@ describe 'Employee Invoice Pages' do
 
         it 'redirects to payment page' do
           click_link cancel
-          should have_content 'Payments for Invoice'
+          should have_current_path(invoice_payments_path(invoice))
         end
       end
 
@@ -145,7 +145,7 @@ describe 'Employee Invoice Pages' do
 
       it 'redirects properly' do
         click_link('DELETE', href: payment_path(payment))
-        should have_content 'Payments for Invoice'
+        should have_current_path(invoice_payments_path(invoice))
       end
 
       it 'removes the payment from the system' do

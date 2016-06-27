@@ -24,27 +24,31 @@ describe 'Navbar' do
 
     describe 'Users link works properly' do
       before { click_link('Users', href: users_path) }
-      it { should have_content('Employees') }
+      it { should have_current_path(users_path) }
     end
 
     describe 'All Invoices link works properly' do
       before { click_link('All Invoices', href: invoices_path(:all => true)) }
-      it { should have_content('All Invoices') }
+      it { should have_current_path(invoices_path(:all => true)) }
     end
 
     describe 'Pending Invoices link works properly' do
       before { click_link('Pending Invoices', href: invoices_path(:pending_only => true)) }
-      it { should have_content('Pending Invoices') }
+      it { should have_current_path(invoices_path(:pending_only => true)) }
+    end
+
+    describe 'Current Invoice link does not appear' do
+      it { should_not have_link('Current Invoice') }
     end
 
     describe 'Edit Profile link works properly' do
       before { click_link('Edit Profile', href: edit_user_path(admin)) }
-      it { should have_content('Edit profile') }
+      it { should have_current_path(edit_user_path(admin)) }
     end
 
     describe 'Log Out link works properly' do
       before { click_link('Log Out', href: logout_path) }
-      it { should have_content('Log In') }
+      it { should have_current_path(login_path) }
       it 'Logs out the user' do
         expect { current_user.to eq(nil) }
       end
@@ -71,22 +75,30 @@ describe 'Navbar' do
 
     describe 'Users link works properly' do
       before { click_link('Users', href: users_path) }
-      it { should have_content('Employees') }
+      it { should have_current_path(users_path) }
+    end
+
+    describe 'All Invoices link does not appear' do
+      it { should_not have_link('All Invoices') }
     end
 
     describe 'Pending Invoices link works properly' do
       before { click_link('Pending Invoices', href: invoices_path(:pending_only => true)) }
-      it { should have_content('Pending Invoices') }
+      it { should have_current_path(invoices_path(:pending_only => true)) }
+    end
+
+    describe 'Current Invoice link does not appear' do
+      it { should_not have_link('Current Invoice') }
     end
 
     describe 'Edit Profile link works properly' do
       before { click_link('Edit Profile', href: edit_user_path(manager)) }
-      it { should have_content('Edit profile') }
+      it { should have_current_path(edit_user_path(manager)) }
     end
 
     describe 'Log Out link works properly' do
       before { click_link('Log Out', href: logout_path) }
-      it { should have_content('Log In') }
+      it { should have_current_path(login_path) }
       it 'Logs out the user' do
         expect { current_user.to eq(nil) }
       end
@@ -111,19 +123,35 @@ describe 'Navbar' do
       should have_link('Log Out', href: logout_path)
     end
 
+    describe 'Users link does not appear' do
+      it { should_not have_link('Users') }
+    end
+
     describe 'Invoices link works properly' do
       before { click_link('Invoices', href: user_invoices_path(employee)) }
-      it { should have_content('Invoices') }
+      it { should have_current_path(user_invoices_path(employee)) }
+    end
+
+    describe 'All Invoices link does not appear' do
+      it { should_not have_link('All Invoices') }
+    end
+
+    describe 'Pending Invoices link does not appear' do
+      it { should_not have_link('Pending Invoices') }
+    end
+
+    describe 'Current Invoice link does not appear' do
+      it { should_not have_link('Current Invoice') }
     end
 
     describe 'Edit Profile link works properly' do
       before { click_link('Edit Profile', href: edit_user_path(employee)) }
-      it { should have_content('Edit profile') }
+      it { should have_current_path(edit_user_path(employee)) }
     end
 
     describe 'Log Out link works properly' do
       before { click_link('Log Out', href: logout_path) }
-      it { should have_content('Log In') }
+      it { should have_current_path(login_path) }
       it 'Logs out the user' do
         expect { current_user.to eq(nil) }
       end
@@ -149,24 +177,36 @@ describe 'Navbar' do
       should have_link('Log Out', href: logout_path)
     end
 
+    describe 'Users link does not appear' do
+      it { should_not have_link('Users') }
+    end
+
     describe 'Invoices link works properly' do
       before { click_link('Invoices', href: user_invoices_path(employee)) }
-      it { should have_content('Invoices') }
+      it { should have_current_path(user_invoices_path(employee)) }
+    end
+
+    describe 'All Invoices link does not appear' do
+      it { should_not have_link('All Invoices') }
+    end
+
+    describe 'Pending Invoices link does not appear' do
+      it { should_not have_link('Pending Invoices') }
     end
 
     describe 'Current Invoice link works properly' do
       before { click_link('Current Invoice', href: invoice_payments_path(invoice)) }
-      it { should have_content('Payments for Invoice') }
+      it { should have_current_path(invoice_payments_path(invoice)) }
     end
 
     describe 'Edit Profile link works properly' do
       before { click_link('Edit Profile', href: edit_user_path(employee)) }
-      it { should have_content('Edit profile') }
+      it { should have_current_path(edit_user_path(employee)) }
     end
 
     describe 'Log Out link works properly' do
       before { click_link('Log Out', href: logout_path) }
-      it { should have_content('Log In') }
+      it { should have_current_path(login_path) }
       it 'Logs out the user' do
         expect { current_user.to eq(nil) }
       end
