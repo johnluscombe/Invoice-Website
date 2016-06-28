@@ -107,8 +107,8 @@ img.brand {
   margin-right: 15px;
 }
 
-input {
-  box-shadow: none !important;
+.input-group {
+  width: 100%;
 }
 
 label {
@@ -149,5 +149,6 @@ ul {
 }
 
 * {
+  box-shadow: none !important;
   font-family: "Candara", Sans-Serif;
 }

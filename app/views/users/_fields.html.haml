@@ -1,0 +1,64 @@
+%table.fields
+  %col{ :width => '150' }
+  %col{ :width => '200' }
+  %tr
+    %td.text-right= f.label 'Full Name', class: 'middle-align'
+    %td= f.text_field :fullname, class: 'form-control'
+    %td.description
+      %i.glyphicon.glyphicon-info-sign
+      First and last name
+  %tr
+    %td.text-right= f.label 'Username', class: 'middle-align'
+    %td= f.text_field :name, class: 'form-control'
+    %td.description
+      %i.glyphicon.glyphicon-info-sign
+      Username you will use to log in
+  %tr
+    %td.text-right= f.label :email, class: 'middle-align'
+    %td= f.text_field :email, class: 'form-control'
+    %td.description
+      %i.glyphicon.glyphicon-info-sign
+      Optional. Email to receive invoice statements.
+
+  - if !current_user?(@user) and current_user.profile >= 2 and @user.profile == 1
+    %tr
+      %td.text-right= f.label :rate, class: 'middle-align'
+      %td
+        .input-group
+          %span.input-group-addon $
+          = f.text_field :rate, class: 'form-control text-right', value: number_with_precision(@user.rate, :precision => 2)
+      %td.description
+        %i.glyphicon.glyphicon-info-sign
+        Hourly rate to pay employee.
+
+  - if current_user.profile == 3 and !current_user?(@user)
+    %tr
+      %td.text-right= f.label :profile
+      %td= f.select :profile, [['Employee', 1], ['Manager', 2], ['Administrator', 3]], {}, class: 'form-control'
+      %td.description
+        %i.glyphicon.glyphicon-info-sign
+        Level of permissions to give to the user.
+    %tr
+      %td.text-right= f.label 'Reset Profile?'
+      %td
+        .panel.panel-default
+          .panel-body
+            = f.check_box :first_time
+      %td.description
+        %i.glyphicon.glyphicon-info-sign
+        Prompt user for profile information at next log in.
+
+  - if current_user?(@user)
+    %tr
+      %td.text-right= f.label :password, class: 'middle-align'
+      %td= f.password_field :password, class: 'form-control new-user'
+      %td.description
+        %i.glyphicon.glyphicon-info-sign
+        Password you will use to log in.
+    %tr
+      %td.text-right= f.label 'Confirmation', class: 'middle-align'
+      %td= f.password_field :password_confirmation, class: 'form-control new-user'
+      %td.description
+        %i.glyphicon.glyphicon-info-sign
+        Verify that the password you entered is correct.
+%br

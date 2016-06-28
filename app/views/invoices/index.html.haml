@@ -20,8 +20,8 @@
         %col{ :width => '7%' } <!-- Hours -->
         - if current_user.profile == 3
             %col{ :width => '7%' } <!-- Rate for Masters -->
-            %col{ :width => '11%' } <!-- Net Pay -->
-            %col{ :width => '15%' } <!-- Status -->
+        %col{ :width => '11%' } <!-- Net Pay -->
+        %col{ :width => '15%' } <!-- Status -->
         - if current_user.profile >= 2
             %col{ :width => '10%' } <!-- Check No. for Admins and Masters -->
             %col{ :width => '10%' } <!-- Transfer Date for Admins and Masters -->
@@ -34,23 +34,23 @@
         %tr
         - if current_user.profile == 3
             %th.bottom-align ID
-            - if params.has_key?(:all) or params.has_key?(:pending_only)
-                %th.bottom-align Employee
-            %th.text-center.bottom-align For Dates
-            %th.text-right.bottom-align Hours</th>
-            - if current_user.profile == 3
-                %th.text-right.bottom-align Rate
-            %th.text-right.bottom-align Net Pay
-            %th.text-center.bottom-align Status
-            - if current_user.profile >= 2
-                %th.text-center.bottom-align Check No.
-                %th.text-center.bottom-align Transfer Date
+        - if params.has_key?(:all) or params.has_key?(:pending_only)
+            %th.bottom-align Employee
+        %th.text-center.bottom-align For Dates
+        %th.text-right.bottom-align Hours</th>
+        - if current_user.profile == 3
+            %th.text-right.bottom-align Rate
+        %th.text-right.bottom-align Net Pay
+        %th.text-center.bottom-align Status
+        - if current_user.profile >= 2
+            %th.text-center.bottom-align Check No.
+            %th.text-center.bottom-align Transfer Date
+        %th
+        %th
+        %th
+        %th
+        - if current_user.profile >= 2
             %th
-            %th
-            %th
-            %th
-            - if current_user.profile >= 2
-                %th
         = render @invoices
     - if @user
         = link_to 'NEW INVOICE', new_user_invoice_path(@user), class: 'btn btn-success'

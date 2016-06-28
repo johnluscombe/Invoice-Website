@@ -32,11 +32,20 @@
   - if current_user.profile >= 2
     %tr
       %td.text-right= f.label :hours
-      %td= f.text_field :hours, class: 'form-control'
+      %td
+        .input-group
+          %span.input-group-addon $
+          = f.text_field :hours, class: 'form-control text-right', value: number_with_precision(@invoice.hours, :precision => 2)
     %tr
       %td.text-right= f.label 'Hourly Rate'
-      %td= f.text_field :rate, class: 'form-control'
+      %td
+        .input-group
+          %span.input-group-addon $
+          = f.text_field :rate, class: 'form-control text-right', value: number_with_precision(@invoice.rate, :precision => 2)
     %tr
       %td.text-right= f.label :net_pay
-      %td= f.text_field :net_pay, class: 'form-control'
+      %td
+        .input-group
+          %span.input-group-addon $
+          = f.text_field :net_pay, class: 'form-control text-right', value: number_with_precision(@invoice.net_pay, :precision => 2)
 %br
