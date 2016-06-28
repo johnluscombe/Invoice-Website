@@ -50,7 +50,6 @@ class InvoicesController < ApplicationController
       else
         @invoice.update(:status => 'Pending')
       end
-      #SubmitEmail.send_submit_email(@user, @invoice).deliver
       if params.has_key?(:from_payments)
         redirect_to invoice_payments_path(@invoice)
       else

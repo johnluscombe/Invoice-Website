@@ -1,0 +1,34 @@
+%table.fields
+  %col{ :width => '100' }
+  %col{ :width => '300' }
+  %tr
+    %td.text-right= f.label :date
+    - if @payment.date == nil
+      %td= f.date_field :date, class: 'form-control', :value => Date.today.strftime('%Y-%m-%d')
+    - else
+      %td= f.date_field :date, class: 'form-control'
+  %tr
+    %td.text-right= f.label :description
+    %td= f.text_area :description, :cols => 50, :rows => 3, class: 'form-control'
+  %tr
+    %td.text-right= f.label :hours
+    %td= f.text_field :hours, class: 'form-control'
+%br
+%table
+  %col{ :width => '100' }
+  %col{ :width => '300' }
+  - if current_user.profile >= 2
+    %tr
+      %td.text-center{ :colspan => '2' }
+        %strong Overrides
+%table.fields
+  %col{ :width => '100' }
+  %col{ :width => '300' }
+  - if current_user.profile >= 2
+    %tr
+      %td.text-right= f.label :daily_rate
+      %td
+        .input-group
+          %span.input-group-addon $
+          = f.text_field :daily_rate, class: 'form-control text-right', value: number_with_precision(@payment.daily_rate, :precision => 2)
+%br
