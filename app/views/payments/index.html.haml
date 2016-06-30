@@ -1,0 +1,96 @@
+- if @invoice.start_date != nil and @invoice.end_date != nil
+  %h1= "Payments for Invoice #{ @invoice.start_date.strftime('%m-%d-%Y') } - #{ @invoice.end_date.strftime('%m-%d-%Y') }"
+- elsif @invoice.start_date != nil and @invoice.end_date == nil
+  %h1= "Payments for Invoice Starting #{ @invoice.start_date.strftime('%m-%d-%Y') }"
+- elsif @invoice.start_date == nil and @invoice.end_date != nil
+  %h1= "Payments for Invoice Ending #{ @invoice.end_date.strftime('%m-%d-%Y') }"
+- else
+  %h1 Payments
+
+= link_to 'BACK', user_invoices_path(@user), class: 'btn btn-primary btn-outline btn-xs'
+%br
+%br
+
+- if @invoice.status == 'Paid'
+  %p.emphasized
+    %strong Status:
+    %span.approve #{ @invoice.status }
+- else
+  %p.emphasized
+    %strong Status: #{ @invoice.status }
+
+- if @invoice.payments.count > 0
+  %table.table.table-striped
+    - if current_user.profile == 3
+      %col{ :width => '5%' } <!-- ID for Masters -->
+    %col{ :width => '10%' } <!-- Date -->
+    %col{ :width => '55%' } <!-- Description -->
+    %col{ :width => '10%' } <!-- Hours -->
+    %col{ :width => '10%' } <!-- Daily Rate -->
+    %col{ :width => '1%' } <!-- Edit Button -->
+    %col{ :width => '1%' } <!-- Delete Button -->
+    %tr
+      - if current_user.profile == 3
+        %th ID
+      %th Date
+      %th Description
+      %th Hours
+      %th Daily Rate
+      %th
+      %th
+    = render @payments
+    %tr
+      - if current_user.profile == 3
+        %td.middle-align.text-right{ :colspan => 3 }
+          %strong
+            Total:
+      - else
+        %td.middle-align.text-right{ :colspan => 2 }
+          %strong
+            Total:
+
+      - if @invoice.hours == nil
+        %td.middle-align
+          %strong= sprintf('%.2f', @invoice.payments.sum(:hours))
+      - else
+        %td.override.middle-align
+          %strong= sprintf('%.2f', @invoice.hours)
+
+      - if @invoice.net_pay == nil
+        - if @invoice.rate == nil
+          - if @invoice.hours == nil
+            <!-- No overrides -->
+            %td.text-center.emphasized{ :colspan => 3 }
+              %strong= "$ #{ sprintf('%.2f', @invoice.payments.where(:daily_rate => nil).sum(:hours) * @invoice.user.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) }"
+          - else
+            <!-- Hours override -->
+            %td.text-center.emphasized{ :colspan => 3 }
+              %strong= "$ #{ sprintf('%.2f', @invoice.hours * @invoice.user.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) }"
+        - else
+          - if @invoice.hours == nil
+            <!-- Rate override -->
+            %td.text-center.emphasized{ :colspan => 3 }
+              %strong= "$ #{ sprintf('%.2f', @invoice.payments.where(:daily_rate => nil).sum(:hours) * @invoice.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) }"
+          - else
+            <!-- Rate and hours override -->
+            %td.text-center.emphasized{ :colspan => 3 }
+              %strong= "$ #{ sprintf('%.2f', @invoice.hours * @invoice.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) }"
+      - else
+        <!-- Net pay override -->
+        %td.text-center.emphasized{ :colspan => 3 }
+          %strong= "$ #{ sprintf('%.2f', @invoice.net_pay) }"
+  %table
+    %col{ :width => '135' }
+    %col{ :width => '135' }
+    %tr
+      - if @invoice.status == 'Started' or @invoice.status == 'In Progress'
+        %td= link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success'
+      - if @invoice.status == 'In Progress'
+        %td= link_to 'SUBMIT INVOICE', edit_invoice_path(@invoice, :submit => true, :from_payments => true), class: 'btn btn-primary btn-outline'
+      - elsif @invoice.status == 'Pending'
+        %td= link_to 'RESET INVOICE', edit_invoice_path(@invoice, :reset => true, :from_payments => true), class: 'btn btn-primary btn-outline'
+  %br
+- else
+  %p There are no payments under this invoice yet.
+  - if @invoice.status == 'Started' or @invoice.status == 'In Progress'
+    = link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success'
