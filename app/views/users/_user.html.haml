@@ -37,7 +37,7 @@
 
   %td.text-center= link_to 'EDIT', edit_user_path(user), class: 'btn btn-primary btn-outline btn-xs'
 
-  - if current_user.profile == 3
+  - if current_user.admin?
     - if current_user?(user)
       %td
     - else

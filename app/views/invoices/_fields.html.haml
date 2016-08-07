@@ -7,7 +7,7 @@
   %tr
     %td.text-right= f.label :end_date
     %td= f.date_field :end_date, class: 'form-control'
-  - if current_user.profile >= 2
+  - if current_user.manager?
     %tr
       %td.text-right= f.label :status
       %td= f.select :status, [%w(Started Started), %w(In\ Progress In\ Progress), %w(Pending Pending),
@@ -22,14 +22,14 @@
 %table
   %col{ :width => '100' }
   %col{ :width => '200' }
-  - if current_user.profile >= 2
+  - if current_user.manager?
     %tr
       %td.text-center{ :colspan => '2' }
         %strong Overrides
 %table.fields
   %col{ :width => '100' }
   %col{ :width => '200' }
-  - if current_user.profile >= 2
+  - if current_user.manager?
     %tr
       %td.text-right= f.label :hours
       %td

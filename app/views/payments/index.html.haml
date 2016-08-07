@@ -21,7 +21,7 @@
 
 - if @invoice.payments.count > 0
   %table.table.table-striped
-    - if current_user.profile == 3
+    - if current_user.admin?
       %col{ :width => '5%' } <!-- ID for Masters -->
     %col{ :width => '10%' } <!-- Date -->
     %col{ :width => '55%' } <!-- Description -->
@@ -30,7 +30,7 @@
     %col{ :width => '1%' } <!-- Edit Button -->
     %col{ :width => '1%' } <!-- Delete Button -->
     %tr
-      - if current_user.profile == 3
+      - if current_user.admin?
         %th ID
       %th Date
       %th Description
@@ -40,7 +40,7 @@
       %th
     = render @payments
     %tr
-      - if current_user.profile == 3
+      - if current_user.admin?
         %td.middle-align.text-right{ :colspan => 3 }
           %strong
             Total:

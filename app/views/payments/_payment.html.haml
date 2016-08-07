@@ -1,5 +1,5 @@
 %tr
-  - if current_user.profile == 3
+  - if current_user.admin?
     %td= payment.id
 
   - if payment.date != nil

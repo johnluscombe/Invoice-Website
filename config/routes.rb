@@ -17,6 +17,8 @@ Rails.application.routes.draw do
    end
    resources :invoices, shallow: true, except: :show do
      resources :payments, except: :show
+     get 'all', :on => :collection
+     get 'pending', :on => :collection
      patch 'submit'
      patch 'reset'
      patch 'pay'

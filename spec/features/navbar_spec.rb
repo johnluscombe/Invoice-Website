@@ -11,8 +11,8 @@ describe 'Navbar' do
 
     it 'should have the right links' do
       should have_link('Users', href: users_path)
-      should have_link('All Invoices', href: invoices_path(:all => true))
-      should have_link('Pending Invoices', href: invoices_path(:pending_only => true))
+      should have_link('All Invoices', href: all_invoices_path)
+      should have_link('Pending Invoices', href: pending_invoices_path)
       should_not have_link('Current Invoice')
       should_not have_link('Invoices', href: user_invoices_path(admin))
       should have_link('Welcome, ' + admin.fullname, href: edit_user_path(admin))
@@ -26,13 +26,13 @@ describe 'Navbar' do
     end
 
     describe 'All Invoices link works properly' do
-      before { click_link('All Invoices', href: invoices_path(:all => true)) }
-      it { should have_current_path(invoices_path(:all => true)) }
+      before { click_link('All Invoices', href: all_invoices_path) }
+      it { should have_current_path(all_invoices_path) }
     end
 
     describe 'Pending Invoices link works properly' do
-      before { click_link('Pending Invoices', href: invoices_path(:pending_only => true)) }
-      it { should have_current_path(invoices_path(:pending_only => true)) }
+      before { click_link('Pending Invoices', href: pending_invoices_path) }
+      it { should have_current_path(pending_invoices_path) }
     end
 
     describe 'Current Invoice link does not appear' do
@@ -60,8 +60,8 @@ describe 'Navbar' do
 
     it 'should have the right links' do
       should have_link('Users', href: users_path)
-      should_not have_link('All Invoices', href: invoices_path(:all => true))
-      should have_link('Pending Invoices', href: invoices_path(:pending_only => true))
+      should_not have_link('All Invoices', href: all_invoices_path)
+      should have_link('Pending Invoices', href: pending_invoices_path)
       should_not have_link('Current Invoice')
       should_not have_link('Invoices', href: user_invoices_path(manager))
       should have_link('Welcome, ' + manager.fullname, href: edit_user_path(manager))
@@ -79,8 +79,8 @@ describe 'Navbar' do
     end
 
     describe 'Pending Invoices link works properly' do
-      before { click_link('Pending Invoices', href: invoices_path(:pending_only => true)) }
-      it { should have_current_path(invoices_path(:pending_only => true)) }
+      before { click_link('Pending Invoices', href: pending_invoices_path) }
+      it { should have_current_path(pending_invoices_path) }
     end
 
     describe 'Current Invoice link does not appear' do
@@ -108,8 +108,8 @@ describe 'Navbar' do
 
     it 'should have the right links' do
       should_not have_link('Users', href: users_path)
-      should_not have_link('All Invoices', href: invoices_path(:all => true))
-      should_not have_link('Pending Invoices', href: invoices_path(:pending_only => true))
+      should_not have_link('All Invoices', href: all_invoices_path)
+      should_not have_link('Pending Invoices', href: pending_invoices_path)
       should_not have_link('Current Invoice')
       should have_link('Invoices', href: user_invoices_path(employee))
       should have_link('Welcome, ' + employee.fullname, href: edit_user_path(employee))
@@ -160,8 +160,8 @@ describe 'Navbar' do
 
     it 'should have the right links' do
       should_not have_link('Users', href: users_path)
-      should_not have_link('All Invoices', href: invoices_path(:all => true))
-      should_not have_link('Pending Invoices', href: invoices_path(:pending_only => true))
+      should_not have_link('All Invoices', href: all_invoices_path)
+      should_not have_link('Pending Invoices', href: pending_invoices_path)
       should have_link('Current Invoice', href: invoice_payments_path(invoice))
       should have_link('Invoices', href: user_invoices_path(employee))
       should have_link('Welcome, ' + employee.fullname, href: edit_user_path(employee))

@@ -17,14 +17,14 @@
 %table
   %col{ :width => '100' }
   %col{ :width => '300' }
-  - if current_user.profile >= 2
+  - if current_user.manager?
     %tr
       %td.text-center{ :colspan => '2' }
         %strong Overrides
 %table.fields
   %col{ :width => '100' }
   %col{ :width => '300' }
-  - if current_user.profile >= 2
+  - if current_user.manager?
     %tr
       %td.text-right= f.label :daily_rate
       %td

@@ -1,31 +1,34 @@
 class InvoicesController < ApplicationController
   before_action :ensure_user_logged_in
-  before_action :ensure_correct_user, except: :index
+  before_action :ensure_correct_user, except: [:all, :pending]
 
   def index
-    if params.has_key?(:all)
-      ensure_master
-      @invoices = Invoice.all.order(:start_date).reverse_order
-    elsif params.has_key?(:pending_only)
-      ensure_admin
-      @invoices = Invoice.where(:status => 'Pending').order(:start_date).reverse_order
-    else
-      ensure_correct_user
-      @user = User.find(params[:user_id])
-      if @user.profile >= 2 and current_user.profile >= 2
-        flash[:warning] = 'User does not get paid hourly'
-        redirect_to users_path
-      end
-      @invoices = @user.invoices.all.order(:start_date).reverse_order
+    @user = User.find(params[:user_id])
+    @invoices = @user.invoices.all.order(:start_date).reverse_order
+    if @user.manager?
+      flash[:warning] = 'User does not get paid hourly'
+      redirect_to users_path
     end
-  rescue
-    redirect
+  end
+
+  def all
+    ensure_admin
+    @invoices = Invoice.all.order(:start_date).reverse_order
+    @all = true
+    render 'index'
+  end
+
+  def pending
+    ensure_manager
+    @invoices = Invoice.where(:status => 'Pending').order(:start_date).reverse_order
+    @pending = true
+    render 'index'
   end
 
   def new
     @user = User.find(params[:user_id])
-    if @user.rate == nil
-      if @user.profile >= 2
+    if @user.rate.nil?
+      if @user.manager?
         flash[:danger] = 'You have not set an hourly rate for this employee.'
       else
         flash[:danger] = 'You have not been assigned an hourly rate. Please contact your manager.'
@@ -44,60 +47,32 @@ class InvoicesController < ApplicationController
   def edit
     @invoice = Invoice.find(params[:id])
     @user = @invoice.user
-  rescue
-    flash[:danger] = 'Unable to find invoice'
-    redirect
   end
 
   def submit
     @invoice = Invoice.find(params[:invoice_id])
     @user = @invoice.user
-    if @invoice.end_date == nil
-      @invoice.update(:end_date => Date.today, :status => 'Pending')
-    else
-      @invoice.update(:status => 'Pending')
-    end
-    if params.has_key?(:from_payments)
-      redirect_to invoice_payments_path(@invoice)
-    else
-      if params.has_key?(:from_pending)
-        redirect_to invoices_path(:pending_only => true)
-      else
-        redirect_to user_invoices_path(@user)
-      end
-    end
+    @invoice.submit
+    redirect_to :back
   end
 
   def reset
     @invoice = Invoice.find(params[:invoice_id])
     @user = @invoice.user
-    @invoice.update(:status => 'In Progress')
-    if params.has_key?(:from_payments)
-      redirect_to invoice_payments_path(@invoice)
-    else
-      if params.has_key?(:from_pending)
-        redirect_to invoices_path(:pending_only => true)
-      else
-        redirect_to user_invoices_path(@user)
-      end
-    end
+    @invoice.reset
+    redirect_to :back
   end
 
   def pay
     @invoice = Invoice.find(params[:invoice_id])
     @user = @invoice.user
-    @invoice.update(:status => 'Paid', :transfer_date => Date.today)
-    if params.has_key?(:from_pending)
-      redirect_to invoices_path(:pending_only => true)
-    else
-      redirect_to user_invoices_path(@user)
-    end
+    @invoice.pay
+    redirect_to :back
   end
 
   def update
     @invoice = Invoice.find(params[:id])
     @user = @invoice.user
-
     if @invoice.update(invoice_params)
       redirect_to user_invoices_path(@user)
     else
@@ -109,7 +84,6 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @user = @invoice.user
     @invoice.destroy
-
     redirect_to user_invoices_path(@user)
   end
 
@@ -130,10 +104,10 @@ class InvoicesController < ApplicationController
     if params[:user_id]
       @user = User.find(params[:user_id])
     else
-      @invoice = Invoice.find(params[:id])
+      @invoice = Invoice.find(params[:id] || params[:invoice_id])
       @user = @invoice.user
     end
-    unless current_user.profile >= 2 or current_user?(@user)
+    unless current_user.manager? or current_user?(@user)
       flash[:danger] = 'You do not have permission to view this page. Please contact your manager.'
       redirect
     end
@@ -142,22 +116,22 @@ class InvoicesController < ApplicationController
     redirect
   end
 
-  def ensure_admin
-    unless current_user.profile >= 2
+  def ensure_manager
+    unless current_user.manager?
       flash[:danger] = 'You do not have permission to perform this action. Please contact your manager.'
       redirect_to user_invoices_path(current_user)
     end
   end
 
-  def ensure_master
-    unless current_user.profile == 3
+  def ensure_admin
+    unless current_user.admin?
       flash[:danger] = 'You do not have permission to perform this action. Please contact your administrator.'
       redirect
     end
   end
 
   def redirect
-    if current_user.profile >= 2
+    if current_user.manager?
       redirect_to users_path
     else
       redirect_to user_invoices_path(current_user)

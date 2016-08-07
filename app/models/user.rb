@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
   end
 
   def self.get_users(current_user)
-    if current_user.profile == 3
+    if current_user.admin?
       User.all.order(:fullname)
     else
       User.where(:profile => 1)

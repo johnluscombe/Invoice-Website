@@ -79,7 +79,7 @@ class PaymentsController < ApplicationController
       @invoice = @payment.invoice
       @user = @invoice.user
     end
-    unless current_user.profile >= 2 or current_user?(@user)
+    unless current_user.manager? or current_user?(@user)
       flash[:danger] = 'You do not have permission to view this page. Please contact your manager.'
       redirect
     end
@@ -89,7 +89,7 @@ class PaymentsController < ApplicationController
   end
 
   def redirect
-    if current_user.profile >= 2
+    if current_user.manager?
       redirect_to users_path
     else
       redirect_to user_invoices_path(current_user)

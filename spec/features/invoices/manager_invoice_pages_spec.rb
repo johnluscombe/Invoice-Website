@@ -141,7 +141,7 @@ describe 'Manager Invoice Pages' do
 
 
     describe 'pending invoices link with no pending invoices' do
-      before { click_link('Pending Invoices', href: invoices_path(:pending_only => true)) }
+      before { click_link('Pending Invoices', href: pending_invoices_path) }
 
       it 'should have back button' do
         should have_link('BACK', href: users_path)
@@ -164,7 +164,7 @@ describe 'Manager Invoice Pages' do
         click_button('CREATE NEW PAYMENT')
         visit user_invoices_path(employee)
         click_link('SUBMIT', href: invoice_submit_path(invoice))
-        click_link('Pending Invoices', href: invoices_path(:pending_only => true))
+        click_link('Pending Invoices', href: pending_invoices_path)
       end
 
       it 'should have back button' do
@@ -183,11 +183,11 @@ describe 'Manager Invoice Pages' do
             should have_selector('tr', text: 'Pending')
             should have_selector('tr', text: invoice.check_no)
             should have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
-            should have_link('MARK AS PAID', href: invoice_pay_path(invoice, :from_pending => true))
-            should have_link('RESET', href: invoice_reset_path(invoice, :from_pending => true))
+            should have_link('MARK AS PAID', href: invoice_pay_path(invoice))
+            should have_link('RESET', href: invoice_reset_path(invoice))
             should have_link('EDIT', href: edit_invoice_path(invoice))
             should have_link('DELETE', href: invoice_path(invoice))
-            should_not have_link('SUBMIT', href: invoice_submit_path(invoice, :from_pending => true))
+            should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
           end
         end
         should_not have_content('Started')

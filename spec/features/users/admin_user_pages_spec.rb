@@ -26,9 +26,9 @@ describe 'Admin User Pages' do
           should have_link('EDIT')
           should have_link('DELETE')
 
-          if user.profile == 3
+          if user.admin?
             should have_selector('tr', text: 'N/A N/A Administrator No')
-          elsif user.profile >= 2
+          elsif user.manager?
             should have_selector('tr', text: 'N/A N/A Manager No')
           else
             should have_selector('tr', text: '$ 10.00 - Employee No')

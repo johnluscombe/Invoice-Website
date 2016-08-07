@@ -1,7 +1,7 @@
 %tr
-  - if current_user.profile == 3
+  - if current_user.admin?
     %td= invoice.id
-  - if params.has_key?(:all) or params.has_key?(:pending_only)
+  - if @all or @pending
     %td= invoice.user.fullname
 
   - if invoice.start_date != nil and invoice.end_date != nil
@@ -18,7 +18,7 @@
   - else
     %td.override.text-right= sprintf('%.2f', invoice.hours)
 
-  - if current_user.profile == 3
+  - if current_user.admin?
     - if invoice.rate == nil
       %td.text-right= sprintf('%.2f', invoice.user.rate)
     - else
@@ -49,14 +49,14 @@
   - else
     %td.text-center= invoice.status
 
-  - if current_user.profile >= 2
+  - if current_user.manager?
     %td.text-right= invoice.check_no
     - if invoice.transfer_date == nil
       %td
     - else
       %td.text-center= invoice.transfer_date.strftime('%m/%d/%y')
 
-  - if current_user.profile == 1
+  - if current_user.employee?
     - if invoice.status == 'Started'
       %td.text-center= link_to 'VIEW PAYMENTS', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td
@@ -67,7 +67,7 @@
       - if @user
         %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       - else
-        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice, :from_pending => true), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
+        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
     - elsif invoice.status == 'Pending'
@@ -75,7 +75,7 @@
       - if @user
         %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       - else
-        %td.text-center= link_to 'RESET', invoice_reset_path(invoice, :from_pending => true), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
+        %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       %td
       %td
     - else
@@ -95,7 +95,7 @@
       - if @user
         %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       - else
-        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice, :from_pending => true), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
+        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       %td
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
@@ -105,8 +105,8 @@
         %td.text-center= link_to 'MARK AS PAID', invoice_pay_path(invoice), method: :patch, class: 'btn btn-success btn-outline btn-xs'
         %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       - else
-        %td.text-center= link_to 'MARK AS PAID', invoice_pay_path(invoice, :from_pending => true), method: :patch, class: 'btn btn-success btn-outline btn-xs'
-        %td.text-center= link_to 'RESET', invoice_reset_path(invoice, :from_pending => true), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
+        %td.text-center= link_to 'MARK AS PAID', invoice_pay_path(invoice), method: :patch, class: 'btn btn-success btn-outline btn-xs'
+        %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
     - else
@@ -115,6 +115,6 @@
       - if @user
         %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       - else
-        %td.text-center= link_to 'RESET', invoice_reset_path(invoice, :from_pending => true), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
+        %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
