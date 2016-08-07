@@ -152,26 +152,26 @@ describe 'Employee Invoice Pages' do
     end
 
     describe "invoices with 'Started' status" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Started') }
+
+      before { visit invoice_payments_path(invoice) }
+
+      it 'shows the correct buttons' do
+        should have_link('NEW PAYMENT', href: new_invoice_payment_path(invoice))
+        should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(invoice))
+        should_not have_link('RESET INVOICE', href: invoice_reset_path(invoice))
+      end
+    end
+
+    describe "invoices with 'In Progress' status" do
       let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
 
       before { visit invoice_payments_path(invoice) }
 
       it 'shows the correct buttons' do
         should have_link('NEW PAYMENT', href: new_invoice_payment_path(invoice))
-        should_not have_link('SUBMIT INVOICE', href: edit_invoice_path(invoice, :submit => true, :from_payments => true))
-        should_not have_link('RESET INVOICE', href: edit_invoice_path(invoice, :reset => true, :from_payments => true))
-      end
-    end
-
-    describe "invoices with 'In Progress' status" do
-      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'In Progress') }
-
-      before { visit invoice_payments_path(invoice) }
-
-      it 'shows the correct buttons' do
-        should have_link('NEW PAYMENT', href: new_invoice_payment_path(invoice))
-        should have_link('SUBMIT INVOICE', href: edit_invoice_path(invoice, :submit => true, :from_payments => true))
-        should_not have_link('RESET INVOICE', href: edit_invoice_path(invoice, :reset => true, :from_payments => true))
+        should have_link('SUBMIT INVOICE', href: invoice_submit_path(invoice))
+        should_not have_link('RESET INVOICE', href: invoice_reset_path(invoice))
       end
     end
 
@@ -182,8 +182,8 @@ describe 'Employee Invoice Pages' do
 
       it 'shows the correct buttons' do
         should_not have_link('NEW PAYMENT', href: new_invoice_payment_path(invoice))
-        should_not have_link('SUBMIT INVOICE', href: edit_invoice_path(invoice, :submit => true, :from_payments => true))
-        should have_link('RESET INVOICE', href: edit_invoice_path(invoice, :reset => true, :from_payments => true))
+        should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(invoice))
+        should have_link('RESET INVOICE', href: invoice_reset_path(invoice))
       end
     end
 
@@ -194,8 +194,8 @@ describe 'Employee Invoice Pages' do
 
       it 'shows the correct buttons' do
         should_not have_link('NEW PAYMENT', href: new_invoice_payment_path(invoice))
-        should_not have_link('SUBMIT INVOICE', href: edit_invoice_path(invoice, :submit => true, :from_payments => true))
-        should_not have_link('RESET INVOICE', href: edit_invoice_path(invoice, :reset => true, :from_payments => true))
+        should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(invoice))
+        should_not have_link('RESET INVOICE', href: invoice_reset_path(invoice))
       end
     end
   end

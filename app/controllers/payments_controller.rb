@@ -18,19 +18,12 @@ class PaymentsController < ApplicationController
     @payment = Payment.find(params[:id])
     @invoice = @payment.invoice
     @user = @invoice.user
-  rescue
-    flash[:danger] = 'Unable to find payment'
-    redirect
   end
 
   def create
     @invoice = Invoice.find(params[:invoice_id])
     @payment = @invoice.payments.build(payment_params)
-    @user = @invoice.user
-
     if @payment.save
-      @invoice.status = 'In Progress'
-      @invoice.save
       redirect_to invoice_payments_path(:invoice_id => @invoice.id)
     else
       render 'new'
@@ -40,8 +33,6 @@ class PaymentsController < ApplicationController
   def update
     @payment = Payment.find(params[:id])
     @invoice = @payment.invoice
-    @user = @invoice.user
-
     if @payment.update(payment_params)
       redirect_to invoice_payments_path(:invoice_id => @invoice.id)
     else
@@ -52,9 +43,7 @@ class PaymentsController < ApplicationController
   def destroy
     @payment = Payment.find(params[:id])
     @invoice = @payment.invoice
-    @user = @invoice.user
     @payment.destroy
-
     redirect_to invoice_payments_path(@invoice)
   end
 

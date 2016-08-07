@@ -86,9 +86,9 @@
       - if @invoice.status == 'Started' or @invoice.status == 'In Progress'
         %td= link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success'
       - if @invoice.status == 'In Progress'
-        %td= link_to 'SUBMIT INVOICE', edit_invoice_path(@invoice, :submit => true, :from_payments => true), class: 'btn btn-primary btn-outline'
+        %td= link_to 'SUBMIT INVOICE', invoice_submit_path(@invoice), class: 'btn btn-primary btn-outline'
       - elsif @invoice.status == 'Pending'
-        %td= link_to 'RESET INVOICE', edit_invoice_path(@invoice, :reset => true, :from_payments => true), class: 'btn btn-primary btn-outline'
+        %td= link_to 'RESET INVOICE', invoice_reset_path(@invoice), class: 'btn btn-primary btn-outline'
   %br
 - else
   %p There are no payments under this invoice yet.
