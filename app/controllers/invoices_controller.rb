@@ -44,43 +44,54 @@ class InvoicesController < ApplicationController
   def edit
     @invoice = Invoice.find(params[:id])
     @user = @invoice.user
-    if params.has_key?(:submit)
-      if @invoice.end_date == nil
-        @invoice.update(:end_date => Date.today, :status => 'Pending')
-      else
-        @invoice.update(:status => 'Pending')
-      end
-      if params.has_key?(:from_payments)
-        redirect_to invoice_payments_path(@invoice)
-      else
-        if params.has_key?(:from_pending)
-          redirect_to invoices_path(:pending_only => true)
-        else
-          redirect_to user_invoices_path(@user)
-        end
-      end
-    elsif params.has_key?(:reset)
-      @invoice.update(:status => 'In Progress')
-      if params.has_key?(:from_payments)
-        redirect_to invoice_payments_path(@invoice)
-      else
-        if params.has_key?(:from_pending)
-          redirect_to invoices_path(:pending_only => true)
-        else
-          redirect_to user_invoices_path(@user)
-        end
-      end
-    elsif current_user.profile >= 2 and params.has_key?(:approve)
-      @invoice.update(:status => 'Paid', :transfer_date => Date.today)
+  rescue
+    flash[:danger] = 'Unable to find invoice'
+    redirect
+  end
+
+  def submit
+    @invoice = Invoice.find(params[:invoice_id])
+    @user = @invoice.user
+    if @invoice.end_date == nil
+      @invoice.update(:end_date => Date.today, :status => 'Pending')
+    else
+      @invoice.update(:status => 'Pending')
+    end
+    if params.has_key?(:from_payments)
+      redirect_to invoice_payments_path(@invoice)
+    else
       if params.has_key?(:from_pending)
         redirect_to invoices_path(:pending_only => true)
       else
         redirect_to user_invoices_path(@user)
       end
     end
-  rescue
-    flash[:danger] = 'Unable to find invoice'
-    redirect
+  end
+
+  def reset
+    @invoice = Invoice.find(params[:invoice_id])
+    @user = @invoice.user
+    @invoice.update(:status => 'In Progress')
+    if params.has_key?(:from_payments)
+      redirect_to invoice_payments_path(@invoice)
+    else
+      if params.has_key?(:from_pending)
+        redirect_to invoices_path(:pending_only => true)
+      else
+        redirect_to user_invoices_path(@user)
+      end
+    end
+  end
+
+  def pay
+    @invoice = Invoice.find(params[:invoice_id])
+    @user = @invoice.user
+    @invoice.update(:status => 'Paid', :transfer_date => Date.today)
+    if params.has_key?(:from_pending)
+      redirect_to invoices_path(:pending_only => true)
+    else
+      redirect_to user_invoices_path(@user)
+    end
   end
 
   def update

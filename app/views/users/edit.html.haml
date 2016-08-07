@@ -4,9 +4,6 @@
 = form_for @user do |form|
   = render partial: 'fields', locals: {f: form }
   = form.submit 'UPDATE USER PROFILE', :class => 'btn btn-success'
-  - if current_user.profile >= 2
-    = link_to 'CANCEL', users_path, class: 'btn btn-danger btn-outline'
-  - else
-    = link_to 'CANCEL', user_invoices_path(current_user), class: 'btn btn-danger btn-outline'
+  = link_to 'CANCEL', redirect_path, class: 'btn btn-danger btn-outline'
   %br
   %br

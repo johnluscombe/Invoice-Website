@@ -17,7 +17,7 @@ describe 'Admin Users Permissions' do
 
       it 'should load the page without error' do
         should have_current_path(users_path)
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -27,7 +27,7 @@ describe 'Admin Users Permissions' do
 
       it 'should load the page without error' do
         should have_current_path(new_user_path)
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -37,7 +37,7 @@ describe 'Admin Users Permissions' do
 
       it 'should load the page without error' do
         should have_current_path(edit_user_path(admin))
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -47,7 +47,7 @@ describe 'Admin Users Permissions' do
 
       it 'should load the page without error' do
         should have_current_path(edit_user_path(other_admin))
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -57,7 +57,7 @@ describe 'Admin Users Permissions' do
 
       it 'should load the page without error' do
         should have_current_path(edit_user_path(manager))
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -67,7 +67,7 @@ describe 'Admin Users Permissions' do
 
       it 'should load the page without error' do
         should have_current_path(edit_user_path(employee))
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -86,7 +86,7 @@ describe 'Admin Users Permissions' do
 
       it 'should not have an error' do
         should have_current_path(users_path)
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
         should_not have_content 'You cannot delete yourself'
       end
@@ -97,7 +97,7 @@ describe 'Admin Users Permissions' do
 
       it 'should not have an error' do
         should have_current_path(users_path)
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
         should_not have_content 'You cannot delete yourself'
       end
@@ -108,7 +108,7 @@ describe 'Admin Users Permissions' do
 
       it 'should not have an error' do
         should have_current_path(users_path)
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
         should_not have_content 'You cannot delete yourself'
       end

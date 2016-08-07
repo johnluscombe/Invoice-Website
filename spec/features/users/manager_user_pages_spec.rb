@@ -44,7 +44,7 @@ describe 'Manager User Pages' do
       end
 
       it 'produces an error message' do
-        should have_content('You do not have permission to perform this action. Please contact your administrator.')
+        should have_content('You do not have permission to perform this action')
       end
     end
 
@@ -200,7 +200,7 @@ describe 'Manager User Pages' do
         end
 
         it 'produces an error message' do
-          should have_content('You do not have permission to perform this action. Please contact your administrator.')
+          should have_content('You do not have permission to perform this action')
         end
       end
 
@@ -214,7 +214,7 @@ describe 'Manager User Pages' do
         end
 
         it 'produces an error message' do
-          should have_content('You do not have permission to perform this action. Please contact your administrator.')
+          should have_content('You do not have permission to perform this action')
         end
       end
     end

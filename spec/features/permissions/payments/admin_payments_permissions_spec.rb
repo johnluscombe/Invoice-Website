@@ -16,7 +16,7 @@ describe 'Admin Payments Permissions' do
 
       it 'should load the page without error' do
         should have_current_path(invoice_payments_path(invoice))
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -26,7 +26,7 @@ describe 'Admin Payments Permissions' do
 
       it 'should load the page without error' do
         should have_current_path(new_invoice_payment_path(invoice))
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -38,7 +38,7 @@ describe 'Admin Payments Permissions' do
 
       it 'should load the page without error' do
         should have_current_path(edit_payment_path(payment))
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -50,7 +50,7 @@ describe 'Admin Payments Permissions' do
 
       it 'should not have an error' do
         should have_current_path(invoice_payments_path(invoice))
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end

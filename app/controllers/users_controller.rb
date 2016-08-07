@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_action :ensure_user_logged_in
-  before_action :ensure_correct_user, only: [:edit, :update]
-  before_action :ensure_admin, only: [:index]
-  before_action :ensure_master, only: [:new, :create, :destroy]
+  before_action :ensure_can_edit, only: [:edit, :update]
+  before_action :ensure_manager, only: [:index]
+  before_action :ensure_admin, only: [:new, :create, :destroy]
 
   def index
     @users = User.get_users(current_user)
@@ -14,11 +14,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.password_digest==nil
-      @user.password = 'password'
-      @user.password_confirmation = 'password'
-    end
-    if @user.save
+    if User.create_user(@user)
       redirect_to users_path
     else
       flash.now[:danger] = 'Unable to create new user'
@@ -28,29 +24,15 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    if !current_user?(@user) and current_user.profile == 1
-      flash[:danger] = "Cannot edit other user's profiles"
-      redirect_to users_path
-    elsif current_user.first_time
+    if current_user.first_time
       flash.now[:info] = 'Please update your profile information'
     end
-  # rescue
-  #   flash[:danger] = 'Unable to find user'
-  #   redirect_to users_path
   end
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
-      if current_user?(@user)
-        redirect
-      else
-        redirect_to users_path
-      end
-      if current_user?(@user)
-        @user.first_time = false
-      end
-      @user.save
+    if @user.update_user(user_params, current_user?(@user))
+      redirect
     else
       flash.now[:danger] = 'Unable to update profile'
       render 'edit'
@@ -59,13 +41,11 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-
     if current_user?(@user)
       flash[:danger] = 'You cannot delete yourself'
     else
       @user.destroy
     end
-
     redirect_to users_path
   end
 
@@ -77,22 +57,13 @@ class UsersController < ApplicationController
   end
 
   def ensure_user_logged_in
-    unless current_user
-      redirect_to login_path
-    end
+    redirect_to login_path unless current_user
   end
 
-  def ensure_correct_user
+  def ensure_can_edit
     @user = User.find(params[:id])
-    #If the queried user does not match AND the current user is not an admin OR
-    #If the queried user does not match AND the current user is not a master AND the queried user is an admin
-    #Give an error
-    if (!current_user?(@user) and current_user.profile == 1) or (!current_user?(@user) and current_user.profile < 3 and @user.profile >= 2)
-      if current_user.profile >= 2
-        flash[:danger] = 'You do not have permission to perform this action. Please contact your administrator.'
-      else
-        flash[:danger] = 'You do not have permission to perform this action. Please contact your manager.'
-      end
+    unless current_user?(@user) or current_user.admin? or current_user.superior(@user)
+      flash[:danger] = 'You do not have permission to perform this action'
       redirect
     end
   rescue
@@ -100,25 +71,34 @@ class UsersController < ApplicationController
     redirect
   end
 
-  def ensure_admin
-    unless current_user.profile >= 2
-      flash[:danger] = 'You do not have permission to perform this action. Please contact your manager.'
+  def ensure_manager
+    unless current_user.manager?
+      flash[:danger] = 'You do not have permission to perform this action'
       redirect_to user_invoices_path(current_user)
     end
   end
 
-  def ensure_master
-    unless current_user.profile == 3
-      flash[:danger] = 'You do not have permission to perform this action. Please contact your administrator.'
+  def ensure_admin
+    unless current_user.admin?
+      flash[:danger] = 'You do not have permission to perform this action'
       redirect
     end
   end
 
   def redirect
-    if current_user.profile >= 2
+    if current_user.manager?
       redirect_to users_path
     else
       redirect_to user_invoices_path(current_user)
     end
   end
+
+  def redirect_path
+    if current_user.manager?
+      users_path
+    else
+      user_invoices_path(current_user)
+    end
+  end
+  helper_method :redirect_path
 end

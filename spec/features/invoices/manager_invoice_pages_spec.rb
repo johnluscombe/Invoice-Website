@@ -26,12 +26,12 @@ describe 'Manager Invoice Pages' do
           should_not have_selector('tr', text: employee.rate)
           should have_selector('tr', text: '0.00 $ 0.00 Started')
           should have_selector('tr', text: invoice.check_no)
-          should have_link('VIEW PAYMENTS')
-          should have_link('EDIT')
-          should have_link('DELETE')
-          should_not have_link('SUBMIT')
-          should_not have_link('RESET')
-          should_not have_link('MARK AS PAID')
+          should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
+          should have_link('EDIT', href: edit_invoice_path(invoice))
+          should have_link('DELETE', href: invoice_path(invoice))
+          should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
+          should_not have_link('RESET', href: invoice_reset_path(invoice))
+          should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
         end
       end
     end
@@ -163,7 +163,7 @@ describe 'Manager Invoice Pages' do
         visit new_invoice_payment_path(invoice)
         click_button('CREATE NEW PAYMENT')
         visit user_invoices_path(employee)
-        click_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+        click_link('SUBMIT', href: invoice_submit_path(invoice))
         click_link('Pending Invoices', href: invoices_path(:pending_only => true))
       end
 
@@ -182,12 +182,12 @@ describe 'Manager Invoice Pages' do
             should have_selector('tr', text: '$ 0.00')
             should have_selector('tr', text: 'Pending')
             should have_selector('tr', text: invoice.check_no)
-            should have_link('VIEW INVOICE')
-            should have_link('MARK AS PAID')
-            should have_link('RESET')
-            should have_link('EDIT')
-            should have_link('DELETE')
-            should_not have_link('SUBMIT')
+            should have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
+            should have_link('MARK AS PAID', href: invoice_pay_path(invoice, :from_pending => true))
+            should have_link('RESET', href: invoice_reset_path(invoice, :from_pending => true))
+            should have_link('EDIT', href: edit_invoice_path(invoice))
+            should have_link('DELETE', href: invoice_path(invoice))
+            should_not have_link('SUBMIT', href: invoice_submit_path(invoice, :from_pending => true))
           end
         end
         should_not have_content('Started')
@@ -206,11 +206,11 @@ describe 'Manager Invoice Pages' do
       it 'shows the correct buttons' do
         should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
         should_not have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
-        should_not have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
-        should_not have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
+        should_not have_link('RESET', href: invoice_reset_path(invoice))
         should have_link('EDIT', href: edit_invoice_path(invoice))
         should have_link('DELETE', href: invoice_path(invoice))
-        should_not have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+        should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
       end
     end
 
@@ -222,11 +222,11 @@ describe 'Manager Invoice Pages' do
       it 'shows the correct buttons' do
         should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
         should_not have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
-        should_not have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
-        should_not have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
+        should_not have_link('RESET', href: invoice_reset_path(invoice))
         should have_link('EDIT', href: edit_invoice_path(invoice))
         should have_link('DELETE', href: invoice_path(invoice))
-        should have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+        should have_link('SUBMIT', href: invoice_submit_path(invoice))
       end
     end
 
@@ -238,11 +238,11 @@ describe 'Manager Invoice Pages' do
       it 'shows the correct buttons' do
         should_not have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
         should have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
-        should have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
-        should have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should have_link('MARK AS PAID', href: invoice_pay_path(invoice))
+        should have_link('RESET', href: invoice_reset_path(invoice))
         should have_link('EDIT', href: edit_invoice_path(invoice))
         should have_link('DELETE', href: invoice_path(invoice))
-        should_not have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+        should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
       end
     end
 
@@ -254,11 +254,11 @@ describe 'Manager Invoice Pages' do
       it 'shows the correct buttons' do
         should_not have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
         should have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
-        should_not have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
-        should have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
+        should have_link('RESET', href: invoice_reset_path(invoice))
         should have_link('EDIT', href: edit_invoice_path(invoice))
         should have_link('DELETE', href: invoice_path(invoice))
-        should_not have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+        should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
       end
     end
   end

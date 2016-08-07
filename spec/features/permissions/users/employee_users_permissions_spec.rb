@@ -17,7 +17,7 @@ describe 'Employee Users Permissions' do
 
       it 'should give a permissions error' do
         should have_current_path(user_invoices_path(employee))
-        should have_content 'You do not have permission to perform this action.'
+        should have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -27,7 +27,7 @@ describe 'Employee Users Permissions' do
 
       it 'should give a permissions error' do
         should have_current_path(user_invoices_path(employee))
-        should have_content 'You do not have permission to perform this action.'
+        should have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -37,7 +37,7 @@ describe 'Employee Users Permissions' do
 
       it 'should load the page without error' do
         should have_current_path(edit_user_path(employee))
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -47,7 +47,7 @@ describe 'Employee Users Permissions' do
 
       it 'should give a permissions error' do
         should have_current_path(user_invoices_path(employee))
-        should have_content 'You do not have permission to perform this action.'
+        should have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -57,7 +57,7 @@ describe 'Employee Users Permissions' do
 
       it 'should give a permissions error' do
         should have_current_path(user_invoices_path(employee))
-        should have_content 'You do not have permission to perform this action.'
+        should have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -67,7 +67,7 @@ describe 'Employee Users Permissions' do
 
       it 'should give a permissions error' do
         should have_current_path(user_invoices_path(employee))
-        should have_content 'You do not have permission to perform this action.'
+        should have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -77,7 +77,7 @@ describe 'Employee Users Permissions' do
 
       it 'should give a permissions error' do
         should have_current_path(user_invoices_path(employee))
-        should have_content 'You do not have permission to perform this action.'
+        should have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -87,7 +87,7 @@ describe 'Employee Users Permissions' do
 
       it 'should give a permissions error' do
         should have_current_path(user_invoices_path(employee))
-        should have_content 'You do not have permission to perform this action.'
+        should have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
         should_not have_content 'You cannot delete yourself'
       end
@@ -98,7 +98,7 @@ describe 'Employee Users Permissions' do
 
       it 'should give a permissions error' do
         should have_current_path(user_invoices_path(employee))
-        should have_content 'You do not have permission to perform this action.'
+        should have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
         should_not have_content 'You cannot delete yourself'
       end
@@ -109,7 +109,7 @@ describe 'Employee Users Permissions' do
 
       it 'should give a permissions error' do
         should have_current_path(user_invoices_path(employee))
-        should have_content 'You do not have permission to perform this action.'
+        should have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
         should_not have_content 'You cannot delete yourself'
       end

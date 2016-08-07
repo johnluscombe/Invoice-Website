@@ -1,43 +1,43 @@
 %h1 Employees
 %br
-- if (User.where('profile >= ?', 2).count > 0 and current_user.profile < 3) || (User.count > 0 and current_user.profile == 3)
+- if (User.managers.count > 0 and !current_user.admin?) or (User.count > 0 and current_user.admin?)
   %table.table.table-striped
-    - if current_user.profile == 3
+    - if current_user.admin?
       %col{ :width => '5%' } <!-- ID for Masters -->
     %col{ :width => '20%' } <!-- Employee Name -->
-    - if current_user.profile == 3
+    - if current_user.admin?
       %col{ :width => '20%' } <!-- Username for Masters -->
     %col{ :width => '20%' } <!-- Email -->
     %col{ :width => '10%' } <!-- Hourly Rate -->
     %col{ :width => '10%' } <!-- Current Invoice -->
-    - if current_user.profile == 3
+    - if current_user.admin?
       %col{ :width => '10%' } <!-- Profile for Masters -->
       %col{ :width => '1%' } <!-- Reset Profile? for Masters -->
     %col{ :width => '1%' } <!-- View Invoices Button -->
     %col{ :width => '1%' } <!-- Edit User Button -->
-    - if current_user.profile == 3
+    - if current_user.admin?
       %col{ :width => '1%' } <!-- Delete User Button -->
     %tr
-      - if current_user.profile == 3
+      - if current_user.admin?
         %th.bottom-align ID
       %th.bottom-align Employee Name
-      - if current_user.profile == 3
+      - if current_user.admin?
         %th.bottom-align Username
       %th.bottom-align Email
       %th.bottom-align.text-right Hourly Rate
       %th.bottom-align.text-right Current Invoice
-      - if current_user.profile == 3
+      - if current_user.admin?
         %th.bottom-align.text-center Profile
         %th.bottom-align.text-center Reset Profile?
       %th
       %th
-      - if current_user.profile == 3
+      - if current_user.admin?
         %th
     = render @users
-  - if current_user.profile == 3
+  - if current_user.admin?
     %td= link_to 'NEW USER', new_user_path, class: 'btn btn-success'
 - else
-  - if current_user.profile == 3
+  - if current_user.admin?
     %p There are no employees yet.
     %td= link_to 'NEW USER', new_user_path, class: 'btn btn-success'
   - else

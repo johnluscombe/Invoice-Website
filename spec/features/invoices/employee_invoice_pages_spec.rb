@@ -25,12 +25,12 @@ describe 'Employee Invoice Pages' do
           should_not have_selector('tr', text: employee.rate)
           should have_selector('tr', text: '0.00 $ 0.00 Started')
           should_not have_selector('tr', text: invoice.check_no)
-          should have_link('VIEW PAYMENTS')
-          should have_link('EDIT')
-          should have_link('DELETE')
-          should_not have_link('SUBMIT')
-          should_not have_link('RESET')
-          should_not have_link('MARK AS PAID')
+          should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
+          should have_link('EDIT', href: edit_invoice_path(invoice))
+          should have_link('DELETE', href: invoice_path(invoice))
+          should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
+          should_not have_link('RESET', href: invoice_reset_path(invoice))
+          should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
         end
       end
     end
@@ -136,11 +136,11 @@ describe 'Employee Invoice Pages' do
       it 'shows the correct buttons' do
         should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
         should_not have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
-        should_not have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
-        should_not have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
+        should_not have_link('RESET', href: invoice_reset_path(invoice))
         should have_link('EDIT', href: edit_invoice_path(invoice))
         should have_link('DELETE', href: invoice_path(invoice))
-        should_not have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+        should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
       end
     end
 
@@ -152,11 +152,11 @@ describe 'Employee Invoice Pages' do
       it 'shows the correct buttons' do
         should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
         should_not have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
-        should_not have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
-        should_not have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
+        should_not have_link('RESET', href: invoice_reset_path(invoice))
         should have_link('EDIT', href: edit_invoice_path(invoice))
         should have_link('DELETE', href: invoice_path(invoice))
-        should have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+        should have_link('SUBMIT', href: invoice_submit_path(invoice))
       end
     end
 
@@ -168,11 +168,11 @@ describe 'Employee Invoice Pages' do
       it 'shows the correct buttons' do
         should_not have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
         should have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
-        should_not have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
-        should have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
+        should have_link('RESET', href: invoice_reset_path(invoice))
         should_not have_link('EDIT', href: edit_invoice_path(invoice))
         should_not have_link('DELETE', href: invoice_path(invoice))
-        should_not have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+        should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
       end
     end
 
@@ -184,11 +184,11 @@ describe 'Employee Invoice Pages' do
       it 'shows the correct buttons' do
         should_not have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
         should have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
-        should_not have_link('MARK AS PAID', href: edit_invoice_path(invoice, :approve => true))
-        should_not have_link('RESET', href: edit_invoice_path(invoice, :reset => true))
+        should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
+        should_not have_link('RESET', href: invoice_reset_path(invoice))
         should_not have_link('EDIT', href: edit_invoice_path(invoice))
         should_not have_link('DELETE', href: invoice_path(invoice))
-        should_not have_link('SUBMIT', href: edit_invoice_path(invoice, :submit => true))
+        should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
       end
     end
   end

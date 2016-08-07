@@ -18,7 +18,7 @@ describe 'Manager Invoices Permissions' do
       it 'should give an error' do
         should have_current_path(users_path)
         should have_content 'User does not get paid hourly'
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -29,7 +29,7 @@ describe 'Manager Invoices Permissions' do
       it 'should give an error' do
         should have_current_path(users_path)
         should have_content 'User does not get paid hourly'
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -40,7 +40,7 @@ describe 'Manager Invoices Permissions' do
       it 'should give an error' do
         should have_current_path(users_path)
         should have_content 'User does not get paid hourly'
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -51,7 +51,7 @@ describe 'Manager Invoices Permissions' do
       it 'should load the page without error' do
         should have_current_path(user_invoices_path(employee))
         should_not have_content 'User does not get paid hourly'
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -62,7 +62,7 @@ describe 'Manager Invoices Permissions' do
       it 'should give an error' do
         should have_current_path(users_path)
         should have_content 'User does not get paid hourly'
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -73,7 +73,7 @@ describe 'Manager Invoices Permissions' do
       it 'should give an error' do
         should have_current_path(users_path)
         should have_content 'User does not get paid hourly'
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -84,7 +84,7 @@ describe 'Manager Invoices Permissions' do
       it 'should give an error' do
         should have_current_path(users_path)
         should have_content 'User does not get paid hourly'
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -95,7 +95,7 @@ describe 'Manager Invoices Permissions' do
       it 'should generate a new invoice and load the invoices index page' do
         should have_current_path(user_invoices_path(employee))
         should_not have_content 'User does not get paid hourly'
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -108,7 +108,7 @@ describe 'Manager Invoices Permissions' do
       it 'should load the page without error' do
         should have_current_path(edit_invoice_path(invoice))
         should_not have_content 'User does not get paid hourly'
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end
@@ -121,7 +121,7 @@ describe 'Manager Invoices Permissions' do
       it 'should not have an error' do
         should have_current_path(user_invoices_path(employee))
         should_not have_content 'User does not get paid hourly'
-        should_not have_content 'You do not have permission to perform this action.'
+        should_not have_content 'You do not have permission to perform this action'
         should_not have_content 'Unable'
       end
     end

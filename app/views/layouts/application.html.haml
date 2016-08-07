@@ -35,7 +35,7 @@
                 %li= link_to 'Current Invoice', invoice_payments_path(Invoice.where(:user_id => current_user.id).order(:start_date).last)
         %ul.nav.navbar-nav.navbar-right
           - if current_user
-            - if current_user.fullname == ''
+            - if current_user.fullname.nil?
               %li= link_to 'Welcome, ' + current_user.name, edit_user_path(current_user)
             - else
               %li= link_to 'Welcome, ' + current_user.fullname, edit_user_path(current_user)

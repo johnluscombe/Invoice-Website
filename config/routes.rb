@@ -17,6 +17,9 @@ Rails.application.routes.draw do
    end
    resources :invoices, shallow: true, except: :show do
      resources :payments, except: :show
+     patch 'submit'
+     patch 'reset'
+     patch 'pay'
    end
 
    get 'login', to: 'logins#new', as: :login
