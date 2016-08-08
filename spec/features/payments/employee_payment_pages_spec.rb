@@ -11,7 +11,6 @@ describe 'Employee Invoice Pages' do
     before do
       10.times { FactoryGirl.create(:payment, invoice: invoice) }
       login employee
-      visit invoice_payments_path(invoice)
     end
 
     it 'should have 10 payments' do
@@ -19,6 +18,8 @@ describe 'Employee Invoice Pages' do
     end
 
     describe 'list payments' do
+      before { visit invoice_payments_path(invoice) }
+
       it 'should show all payments' do
         Payment.all.each do |payment|
           should_not have_selector('tr', text: payment.id.to_s + ' ' + payment.date.strftime('%m-%d-%Y'))
@@ -75,8 +76,8 @@ describe 'Employee Invoice Pages' do
     describe 'editing payments' do
       let(:submit) { 'UPDATE PAYMENT' }
       let(:cancel) { 'CANCEL' }
-      let(:invoice) { FactoryGirl.create(:invoice, user: employee) }
-      let(:payment) { FactoryGirl.create(:payment, invoice: invoice) }
+      let(:new_invoice) { FactoryGirl.create(:invoice, user: employee) }
+      let(:payment) { FactoryGirl.create(:payment, invoice: new_invoice) }
 
       before { visit edit_payment_path(payment) }
 
@@ -104,7 +105,7 @@ describe 'Employee Invoice Pages' do
 
         it 'redirects back to payments page and shows payment' do
           click_button submit
-          should have_current_path(invoice_payments_path(invoice))
+          should have_current_path(invoice_payments_path(new_invoice))
           should have_selector('tr', text: '12-31-2016 Changed Description 4.00 $ 40.00')
         end
 
@@ -120,7 +121,7 @@ describe 'Employee Invoice Pages' do
 
         it 'redirects to payment page' do
           click_link cancel
-          should have_current_path(invoice_payments_path(invoice))
+          should have_current_path(invoice_payments_path(new_invoice))
         end
       end
 
@@ -132,16 +133,16 @@ describe 'Employee Invoice Pages' do
     end
 
     describe 'delete payments' do
-      let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
-      let!(:payment) { FactoryGirl.create(:payment, invoice: invoice) }
+      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee) }
+      let!(:payment) { FactoryGirl.create(:payment, invoice: new_invoice) }
 
-      before { visit invoice_payments_path(invoice) }
+      before { visit invoice_payments_path(new_invoice) }
 
       it { should have_link('DELETE', href: payment_path(payment)) }
 
       it 'redirects properly' do
         click_link('DELETE', href: payment_path(payment))
-        should have_current_path(invoice_payments_path(invoice))
+        should have_current_path(invoice_payments_path(new_invoice))
       end
 
       it 'removes the payment from the system' do
@@ -152,50 +153,59 @@ describe 'Employee Invoice Pages' do
     end
 
     describe "invoices with 'Started' status" do
-      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Started') }
+      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Started') }
 
-      before { visit invoice_payments_path(invoice) }
+      before { visit invoice_payments_path(new_invoice) }
 
       it 'shows the correct buttons' do
-        should have_link('NEW PAYMENT', href: new_invoice_payment_path(invoice))
-        should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(invoice))
-        should_not have_link('RESET INVOICE', href: invoice_reset_path(invoice))
+        should have_link('NEW PAYMENT', href: new_invoice_payment_path(new_invoice))
+        should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(new_invoice))
+        should_not have_link('RESET INVOICE', href: invoice_reset_path(new_invoice))
       end
     end
 
     describe "invoices with 'In Progress' status" do
-      let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
+      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee) }
 
-      before { visit invoice_payments_path(invoice) }
+      before do
+        FactoryGirl.create(:payment, invoice: new_invoice)
+        visit invoice_payments_path(new_invoice)
+      end
 
       it 'shows the correct buttons' do
-        should have_link('NEW PAYMENT', href: new_invoice_payment_path(invoice))
-        should have_link('SUBMIT INVOICE', href: invoice_submit_path(invoice))
-        should_not have_link('RESET INVOICE', href: invoice_reset_path(invoice))
+        should have_link('NEW PAYMENT', href: new_invoice_payment_path(new_invoice))
+        should have_link('SUBMIT INVOICE', href: invoice_submit_path(new_invoice))
+        should_not have_link('RESET INVOICE', href: invoice_reset_path(new_invoice))
       end
     end
 
     describe "invoices with 'Pending' status" do
-      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
+      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
 
-      before { visit invoice_payments_path(invoice) }
+      before do
+        FactoryGirl.create(:payment, invoice: new_invoice)
+        visit invoice_payments_path(new_invoice)
+      end
 
       it 'shows the correct buttons' do
-        should_not have_link('NEW PAYMENT', href: new_invoice_payment_path(invoice))
-        should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(invoice))
-        should have_link('RESET INVOICE', href: invoice_reset_path(invoice))
+        should_not have_link('NEW PAYMENT', href: new_invoice_payment_path(new_invoice))
+        should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(new_invoice))
+        should have_link('RESET INVOICE', href: invoice_reset_path(new_invoice))
       end
     end
 
     describe "invoices with 'Paid' status" do
-      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Paid') }
+      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Paid') }
 
-      before { visit invoice_payments_path(invoice) }
+      before do
+        FactoryGirl.create(:payment, invoice: new_invoice)
+        visit invoice_payments_path(new_invoice)
+      end
 
       it 'shows the correct buttons' do
-        should_not have_link('NEW PAYMENT', href: new_invoice_payment_path(invoice))
-        should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(invoice))
-        should_not have_link('RESET INVOICE', href: invoice_reset_path(invoice))
+        should_not have_link('NEW PAYMENT', href: new_invoice_payment_path(new_invoice))
+        should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(new_invoice))
+        should_not have_link('RESET INVOICE', href: invoice_reset_path(new_invoice))
       end
     end
   end

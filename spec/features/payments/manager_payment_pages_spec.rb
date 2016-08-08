@@ -12,7 +12,6 @@ describe 'Manager Invoice Pages' do
     before do
       10.times { FactoryGirl.create(:payment, invoice: invoice) }
       login manager
-      visit invoice_payments_path(invoice)
     end
 
     it 'should have 10 payments' do
@@ -20,6 +19,8 @@ describe 'Manager Invoice Pages' do
     end
 
     describe 'list payments' do
+      before { visit invoice_payments_path(invoice) }
+
       it 'should show all payments' do
         Payment.all.each do |payment|
           should_not have_selector('tr', text: payment.id.to_s + ' ' + payment.date.strftime('%m-%d-%Y'))
@@ -76,8 +77,8 @@ describe 'Manager Invoice Pages' do
     describe 'editing payments' do
       let(:submit) { 'UPDATE PAYMENT' }
       let(:cancel) { 'CANCEL' }
-      let(:invoice) { FactoryGirl.create(:invoice, user: employee) }
-      let(:payment) { FactoryGirl.create(:payment, invoice: invoice) }
+      let(:new_invoice) { FactoryGirl.create(:invoice, user: employee) }
+      let(:payment) { FactoryGirl.create(:payment, invoice: new_invoice) }
 
       before do
         visit edit_payment_path(payment)
@@ -109,7 +110,7 @@ describe 'Manager Invoice Pages' do
 
         it 'redirects back to payments page and shows payment' do
           click_button submit
-          should have_current_path(invoice_payments_path(invoice))
+          should have_current_path(invoice_payments_path(new_invoice))
           should have_selector('tr', text: '12-31-2016 Changed Description 4.00 $ 15.00')
         end
 
@@ -125,7 +126,7 @@ describe 'Manager Invoice Pages' do
 
         it 'redirects to payment page' do
           click_link cancel
-          should have_current_path(invoice_payments_path(invoice))
+          should have_current_path(invoice_payments_path(new_invoice))
         end
       end
 
@@ -137,16 +138,16 @@ describe 'Manager Invoice Pages' do
     end
 
     describe 'delete payments' do
-      let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
-      let!(:payment) { FactoryGirl.create(:payment, invoice: invoice) }
+      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee) }
+      let!(:payment) { FactoryGirl.create(:payment, invoice: new_invoice) }
 
-      before { visit invoice_payments_path(invoice) }
+      before { visit invoice_payments_path(new_invoice) }
 
       it { should have_link('DELETE', href: payment_path(payment)) }
 
       it 'redirects properly' do
         click_link('DELETE', href: payment_path(payment))
-        should have_current_path(invoice_payments_path(invoice))
+        should have_current_path(invoice_payments_path(new_invoice))
       end
 
       it 'removes the payment from the system' do
@@ -157,7 +158,7 @@ describe 'Manager Invoice Pages' do
     end
 
     describe "invoices with 'Started' status" do
-      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee) }
+      let(:new_invoice) { FactoryGirl.create(:invoice, user: employee) }
 
       before { visit invoice_payments_path(new_invoice) }
 
@@ -169,9 +170,12 @@ describe 'Manager Invoice Pages' do
     end
 
     describe "invoices with 'In Progress' status" do
-      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'In Progress') }
+      let(:new_invoice) { FactoryGirl.create(:invoice, user: employee) }
 
-      before { visit invoice_payments_path(new_invoice) && puts(page.body) }
+      before do
+        FactoryGirl.create(:payment, invoice: new_invoice)
+        visit invoice_payments_path(new_invoice)
+      end
 
       it 'shows the correct buttons' do
         should have_link('NEW PAYMENT', href: new_invoice_payment_path(new_invoice))
@@ -181,9 +185,12 @@ describe 'Manager Invoice Pages' do
     end
 
     describe "invoices with 'Pending' status" do
-      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
+      let(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
 
-      before { visit invoice_payments_path(new_invoice) }
+      before do
+        FactoryGirl.create(:payment, invoice: new_invoice)
+        visit invoice_payments_path(new_invoice)
+      end
 
       it 'shows the correct buttons' do
         should_not have_link('NEW PAYMENT', href: new_invoice_payment_path(new_invoice))
@@ -193,9 +200,12 @@ describe 'Manager Invoice Pages' do
     end
 
     describe "invoices with 'Paid' status" do
-      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Paid') }
+      let(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Paid') }
 
-      before { visit invoice_payments_path(new_invoice) }
+      before do
+        FactoryGirl.create(:payment, invoice: new_invoice)
+        visit invoice_payments_path(new_invoice)
+      end
 
       it 'shows the correct buttons' do
         should_not have_link('NEW PAYMENT', href: new_invoice_payment_path(new_invoice))
