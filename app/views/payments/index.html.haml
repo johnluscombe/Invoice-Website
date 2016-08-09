@@ -1,8 +1,8 @@
-- if @invoice.start_date != nil and @invoice.end_date != nil
+- if !@invoice.start_date.nil? and !@invoice.end_date.nil?
   %h1= "Payments for Invoice #{ @invoice.start_date.strftime('%m-%d-%Y') } - #{ @invoice.end_date.strftime('%m-%d-%Y') }"
-- elsif @invoice.start_date != nil and @invoice.end_date == nil
+- elsif !@invoice.start_date.nil? and @invoice.end_date.nil?
   %h1= "Payments for Invoice Starting #{ @invoice.start_date.strftime('%m-%d-%Y') }"
-- elsif @invoice.start_date == nil and @invoice.end_date != nil
+- elsif @invoice.start_date.nil? and !@invoice.end_date.nil?
   %h1= "Payments for Invoice Ending #{ @invoice.end_date.strftime('%m-%d-%Y') }"
 - else
   %h1 Payments
@@ -11,7 +11,7 @@
 %br
 %br
 
-- if @invoice.status == 'Paid'
+- if @invoice.paid?
   %p.emphasized
     %strong Status:
     %span.approve #{ @invoice.status }
@@ -56,41 +56,21 @@
         %td.override.middle-align
           %strong= sprintf('%.2f', @invoice.hours)
 
-      - if @invoice.net_pay == nil
-        - if @invoice.rate == nil
-          - if @invoice.hours == nil
-            <!-- No overrides -->
-            %td.text-center.emphasized{ :colspan => 3 }
-              %strong= "$ #{ sprintf('%.2f', @invoice.payments.where(:daily_rate => nil).sum(:hours) * @invoice.user.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) }"
-          - else
-            <!-- Hours override -->
-            %td.text-center.emphasized{ :colspan => 3 }
-              %strong= "$ #{ sprintf('%.2f', @invoice.hours * @invoice.user.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) }"
-        - else
-          - if @invoice.hours == nil
-            <!-- Rate override -->
-            %td.text-center.emphasized{ :colspan => 3 }
-              %strong= "$ #{ sprintf('%.2f', @invoice.payments.where(:daily_rate => nil).sum(:hours) * @invoice.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) }"
-          - else
-            <!-- Rate and hours override -->
-            %td.text-center.emphasized{ :colspan => 3 }
-              %strong= "$ #{ sprintf('%.2f', @invoice.hours * @invoice.rate + @invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)) }"
-      - else
-        <!-- Net pay override -->
-        %td.text-center.emphasized{ :colspan => 3 }
-          %strong= "$ #{ sprintf('%.2f', @invoice.net_pay) }"
+      %td.text-center.emphasized{ :colspan => 3 }
+        %strong= "$ #{ @invoice.get_net_pay }"
+
   %table
     %col{ :width => '135' }
     %col{ :width => '135' }
     %tr
-      - if @invoice.status == 'Started' or @invoice.status == 'In Progress'
+      - if @invoice.started? or @invoice.in_progress?
         %td= link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success'
-      - if @invoice.status == 'In Progress'
+      - if @invoice.in_progress?
         %td= link_to 'SUBMIT INVOICE', invoice_submit_path(@invoice), class: 'btn btn-primary btn-outline'
-      - elsif @invoice.status == 'Pending'
+      - elsif @invoice.pending?
         %td= link_to 'RESET INVOICE', invoice_reset_path(@invoice), class: 'btn btn-primary btn-outline'
   %br
 - else
   %p There are no payments under this invoice yet.
-  - if @invoice.status == 'Started' or @invoice.status == 'In Progress'
+  - if @invoice.started? or @invoice.in_progress?
     = link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success'

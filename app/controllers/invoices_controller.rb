@@ -4,7 +4,7 @@ class InvoicesController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-    @invoices = @user.invoices.all.order(:start_date).reverse_order
+    @invoices = @user.invoices.ordered
     if @user.manager?
       flash[:warning] = 'User does not get paid hourly'
       redirect_to users_path
@@ -13,14 +13,14 @@ class InvoicesController < ApplicationController
 
   def all
     ensure_admin
-    @invoices = Invoice.all.order(:start_date).reverse_order
+    @invoices = Invoice.all.ordered
     @all = true
     render 'index'
   end
 
   def pending
     ensure_manager
-    @invoices = Invoice.where(:status => 'Pending').order(:start_date).reverse_order
+    @invoices = Invoice.pending.ordered
     @pending = true
     render 'index'
   end

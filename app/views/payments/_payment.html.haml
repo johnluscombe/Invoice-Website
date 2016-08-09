@@ -2,17 +2,16 @@
   - if current_user.admin?
     %td= payment.id
 
-  - if payment.date != nil
+  - if !payment.date.nil?
     %td= payment.date.strftime('%m-%d-%Y')
   - else
     %td
 
   %td= payment.description
 
-  - if payment.hours != nil
+  - if !payment.hours.nil?
     %td= sprintf('%.2f', payment.hours)
-
-    - if payment.daily_rate == nil
+    - if payment.daily_rate.nil?
       %td= "$ #{ sprintf('%.2f', payment.hours * payment.invoice.user.rate) }"
     - else
       %td.override= "$ #{ sprintf('%.2f', payment.daily_rate)}"

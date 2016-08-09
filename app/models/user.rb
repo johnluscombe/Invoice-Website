@@ -32,25 +32,7 @@ class User < ActiveRecord::Base
   def net_pay
     invoice = self.invoice
     if invoice and self.employee?
-      sum_hours_without_override = invoice.payments.where(:daily_rate => nil).sum(:hours)
-      sum_daily_rate_with_override = invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate)
-      if invoice.net_pay == nil
-        if invoice.rate == nil
-          if invoice.hours == nil
-            sprintf('%.2f', sum_hours_without_override * self.rate + sum_daily_rate_with_override)
-          else
-            sprintf('%.2f', invoice.hours * self.rate + sum_daily_rate_with_override)
-          end
-        else
-          if invoice.hours == nil
-            sprintf('%.2f', sum_hours_without_override * invoice.rate + sum_daily_rate_with_override)
-          else
-            sprintf('%.2f', invoice.hours * invoice.rate + sum_daily_rate_with_override)
-          end
-        end
-      else
-        sprintf('%.2f', invoice.net_pay)
-      end
+      invoice.get_net_pay
     elsif self.manager?
       'N/A'
     else

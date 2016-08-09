@@ -10,7 +10,7 @@
 - else
     %h1 Invoices
 %br
-- if (@user and @user.invoices.count > 0) or (@user == nil and @all and @invoices.count > 0) or (@user == nil and @pending and @invoices.count > 0)
+- if (@user and @user.invoices.count > 0) or (@invoices.count > 0 and (@all or @pending))
     %table.table.table-striped
         - if current_user.admin?
             %col{ :width => '5%' } <!-- ID for Masters -->

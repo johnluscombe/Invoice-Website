@@ -20,7 +20,7 @@
       %i.glyphicon.glyphicon-info-sign
       Optional. Email to receive invoice statements.
 
-  - if !current_user?(@user) and current_user.manager? and @user.employee?
+  - if current_user.manager? and @user.employee?
     %tr
       %td.text-right= f.label :rate, class: 'middle-align'
       %td

@@ -4,46 +4,32 @@
   - if @all or @pending
     %td= invoice.user.fullname
 
-  - if invoice.start_date != nil and invoice.end_date != nil
+  - if !invoice.start_date.nil? and !invoice.end_date.nil?
     %td.text-center= "#{invoice.start_date.strftime('%m/%d/%y')} - #{invoice.end_date.strftime('%m/%d/%y')}"
-  - elsif invoice.start_date == nil and invoice.end_date != nil
+  - elsif invoice.start_date.nil? and !invoice.end_date.nil?
     %td.text-center= "Ended #{invoice.end_date.strftime('%m/%d/%y')}"
-  - elsif invoice.start_date != nil and invoice.end_date == nil
+  - elsif !invoice.start_date.nil? and invoice.end_date.nil?
     %td.text-center= "Started #{invoice.start_date.strftime('%m/%d/%y')}"
   - else
     %td
 
-  - if invoice.hours == nil
+  - if invoice.hours.nil?
     %td.text-right= sprintf('%.2f', invoice.payments.sum(:hours))
   - else
     %td.override.text-right= sprintf('%.2f', invoice.hours)
 
   - if current_user.admin?
-    - if invoice.rate == nil
+    - if invoice.rate.nil?
       %td.text-right= sprintf('%.2f', invoice.user.rate)
     - else
       %td.override.text-right= sprintf('%.2f', invoice.rate)
 
-  - if invoice.net_pay == nil
-    - if invoice.rate == nil
-      - if invoice.hours == nil
-        <!-- No overrides -->
-        %td.text-right= "$ #{sprintf('%.2f', invoice.payments.where(:daily_rate => nil).sum(:hours) * invoice.user.rate + invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate))}"
-      - else
-        <!-- Hours override -->
-        %td.text-right= "$ #{sprintf('%.2f', invoice.hours * invoice.user.rate + invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate))}"
-    - else
-      - if invoice.hours == nil
-        <!-- Rate override -->
-        %td.text-right= "$ #{sprintf('%.2f', invoice.payments.where(:daily_rate => nil).sum(:hours) * invoice.rate + invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate))}"
-      - else
-        <!-- Rate and hours override -->
-        %td.text-right= "$ #{sprintf('%.2f', invoice.hours * invoice.rate + invoice.payments.where.not(:daily_rate => nil).sum(:daily_rate))}"
+  - if invoice.net_pay.nil?
+    %td.text-right= "$ #{ sprintf('%.2f', invoice.get_net_pay) }"
   - else
-    <!-- Net pay override -->
-    %td.override.text-right= "$ #{sprintf('%.2f', invoice.net_pay)}"
+    %td.override.text-right= "$ #{ sprintf('%.2f', invoice.net_pay) }"
 
-  - if invoice.status == 'Paid'
+  - if invoice.paid?
     %td.approve.text-center
       %strong= invoice.status
   - else
@@ -51,18 +37,18 @@
 
   - if current_user.manager?
     %td.text-right= invoice.check_no
-    - if invoice.transfer_date == nil
+    - if invoice.transfer_date.nil?
       %td
     - else
       %td.text-center= invoice.transfer_date.strftime('%m/%d/%y')
 
   - if current_user.employee?
-    - if invoice.status == 'Started'
+    - if invoice.started?
       %td.text-center= link_to 'VIEW PAYMENTS', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
-    - elsif invoice.status == 'In Progress'
+    - elsif invoice.in_progress?
       %td.text-center= link_to 'VIEW PAYMENTS', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       - if @user
         %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
@@ -70,7 +56,7 @@
         %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
-    - elsif invoice.status == 'Pending'
+    - elsif invoice.pending?
       %td.text-center= link_to 'VIEW INVOICE', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       - if @user
         %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
@@ -78,19 +64,19 @@
         %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       %td
       %td
-    - else
+    - elsif invoice.paid?
       %td.text-center= link_to 'VIEW INVOICE', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td
       %td
       %td
   - else
-    - if invoice.status == 'Started'
+    - if invoice.started?
       %td.text-center= link_to 'VIEW PAYMENTS', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td
       %td
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
-    - elsif invoice.status == 'In Progress'
+    - elsif invoice.in_progress?
       %td.text-center= link_to 'VIEW PAYMENTS', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       - if @user
         %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
@@ -99,7 +85,7 @@
       %td
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
-    - elsif invoice.status == 'Pending'
+    - elsif invoice.pending?
       %td.text-center= link_to 'VIEW INVOICE', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       - if @user
         %td.text-center= link_to 'MARK AS PAID', invoice_pay_path(invoice), method: :patch, class: 'btn btn-success btn-outline btn-xs'
@@ -109,7 +95,7 @@
         %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
-    - else
+    - elsif invoice.paid?
       %td.text-center= link_to 'VIEW INVOICE', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td
       - if @user

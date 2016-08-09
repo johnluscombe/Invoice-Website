@@ -3,7 +3,7 @@
   %col{ :width => '300' }
   %tr
     %td.text-right= f.label :date
-    - if @payment.date == nil
+    - if @payment.date.nil?
       %td= f.date_field :date, class: 'form-control', :value => Date.today.strftime('%Y-%m-%d')
     - else
       %td= f.date_field :date, class: 'form-control'

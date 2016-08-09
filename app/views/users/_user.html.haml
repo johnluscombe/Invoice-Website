@@ -14,7 +14,11 @@
     - else
       %td.text-right= "$ #{ sprintf('%.2f', user.rate) }"
 
-  %td.text-right= user.net_pay
+  - if user.net_pay == 'N/A' or user.net_pay == '-'
+    %td.text-right= user.net_pay
+  - else
+    %td.text-right= "$ #{ user.net_pay }"
+
 
   - if current_user.admin?
     %td.text-center
