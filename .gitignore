@@ -16,9 +16,10 @@
 /tmp
 logfile
 
-/.idea/*
+/.idea
+/vendor
 Gemfile.lock
+.rspec
 .DS_Store
 */.DS_Store
 */*/.DS_Store
-.rspec
