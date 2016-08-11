@@ -29,6 +29,13 @@ a.navbar-brand {
   color: green;
 }
 
+.badge {
+  font-family: Sans-Serif;
+  margin-top: 1px;
+  padding: 3px 10px;
+  vertical-align: top;
+}
+
 .bottom-align {
   vertical-align: bottom !important;
 }
@@ -107,6 +114,10 @@ div.field_with_errors {
 
 .fields > tbody > tr > td {
   padding-top: 10px;
+}
+
+.glyphicon-repeat, .glyphicon-usd {
+  top: 2px;
 }
 
 img.brand {

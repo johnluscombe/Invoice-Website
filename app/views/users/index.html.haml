@@ -35,11 +35,17 @@
         %th
     = render @users
   - if current_user.admin?
-    %td= link_to 'NEW USER', new_user_path, class: 'btn btn-success'
+    %td
+      = link_to new_user_path, class: 'btn btn-success' do
+        %i.glyphicon.glyphicon-plus
+        NEW USER
 - else
   - if current_user.admin?
     %p There are no employees yet.
-    %td= link_to 'NEW USER', new_user_path, class: 'btn btn-success'
+    %td
+      = link_to new_user_path, class: 'btn btn-success' do
+        %i.glyphicon.glyphicon-plus
+        NEW USER
   - else
     %p You do not have any employees yet.
     %p Please contact your administrator to add employees.

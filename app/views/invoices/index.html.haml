@@ -53,10 +53,14 @@
             %th
         = render @invoices
     - if @user
-        = link_to 'NEW INVOICE', new_user_invoice_path(@user), class: 'btn btn-success'
+        = link_to new_user_invoice_path(@user), class: 'btn btn-success' do
+            %i.glyphicon.glyphicon-plus
+            NEW INVOICE
 - elsif @user
     %p You do not have any invoices yet.
-    = link_to 'NEW INVOICE', new_user_invoice_path(@user), class: 'btn btn-success'
+    = link_to new_user_invoice_path(@user), class: 'btn btn-success' do
+        %i.glyphicon.glyphicon-plus
+        NEW INVOICE
 - elsif @submitted
     %p There are no submitted invoices.
 - elsif @all

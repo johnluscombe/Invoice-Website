@@ -64,12 +64,29 @@
     %col{ :width => '135' }
     %tr
       - if @invoice.started?
-        %td= link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success'
-        %td= link_to 'SUBMIT INVOICE', invoice_submit_path(@invoice), method: :patch, class: 'btn btn-primary btn-outline'
+        %td.payment-buttons
+          = link_to new_invoice_payment_path(@invoice), class: 'btn btn-success' do
+            %i.glyphicon.glyphicon-plus
+            NEW PAYMENT
+        %td.payment-buttons
+          = link_to invoice_submit_path(@invoice), method: :patch, class: 'btn btn-success btn-outline' do
+            %i.glyphicon.glyphicon-ok
+            SUBMIT INVOICE
       - elsif @invoice.submitted?
-        %td= link_to 'RESET INVOICE', invoice_reset_path(@invoice), method: :patch, class: 'btn btn-primary btn-outline'
+        - if current_user.manager?
+          %td.payment-buttons
+            = link_to invoice_pay_path(@invoice), method: :patch, class: 'btn btn-success btn-outline' do
+              %i.glyphicon.glyphicon-usd
+              MARK AS PAID
+        %td.payment-buttons
+          = link_to invoice_reset_path(@invoice), method: :patch, class: 'btn btn-primary btn-outline' do
+            %i.glyphicon.glyphicon-repeat
+            RESET INVOICE
   %br
 - else
   %p There are no payments under this invoice yet.
   - if @invoice.started?
-    = link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success'
+    %td.payment-buttons
+      = link_to new_invoice_payment_path(@invoice), class: 'btn btn-success' do
+        %i.glyphicon.glyphicon-plus
+        NEW PAYMENT
