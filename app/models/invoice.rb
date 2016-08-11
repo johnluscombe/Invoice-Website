@@ -27,6 +27,32 @@ class Invoice < ActiveRecord::Base
     self.status == 'Paid'
   end
 
+  def start_date_as_string
+    if self.start_date
+      @start_date_as_string = self.start_date.strftime('%m-%d-%Y')
+    else
+      @start_date_as_string = nil
+    end
+  end
+
+  def start_date_as_string=(string)
+    @start_date_as_string = string
+    self.start_date = Chronic.parse(string)
+  end
+
+  def end_date_as_string
+    if self.end_date
+      @end_date_as_string = self.end_date.strftime('%m-%d-%Y')
+    else
+      @end_date_as_string = nil
+    end
+  end
+
+  def end_date_as_string=(string)
+    @end_date_as_string = string
+    self.end_date = Chronic.parse(string)
+  end
+
   def submit
     if self.end_date == nil
       self.update(:end_date => Date.today, :status => 'Pending')

@@ -50,7 +50,7 @@ class PaymentsController < ApplicationController
   private
 
   def payment_params
-    params.require(:payment).permit(:date, :description, :hours, :daily_rate)
+    params.require(:payment).permit(:date, :date_as_string, :description, :hours, :daily_rate)
   end
 
   def ensure_user_logged_in

@@ -11,4 +11,17 @@ class Payment < ActiveRecord::Base
       self.invoice.update(:status => 'In Progress')
     end
   end
+
+  def date_as_string
+    if self.date
+      @date_as_string = self.date.strftime('%m-%d-%Y')
+    else
+      @date_as_string = nil
+    end
+  end
+
+  def date_as_string=(string)
+    @date_as_string = string
+    self.date = Chronic.parse(string)
+  end
 end

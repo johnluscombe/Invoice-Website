@@ -58,8 +58,8 @@ describe 'Manager Invoice Pages' do
       before { visit edit_invoice_path(invoice) }
 
       it 'has the correct fields' do
-        should have_field('invoice_start_date', with: invoice.start_date)
-        should have_field('invoice_end_date')
+        should have_field('invoice_start_date_as_string', with: invoice.start_date_as_string)
+        should have_field('invoice_end_date_as_string')
         should have_field('invoice_status', with: invoice.status)
         should have_field('invoice_check_no')
         should have_content('Overrides')
@@ -70,8 +70,8 @@ describe 'Manager Invoice Pages' do
 
       describe 'with valid information' do
         before do
-          fill_in 'invoice_start_date', with: '2016-12-30'
-          fill_in 'invoice_end_date', with: '2016-12-31'
+          fill_in 'invoice_start_date_as_string', with: '2016-12-30'
+          fill_in 'invoice_end_date_as_string', with: '2016-12-31'
           select 'In Progress', from: 'invoice_status'
           fill_in 'invoice_check_no', with: '1234'
           fill_in 'invoice_hours', with: 1

@@ -43,7 +43,7 @@ describe 'Manager Invoice Pages' do
       end
 
       it "has the date filled in with today's date" do
-        should have_field('payment_date', with: Date.today.strftime('%Y-%m-%d'))
+        should have_field('payment_date_as_string', with: Date.today.strftime('%m-%d-%Y'))
       end
 
       describe 'with valid information' do
@@ -85,7 +85,7 @@ describe 'Manager Invoice Pages' do
       end
 
       it 'has the correct fields' do
-        should have_field('payment_date', with: payment.date)
+        should have_field('payment_date_as_string', with: payment.date_as_string)
         should have_field('payment_description', with: payment.description)
         should have_field('payment_hours', with: payment.hours)
         should have_field('payment_daily_rate')
@@ -93,7 +93,7 @@ describe 'Manager Invoice Pages' do
 
       describe 'with valid information' do
         before do
-          fill_in 'payment_date', with: '2016-12-31'
+          fill_in 'payment_date_as_string', with: '2016-12-31'
           fill_in 'payment_description', with: 'Changed Description'
           fill_in 'payment_hours', with: 4
           fill_in 'payment_daily_rate', with: 15

@@ -4,6 +4,7 @@ ruby '2.3.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 group :development do
+  # Use Pry to make rails console easier to read
   gem 'pry-rails'
 end
 
@@ -32,6 +33,9 @@ gem 'turbolinks'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+
+# Use Chronic natural language date/time parser
+gem 'chronic'
 
 gem 'seed_dump'
 
