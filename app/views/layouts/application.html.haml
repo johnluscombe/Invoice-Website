@@ -34,7 +34,7 @@
               %li= link_to 'Current Invoice', invoice_payments_path(current_user.invoices.ordered.first)
         %ul.nav.navbar-nav.navbar-right
           - if current_user
-            - if current_user.fullname.nil?
+            - if current_user.fullname.nil? or current_user.fullname == ''
               %li= link_to 'Welcome, ' + current_user.name, edit_user_path(current_user)
             - else
               %li= link_to 'Welcome, ' + current_user.fullname, edit_user_path(current_user)
@@ -44,9 +44,12 @@
           - else
             %li= link_to 'Log In', login_path
 
-  - flash.each do |type, message|
-    %div{ :class => "alert alert-#{type}" }
-      %p{ :class => "ALERT-#{type}" }= message
-
   .main.container-fluid
+    - flash.each do |type, message|
+      %div{ :class => "alert alert-#{type}" }
+        - if type == 'danger'
+          %strong ERROR
+        - elsif type == 'info'
+          %strong INFORMATION
+        = message
     = yield

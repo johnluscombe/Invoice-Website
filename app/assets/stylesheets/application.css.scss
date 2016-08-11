@@ -20,6 +20,11 @@ a.navbar-brand {
   padding: 0;
 }
 
+.alert {
+  padding: 0;
+  white-space: pre-wrap;
+}
+
 .approve {
   color: green;
 }
@@ -95,6 +100,9 @@ button > a {
 
 div.field_with_errors {
   display: inline;
+  input {
+    border: 1px solid #d9534f;
+  }
 }
 
 .fields > tbody > tr > td {

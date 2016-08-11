@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: { message: 'is required' }, uniqueness: true
   validates :rate, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :profile, presence: true
+  validates :profile, presence: { message: 'is required' }
 
   scope :managers, -> { where('profile >= ?', 2) }
 

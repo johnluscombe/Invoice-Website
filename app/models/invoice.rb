@@ -2,8 +2,8 @@ class Invoice < ActiveRecord::Base
   belongs_to :user, inverse_of: :invoices
   has_many :payments, inverse_of: :invoice
 
-  validates :user, presence: true
-  validates :status, presence: true
+  validates :user, presence: { message: 'is required' }
+  validates :status, presence: { message: 'is required' }
   validates :hours, :net_pay, :rate, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :check_no, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
 
@@ -51,6 +51,19 @@ class Invoice < ActiveRecord::Base
   def end_date_as_string=(string)
     @end_date_as_string = string
     self.end_date = Chronic.parse(string)
+  end
+
+  def transfer_date_as_string
+    if self.transfer_date
+      @transfer_date_as_string = self.transfer_date.strftime('%m-%d-%Y')
+    else
+      @transfer_date_as_string = nil
+    end
+  end
+
+  def transfer_date_as_string=(string)
+    @transfer_date_as_string = string
+    self.transfer_date = Chronic.parse(string)
   end
 
   def submit

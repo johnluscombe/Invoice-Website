@@ -1,7 +1,7 @@
 class Payment < ActiveRecord::Base
   belongs_to :invoice, inverse_of: :payments
 
-  validates :invoice, presence: true
+  validates :invoice, presence: { message: 'is required' }
   validates :hours, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
   after_save :update_invoice

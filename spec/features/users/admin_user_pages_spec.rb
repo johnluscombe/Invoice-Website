@@ -50,7 +50,7 @@ describe 'Admin User Pages' do
 
         it 'produces an error message' do
           click_button submit
-          should have_content("Name can't be blank")
+          should have_content('Name is required')
         end
       end
 
@@ -173,7 +173,7 @@ describe 'Admin User Pages' do
 
           it 'produces an error message' do
             click_button submit
-            should have_content("Name can't be blank")
+            should have_content('Name is required')
           end
         end
 
@@ -250,7 +250,7 @@ describe 'Admin User Pages' do
 
           it 'produces an error message' do
             click_button submit
-            should have_content("Name can't be blank")
+            should have_content('Name is required')
           end
         end
 

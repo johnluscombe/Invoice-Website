@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     if current_user.first_time
-      flash.now[:info] = 'Please update your profile information'
+      flash.now[:info] = 'Some additional information is required'
     end
   end
 
