@@ -18,7 +18,6 @@ logfile
 
 /.idea
 /vendor
-Gemfile.lock
 .rspec
 .DS_Store
 */.DS_Store
