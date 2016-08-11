@@ -63,13 +63,13 @@
     %col{ :width => '135' }
     %col{ :width => '135' }
     %tr
-      - if @invoice.in_progress?
+      - if @invoice.started?
         %td= link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success'
         %td= link_to 'SUBMIT INVOICE', invoice_submit_path(@invoice), class: 'btn btn-primary btn-outline'
-      - elsif @invoice.pending?
+      - elsif @invoice.submitted?
         %td= link_to 'RESET INVOICE', invoice_reset_path(@invoice), class: 'btn btn-primary btn-outline'
   %br
 - else
   %p There are no payments under this invoice yet.
-  - if @invoice.in_progress?
+  - if @invoice.started?
     = link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success'

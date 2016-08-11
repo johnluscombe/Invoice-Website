@@ -1,8 +1,8 @@
 - if current_user.manager?
     - if @all
         %h1 All Invoices
-    - elsif @pending
-        %h1 Pending Invoices
+    - elsif @submitted
+        %h1 Submitted Invoices
     - else
         %h1= "Invoices for #{@user.fullname}"
     = link_to 'BACK', users_path, class: 'btn btn-primary btn-outline btn-xs'
@@ -10,12 +10,12 @@
 - else
     %h1 Invoices
 %br
-- if (@user and @user.invoices.count > 0) or (@invoices.count > 0 and (@all or @pending))
+- if (@user and @user.invoices.count > 0) or (@invoices.count > 0 and (@all or @submitted))
     %table.table.table-striped
         - if current_user.admin?
             %col{ :width => '5%' } <!-- ID for Masters -->
-        - if @all or @pending
-            %col{ :width => '200' } <!-- Employee for All and Pending Only View for Admins and Masters -->
+        - if @all or @submitted
+            %col{ :width => '200' } <!-- Employee for All and Submitted Only View for Admins and Masters -->
         %col{ :width => '20%' } <!-- For Dates -->
         %col{ :width => '7%' } <!-- Hours -->
         - if current_user.admin?
@@ -34,7 +34,7 @@
         %tr
         - if current_user.admin?
             %th.bottom-align ID
-        - if @all or @pending
+        - if @all or @submitted
             %th.bottom-align Employee
         %th.text-center.bottom-align For Dates
         %th.text-right.bottom-align Hours</th>
@@ -57,8 +57,8 @@
 - elsif @user
     %p You do not have any invoices yet.
     = link_to 'NEW INVOICE', new_user_invoice_path(@user), class: 'btn btn-success'
-- elsif @pending
-    %p There are no pending invoices.
+- elsif @submitted
+    %p There are no submitted invoices.
 - elsif @all
     %p There are no invoices.
 %br

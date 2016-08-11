@@ -7,16 +7,16 @@ class Invoice < ActiveRecord::Base
   validates :hours, :net_pay, :rate, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :check_no, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
 
-  scope :not_submitted, -> { where(status: 'In Progress') }
-  scope :pending, -> { where(:status => 'Pending') }
+  scope :not_submitted, -> { where(status: 'Started') }
+  scope :submitted, -> { where(:status => 'Submitted') }
   scope :ordered, -> { order(:start_date).reverse_order }
 
-  def in_progress?
-    self.status == 'In Progress'
+  def started?
+    self.status == 'Started'
   end
 
-  def pending?
-    self.status == 'Pending'
+  def submitted?
+    self.status == 'Submitted'
   end
 
   def paid?
@@ -64,14 +64,14 @@ class Invoice < ActiveRecord::Base
 
   def submit
     if self.end_date == nil
-      self.update(:end_date => Date.today, :status => 'Pending')
+      self.update(:end_date => Date.today, :status => 'Submitted')
     else
-      self.update(:status => 'Pending')
+      self.update(:status => 'Submitted')
     end
   end
 
   def reset
-    self.update(:status => 'In Progress')
+    self.update(:status => 'Started')
   end
 
   def pay

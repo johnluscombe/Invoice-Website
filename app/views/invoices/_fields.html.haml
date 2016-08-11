@@ -10,7 +10,7 @@
   - if current_user.manager?
     %tr
       %td.text-right= f.label :status
-      %td= f.select :status, [%w(In\ Progress In\ Progress), %w(Pending Pending), %w(Paid Paid)],
+      %td= f.select :status, [%w(Started Started), %w(Submitted Submitted), %w(Paid Paid)],
       {}, class: 'form-control'
     %tr
       %td.text-right= f.label 'Check #'

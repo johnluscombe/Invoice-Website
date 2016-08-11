@@ -25,7 +25,7 @@ FactoryGirl.define do
   factory :invoice do
     user
     start_date '2016-01-30'
-    status 'In Progress'
+    status 'Started'
     check_no 1234
   end
 

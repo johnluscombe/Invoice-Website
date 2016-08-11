@@ -30,7 +30,7 @@ describe 'Admin Invoice Pages' do
           should have_selector('tr', text: '0.00')
           should have_selector('tr', text: employee.rate)
           should have_selector('tr', text: '$ 0.00')
-          should have_selector('tr', text: 'In Progress')
+          should have_selector('tr', text: 'Started')
           should have_selector('tr', text: invoice.check_no)
           should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
           should have_link('EDIT', href: edit_invoice_path(invoice))
@@ -82,7 +82,7 @@ describe 'Admin Invoice Pages' do
         before do
           fill_in 'invoice_start_date_as_string', with: '2016-12-30'
           fill_in 'invoice_end_date_as_string', with: '2016-12-31'
-          select 'In Progress', from: 'invoice_status'
+          select 'Started', from: 'invoice_status'
           fill_in 'invoice_check_no', with: '1234'
           fill_in 'invoice_hours', with: 1
           fill_in 'invoice_rate', with: 5
@@ -94,7 +94,7 @@ describe 'Admin Invoice Pages' do
 
           specify { expect(invoice.reload.start_date).to eq('2016-12-30'.to_date) }
           specify { expect(invoice.reload.end_date).to eq('2016-12-31'.to_date) }
-          specify { expect(invoice.reload.status).to eq('In Progress') }
+          specify { expect(invoice.reload.status).to eq('Started') }
           specify { expect(invoice.reload.check_no).to eq(1234) }
           specify { expect(invoice.reload.hours).to eq(1) }
           specify { expect(invoice.reload.rate).to eq(5) }
@@ -104,7 +104,7 @@ describe 'Admin Invoice Pages' do
         it 'redirects back to invoices page and shows invoice' do
           click_button submit
           should have_current_path(user_invoices_path(employee))
-          should have_selector('tr', text: '12/30/16 - 12/31/16 1.00 5.00 $ 15.00 In Progress 1234')
+          should have_selector('tr', text: '12/30/16 - 12/31/16 1.00 5.00 $ 15.00 Started 1234')
         end
 
         it 'does not add a new invoice to the system' do
@@ -159,11 +159,11 @@ describe 'Admin Invoice Pages' do
       Invoice.all.each do |invoice|
         should have_selector('tr', text: invoice.id)
         should have_selector('tr', text: invoice.user.fullname)
-        should have_selector('tr', text: 'In Progress ' + invoice.start_date.strftime('%m/%d/%y'))
+        should have_selector('tr', text: 'Started ' + invoice.start_date.strftime('%m/%d/%y'))
         should have_selector('tr', text: '0.00')
         should have_selector('tr', text: employee.rate)
         should have_selector('tr', text: '$ 0.00')
-        should have_selector('tr', text: 'In Progress')
+        should have_selector('tr', text: 'Started')
         should have_selector('tr', text: invoice.check_no)
         should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
         should have_link('EDIT', href: edit_invoice_path(invoice))
@@ -178,15 +178,15 @@ describe 'Admin Invoice Pages' do
       end
     end
 
-    describe 'pending invoices link with no pending invoices' do
-      before { click_link('Pending Invoices', href: pending_invoices_path) }
+    describe 'submitted invoices link with no submitted invoices' do
+      before { click_link('Submitted Invoices', href: submitted_invoices_path) }
 
       it 'should have back button' do
         should have_link('BACK', href: users_path)
       end
 
       it 'should have no invoices' do
-        should have_selector('p', text: 'There are no pending invoices.')
+        should have_selector('p', text: 'There are no submitted invoices.')
       end
 
       it 'should not have new invoice button' do
@@ -194,7 +194,7 @@ describe 'Admin Invoice Pages' do
       end
     end
 
-    describe 'pending invoices link with a pending invoice' do
+    describe 'submitted invoices link with a submitted invoice' do
       let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
 
       before do
@@ -202,7 +202,7 @@ describe 'Admin Invoice Pages' do
         click_button('CREATE NEW PAYMENT')
         visit user_invoices_path(employee)
         click_link('SUBMIT', href: invoice_submit_path(invoice))
-        click_link('Pending Invoices', href: pending_invoices_path)
+        click_link('Submitted Invoices', href: submitted_invoices_path)
       end
 
       it 'should have back button' do
@@ -211,13 +211,13 @@ describe 'Admin Invoice Pages' do
 
       it 'should only show one invoice' do
         Invoice.all.each do |invoice|
-          if invoice.status == 'Pending'
+          if invoice.status == 'Submitted'
             should have_selector('tr', text: invoice.id.to_s + ' ' + invoice.user.fullname)
             should have_selector('tr', text: invoice.start_date.strftime('%m/%d/%y') + ' - ' + invoice.end_date.strftime('%m/%d/%y'))
             should have_selector('tr', text: '0.00')
             should have_selector('tr', text: employee.rate)
             should have_selector('tr', text: '$ 0.00')
-            should have_selector('tr', text: 'Pending')
+            should have_selector('tr', text: 'Submitted')
             should have_selector('tr', text: invoice.check_no)
             should have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
             should have_link('MARK AS PAID', href: invoice_pay_path(invoice))
@@ -227,7 +227,7 @@ describe 'Admin Invoice Pages' do
             should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
           end
         end
-        should_not have_content('In Progress')
+        should_not have_content('Started')
       end
 
       it 'should not have new invoice button' do
@@ -235,8 +235,8 @@ describe 'Admin Invoice Pages' do
       end
     end
 
-    describe "invoices with 'In Progress' status" do
-      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'In Progress') }
+    describe "invoices with 'Started' status" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Started') }
 
       before { visit user_invoices_path(employee) }
 
@@ -251,8 +251,8 @@ describe 'Admin Invoice Pages' do
       end
     end
 
-    describe "invoices with 'Pending' status" do
-      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
+    describe "invoices with 'Submitted' status" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Submitted') }
 
       before { visit user_invoices_path(employee) }
 

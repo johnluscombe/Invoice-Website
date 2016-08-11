@@ -1,6 +1,6 @@
 class InvoicesController < ApplicationController
   before_action :ensure_user_logged_in
-  before_action :ensure_correct_user, except: [:all, :pending]
+  before_action :ensure_correct_user, except: [:all, :submitted]
 
   def index
     @user = User.find(params[:user_id])
@@ -18,10 +18,10 @@ class InvoicesController < ApplicationController
     render 'index'
   end
 
-  def pending
+  def submitted
     ensure_manager
-    @invoices = Invoice.pending.ordered
-    @pending = true
+    @invoices = Invoice.submitted.ordered
+    @submitted = true
     render 'index'
   end
 
@@ -35,7 +35,7 @@ class InvoicesController < ApplicationController
       end
       redirect_to user_invoices_path(@user)
     else
-      @invoice = @user.invoices.build(:user_id => @user.id, :start_date => Date.today, :status => 'In Progress')
+      @invoice = @user.invoices.build(:user_id => @user.id, :start_date => Date.today, :status => 'Started')
       if @invoice.save
         redirect_to user_invoices_path(@user)
       else

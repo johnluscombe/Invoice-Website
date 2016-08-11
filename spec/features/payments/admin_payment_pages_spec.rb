@@ -155,7 +155,7 @@ describe 'Admin Invoice Pages' do
       end
     end
 
-    describe "invoices with 'In Progress' status" do
+    describe "invoices with 'Started' status" do
       let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee) }
 
       before do
@@ -170,8 +170,8 @@ describe 'Admin Invoice Pages' do
       end
     end
 
-    describe "invoices with 'Pending' status" do
-      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Pending') }
+    describe "invoices with 'Submitted' status" do
+      let!(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Submitted') }
 
       before do
         FactoryGirl.create(:payment, invoice: new_invoice)
