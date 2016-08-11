@@ -65,9 +65,9 @@
     %tr
       - if @invoice.started?
         %td= link_to 'NEW PAYMENT', new_invoice_payment_path(@invoice), class: 'btn btn-success'
-        %td= link_to 'SUBMIT INVOICE', invoice_submit_path(@invoice), class: 'btn btn-primary btn-outline'
+        %td= link_to 'SUBMIT INVOICE', invoice_submit_path(@invoice), method: :patch, class: 'btn btn-primary btn-outline'
       - elsif @invoice.submitted?
-        %td= link_to 'RESET INVOICE', invoice_reset_path(@invoice), class: 'btn btn-primary btn-outline'
+        %td= link_to 'RESET INVOICE', invoice_reset_path(@invoice), method: :patch, class: 'btn btn-primary btn-outline'
   %br
 - else
   %p There are no payments under this invoice yet.
