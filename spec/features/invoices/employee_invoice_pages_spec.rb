@@ -20,15 +20,15 @@ describe 'Employee Invoice Pages' do
     describe 'list invoices' do
       it 'should show all invoices' do
         Invoice.all.each do |invoice|
-          should_not have_selector('tr', text: invoice.id.to_s + ' Started')
+          should_not have_selector('tr', text: invoice.id.to_s + ' In Progress')
           should have_selector('tr', text: invoice.start_date.strftime('%m/%d/%y'))
           should_not have_selector('tr', text: employee.rate)
-          should have_selector('tr', text: '0.00 $ 0.00 Started')
+          should have_selector('tr', text: '0.00 $ 0.00 In Progress')
           should_not have_selector('tr', text: invoice.check_no)
           should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
           should have_link('EDIT', href: edit_invoice_path(invoice))
           should have_link('DELETE', href: invoice_path(invoice))
-          should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
+          should have_link('SUBMIT', href: invoice_submit_path(invoice))
           should_not have_link('RESET', href: invoice_reset_path(invoice))
           should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
         end
@@ -83,7 +83,7 @@ describe 'Employee Invoice Pages' do
         it 'redirects back to invoices page and shows invoice' do
           click_button submit
           should have_current_path(user_invoices_path(employee))
-          should have_selector('tr', text: '12/30/16 - 12/31/16 0.00 $ 0.00 Started')
+          should have_selector('tr', text: '12/30/16 - 12/31/16 0.00 $ 0.00 In Progress')
         end
 
         it 'does not add a new invoice to the system' do
@@ -125,22 +125,6 @@ describe 'Employee Invoice Pages' do
         expect do
           click_link('DELETE', href: invoice_path(invoice))
         end.to change(Invoice, :count).by(-1)
-      end
-    end
-
-    describe "invoices with 'Started' status" do
-      let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
-
-      before { visit user_invoices_path(employee) }
-
-      it 'shows the correct buttons' do
-        should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
-        should_not have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
-        should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
-        should_not have_link('RESET', href: invoice_reset_path(invoice))
-        should have_link('EDIT', href: edit_invoice_path(invoice))
-        should have_link('DELETE', href: invoice_path(invoice))
-        should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
       end
     end
 

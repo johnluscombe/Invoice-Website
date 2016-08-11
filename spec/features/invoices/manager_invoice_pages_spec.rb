@@ -21,15 +21,15 @@ describe 'Manager Invoice Pages' do
     describe 'list invoices' do
       it 'should show all invoices' do
         Invoice.all.each do |invoice|
-          should_not have_selector('tr', text: invoice.id.to_s + ' Started')
+          should_not have_selector('tr', text: invoice.id.to_s + ' In Progress')
           should have_selector('tr', text: invoice.start_date.strftime("%m/%d/%y"))
           should_not have_selector('tr', text: employee.rate)
-          should have_selector('tr', text: '0.00 $ 0.00 Started')
+          should have_selector('tr', text: '0.00 $ 0.00 In Progress')
           should have_selector('tr', text: invoice.check_no)
           should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
           should have_link('EDIT', href: edit_invoice_path(invoice))
           should have_link('DELETE', href: invoice_path(invoice))
-          should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
+          should have_link('SUBMIT', href: invoice_submit_path(invoice))
           should_not have_link('RESET', href: invoice_reset_path(invoice))
           should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
         end
@@ -190,27 +190,11 @@ describe 'Manager Invoice Pages' do
             should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
           end
         end
-        should_not have_content('Started')
+        should_not have_content('In Progress')
       end
 
       it 'should not have new invoice button' do
         should_not have_link('NEW EMPLOYEE', href: new_user_invoice_path(employee))
-      end
-    end
-
-    describe "invoices with 'Started' status" do
-      let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
-
-      before { visit user_invoices_path(employee) }
-
-      it 'shows the correct buttons' do
-        should have_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
-        should_not have_link('VIEW INVOICE', href: invoice_payments_path(invoice))
-        should_not have_link('MARK AS PAID', href: invoice_pay_path(invoice))
-        should_not have_link('RESET', href: invoice_reset_path(invoice))
-        should have_link('EDIT', href: edit_invoice_path(invoice))
-        should have_link('DELETE', href: invoice_path(invoice))
-        should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
       end
     end
 

@@ -7,13 +7,9 @@ class Invoice < ActiveRecord::Base
   validates :hours, :net_pay, :rate, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :check_no, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
 
-  scope :not_submitted, -> { where(status: %w(Started In\ Progress)) }
+  scope :not_submitted, -> { where(status: 'In Progress') }
   scope :pending, -> { where(:status => 'Pending') }
   scope :ordered, -> { order(:start_date).reverse_order }
-
-  def started?
-    self.status == 'Started'
-  end
 
   def in_progress?
     self.status == 'In Progress'

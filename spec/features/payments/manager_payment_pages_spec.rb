@@ -157,18 +157,6 @@ describe 'Manager Invoice Pages' do
       end
     end
 
-    describe "invoices with 'Started' status" do
-      let(:new_invoice) { FactoryGirl.create(:invoice, user: employee) }
-
-      before { visit invoice_payments_path(new_invoice) }
-
-      it 'shows the correct buttons' do
-        should have_link('NEW PAYMENT', href: new_invoice_payment_path(new_invoice))
-        should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(new_invoice))
-        should_not have_link('RESET INVOICE', href: invoice_reset_path(new_invoice))
-      end
-    end
-
     describe "invoices with 'In Progress' status" do
       let(:new_invoice) { FactoryGirl.create(:invoice, user: employee) }
 

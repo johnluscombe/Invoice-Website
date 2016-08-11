@@ -35,7 +35,7 @@ class InvoicesController < ApplicationController
       end
       redirect_to user_invoices_path(@user)
     else
-      @invoice = @user.invoices.build(:user_id => @user.id, :start_date => Date.today, :status => 'Started')
+      @invoice = @user.invoices.build(:user_id => @user.id, :start_date => Date.today, :status => 'In Progress')
       if @invoice.save
         redirect_to user_invoices_path(@user)
       else
