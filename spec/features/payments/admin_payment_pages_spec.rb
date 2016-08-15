@@ -37,7 +37,8 @@ describe 'Admin Invoice Pages' do
       let(:cancel) { 'CANCEL' }
 
       before do
-        visit new_invoice_payment_path(invoice)
+        visit invoice_payments_path(invoice)
+        click_link('NEW PAYMENT', href: new_invoice_payment_path(invoice))
         fill_in 'payment_description', with: 'Test Description'
         fill_in 'payment_hours', with: 3
       end
@@ -166,6 +167,7 @@ describe 'Admin Invoice Pages' do
       it 'shows the correct buttons' do
         should have_link('NEW PAYMENT', href: new_invoice_payment_path(new_invoice))
         should have_link('SUBMIT INVOICE', href: invoice_submit_path(new_invoice))
+        should_not have_link('MARK AS PAID', href: invoice_pay_path(new_invoice))
         should_not have_link('RESET INVOICE', href: invoice_reset_path(new_invoice))
       end
     end
@@ -181,6 +183,7 @@ describe 'Admin Invoice Pages' do
       it 'shows the correct buttons' do
         should_not have_link('NEW PAYMENT', href: new_invoice_payment_path(new_invoice))
         should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(new_invoice))
+        should have_link('MARK AS PAID', href: invoice_pay_path(new_invoice))
         should have_link('RESET INVOICE', href: invoice_reset_path(new_invoice))
       end
     end
@@ -196,8 +199,55 @@ describe 'Admin Invoice Pages' do
       it 'shows the correct buttons' do
         should_not have_link('NEW PAYMENT', href: new_invoice_payment_path(new_invoice))
         should_not have_link('SUBMIT INVOICE', href: invoice_submit_path(new_invoice))
-        should_not have_link('RESET INVOICE', href: invoice_reset_path(new_invoice))
+        should_not have_link('MARK AS PAID', href: invoice_pay_path(new_invoice))
+        should have_link('RESET INVOICE', href: invoice_reset_path(new_invoice))
       end
+    end
+
+    describe "'Submit' button works properly" do
+      before do
+        FactoryGirl.create(:payment, invoice: invoice)
+        visit invoice_payments_path(invoice)
+        click_link('SUBMIT INVOICE', href: invoice_submit_path(invoice))
+      end
+
+      it { should have_content('Payments for Invoice') }
+    end
+
+    describe "'Reset' button works properly before 'Mark as Paid' is clicked" do
+      let(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Submitted')}
+
+      before do
+        FactoryGirl.create(:payment, invoice: new_invoice)
+        visit invoice_payments_path(new_invoice)
+        click_link('RESET INVOICE', href: invoice_reset_path(new_invoice))
+      end
+
+      it { should have_content('Payments for Invoice') }
+    end
+
+    describe "'Reset' button works properly after 'Mark as Paid' is clicked" do
+      let(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Paid')}
+
+      before do
+        FactoryGirl.create(:payment, invoice: new_invoice)
+        visit invoice_payments_path(new_invoice)
+        click_link('RESET INVOICE', href: invoice_reset_path(new_invoice))
+      end
+
+      it { should have_content('Payments for Invoice') }
+    end
+
+    describe "'Mark as Paid' button works properly" do
+      let(:new_invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Submitted')}
+
+      before do
+        FactoryGirl.create(:payment, invoice: new_invoice)
+        visit invoice_payments_path(new_invoice)
+        click_link('MARK AS PAID', href: invoice_pay_path(new_invoice))
+      end
+
+      it { should have_content('Payments for Invoice') }
     end
   end
 end

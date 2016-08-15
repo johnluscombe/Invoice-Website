@@ -53,9 +53,12 @@ describe 'Manager Invoice Pages' do
     describe 'editing invoices' do
       let(:submit) { 'UPDATE INVOICE' }
       let(:cancel) { 'CANCEL' }
-      let(:invoice) { FactoryGirl.create(:invoice, user: employee) }
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
 
-      before { visit edit_invoice_path(invoice) }
+      before do
+        visit user_invoices_path(employee)
+        click_link('EDIT', href: edit_invoice_path(invoice))
+      end
 
       it 'has the correct fields' do
         should have_field('invoice_start_date_as_string', with: invoice.start_date_as_string)
@@ -244,6 +247,61 @@ describe 'Manager Invoice Pages' do
         should have_link('DELETE', href: invoice_path(invoice))
         should_not have_link('SUBMIT', href: invoice_submit_path(invoice))
       end
+    end
+
+    describe "'View Payments' button works properly" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
+
+      before do
+        visit user_invoices_path(employee)
+        click_link('VIEW PAYMENTS', href: invoice_payments_path(invoice))
+      end
+
+      it { should have_content('Payments for Invoice') }
+    end
+
+    describe "'View Invoice' button works properly" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Submitted') }
+
+      before do
+        visit user_invoices_path(employee)
+        click_link('VIEW INVOICE', href: invoice_payments_path(invoice))
+      end
+
+      it { should have_content('Payments for Invoice') }
+    end
+
+    describe "'Mark as Paid' button works properly" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Submitted') }
+
+      before do
+        visit user_invoices_path(employee)
+        click_link('MARK AS PAID', href: invoice_pay_path(invoice))
+      end
+
+      it { should have_content('Invoices for') }
+    end
+
+    describe "'Submit' button works properly" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee) }
+
+      before do
+        visit user_invoices_path(employee)
+        click_link('SUBMIT', href: invoice_submit_path(invoice))
+      end
+
+      it { should have_content('Invoices for') }
+    end
+
+    describe "'Reset' button works properly" do
+      let!(:invoice) { FactoryGirl.create(:invoice, user: employee, status: 'Submitted') }
+
+      before do
+        visit user_invoices_path(employee)
+        click_link('RESET', href: invoice_reset_path(invoice))
+      end
+
+      it { should have_content('Invoices for') }
     end
   end
 end

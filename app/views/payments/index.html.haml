@@ -14,7 +14,8 @@
 - if @invoice.paid?
   %p.emphasized
     %strong Status:
-    %span.approve #{ @invoice.status }
+    %strong
+      %span.approve #{ @invoice.status }
 - else
   %p.emphasized
     %strong Status: #{ @invoice.status }
@@ -82,6 +83,10 @@
           = link_to invoice_reset_path(@invoice), method: :patch, class: 'btn btn-primary btn-outline' do
             %i.glyphicon.glyphicon-repeat
             RESET INVOICE
+      - elsif @invoice.paid? and current_user.manager?
+        = link_to invoice_reset_path(@invoice), method: :patch, class: 'btn btn-primary btn-outline' do
+          %i.glyphicon.glyphicon-repeat
+          RESET INVOICE
   %br
 - else
   %p There are no payments under this invoice yet.
