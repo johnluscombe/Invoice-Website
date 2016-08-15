@@ -25,9 +25,9 @@
       %td.override.text-right= sprintf('%.2f', invoice.rate)
 
   - if invoice.net_pay.nil?
-    %td.text-right= "$ #{ sprintf('%.2f', invoice.get_net_pay) }"
+    %td.text-right.no-wrap= "$ #{ sprintf('%.2f', invoice.get_net_pay) }"
   - else
-    %td.override.text-right= "$ #{ sprintf('%.2f', invoice.net_pay) }"
+    %td.override.text-right.no-wrap= "$ #{ sprintf('%.2f', invoice.net_pay) }"
 
   - if invoice.paid?
     %td.approve.text-center

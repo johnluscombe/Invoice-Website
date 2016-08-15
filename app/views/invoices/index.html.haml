@@ -12,25 +12,7 @@
 %br
 - if (@user and @user.invoices.count > 0) or (@invoices.count > 0 and (@all or @submitted))
     %table.table.table-striped
-        - if current_user.admin?
-            %col{ :width => '5%' } <!-- ID for Masters -->
-        - if @all or @submitted
-            %col{ :width => '200' } <!-- Employee for All and Submitted Only View for Admins and Masters -->
-        %col{ :width => '20%' } <!-- For Dates -->
-        %col{ :width => '7%' } <!-- Hours -->
-        - if current_user.admin?
-            %col{ :width => '7%' } <!-- Rate for Masters -->
-        %col{ :width => '11%' } <!-- Net Pay -->
-        %col{ :width => '15%' } <!-- Status -->
-        - if current_user.manager?
-            %col{ :width => '10%' } <!-- Check No. for Admins and Masters -->
-            %col{ :width => '10%' } <!-- Transfer Date for Admins and Masters -->
-        %col{ :width => '1%' } <!-- Button 1 -->
-        %col{ :width => '1%' } <!-- Button 2 -->
-        %col{ :width => '1%' } <!-- Button 3 -->
-        %col{ :width => '1%' } <!-- Button 4 -->
-        - if current_user.manager?
-            %col{ :width => '1%' } <!-- Button 5 for Admins and Masters -->
+        = render 'column_widths'
         %tr
         - if current_user.admin?
             %th.bottom-align ID
@@ -43,7 +25,7 @@
         %th.text-right.bottom-align Net Pay
         %th.text-center.bottom-align Status
         - if current_user.manager?
-            %th.text-center.bottom-align Check No.
+            %th.text-center.bottom-align Check
             %th.text-center.bottom-align Transfer Date
         %th
         %th

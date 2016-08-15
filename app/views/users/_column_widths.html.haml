@@ -1,0 +1,19 @@
+- if current_user.admin?
+  %col{ :width => '5%' } <!-- ID -->
+  %col{ :width => '18%' } <!-- Employee Name -->
+  %col{ :width => '18%' } <!-- Username for Masters -->
+  %col{ :width => '18%' } <!-- Email -->
+  %col{ :width => '10%' } <!-- Hourly Rate -->
+  %col{ :width => '10%' } <!-- Current Invoice -->
+  %col{ :width => '14%' } <!-- Profile for Masters -->
+  %col{ :width => '5%' } <!-- Reset Profile? for Masters -->
+  %col{ :width => '1%' } <!-- View Invoices Button -->
+  %col{ :width => '1%' } <!-- Edit User Button -->
+  %col{ :width => '1%' } <!-- Delete User Button -->
+- else
+  %col{ :width => '39%' } <!-- Employee Name -->
+  %col{ :width => '39%' } <!-- Email -->
+  %col{ :width => '10%' } <!-- Hourly Rate -->
+  %col{ :width => '10%' } <!-- Current Invoice -->
+  %col{ :width => '1%' } <!-- View Invoices Button -->
+  %col{ :width => '1%' } <!-- Edit User Button -->

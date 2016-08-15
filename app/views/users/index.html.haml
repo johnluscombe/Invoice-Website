@@ -2,21 +2,7 @@
 %br
 - if (User.managers.count > 0 and !current_user.admin?) or (User.count > 0 and current_user.admin?)
   %table.table.table-striped
-    - if current_user.admin?
-      %col{ :width => '5%' } <!-- ID for Masters -->
-    %col{ :width => '20%' } <!-- Employee Name -->
-    - if current_user.admin?
-      %col{ :width => '20%' } <!-- Username for Masters -->
-    %col{ :width => '20%' } <!-- Email -->
-    %col{ :width => '10%' } <!-- Hourly Rate -->
-    %col{ :width => '10%' } <!-- Current Invoice -->
-    - if current_user.admin?
-      %col{ :width => '10%' } <!-- Profile for Masters -->
-      %col{ :width => '1%' } <!-- Reset Profile? for Masters -->
-    %col{ :width => '1%' } <!-- View Invoices Button -->
-    %col{ :width => '1%' } <!-- Edit User Button -->
-    - if current_user.admin?
-      %col{ :width => '1%' } <!-- Delete User Button -->
+    = render 'column_widths'
     %tr
       - if current_user.admin?
         %th.bottom-align ID

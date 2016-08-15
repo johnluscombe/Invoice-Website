@@ -12,12 +12,12 @@
     - if user.rate == nil
       %td.text-right -
     - else
-      %td.text-right= "$ #{ sprintf('%.2f', user.rate) }"
+      %td.text-right= sprintf('%.2f', user.rate)
 
   - if user.net_pay == 'N/A' or user.net_pay == '-'
-    %td.text-right= user.net_pay
+    %td.text-right.no-wrap= user.net_pay
   - else
-    %td.text-right= "$ #{ user.net_pay }"
+    %td.text-right.no-wrap= "$ #{ user.net_pay }"
 
 
   - if current_user.admin?
@@ -37,7 +37,7 @@
   - if user.manager?
     %td
   - else
-    %td.text-center= link_to 'VIEW INVOICES', user_invoices_path(user), class: 'btn btn-primary btn-outline btn-xs'
+    %td.text-center= link_to 'VIEW INVOICES', user_invoices_path(user), class: 'btn btn-primary btn-outline btn-xs view-invoices-margin'
 
   %td.text-center= link_to 'EDIT', edit_user_path(user), class: 'btn btn-primary btn-outline btn-xs'
 

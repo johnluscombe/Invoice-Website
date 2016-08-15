@@ -22,14 +22,7 @@
 
 - if @invoice.payments.count > 0
   %table.table.table-striped
-    - if current_user.admin?
-      %col{ :width => '5%' } <!-- ID for Masters -->
-    %col{ :width => '10%' } <!-- Date -->
-    %col{ :width => '55%' } <!-- Description -->
-    %col{ :width => '10%' } <!-- Hours -->
-    %col{ :width => '10%' } <!-- Daily Rate -->
-    %col{ :width => '1%' } <!-- Edit Button -->
-    %col{ :width => '1%' } <!-- Delete Button -->
+    = render 'column_widths'
     %tr
       - if current_user.admin?
         %th ID
