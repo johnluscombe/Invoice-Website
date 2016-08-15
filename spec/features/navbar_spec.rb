@@ -6,6 +6,7 @@ describe 'Navbar' do
 
   describe 'admin' do
     let(:admin) { FactoryGirl.create(:admin) }
+    let(:employee) { FactoryGirl.create(:employee) }
 
     before { login admin }
 
@@ -33,6 +34,21 @@ describe 'Navbar' do
     describe 'Submitted Invoices link works properly' do
       before { click_link('Submitted Invoices', href: submitted_invoices_path) }
       it { should have_current_path(submitted_invoices_path) }
+    end
+
+    describe 'Submitted Invoices with 1 submitted invoice' do
+      before do
+        FactoryGirl.create(:invoice, user: employee, status: 'Submitted')
+        visit current_path
+      end
+
+      it { should have_content('Submitted Invoices 1') }
+    end
+
+    describe 'Submitted Invoices with no submitted invoices' do
+      before { visit current_path }
+
+      it { should_not have_content('Submitted Invoices 0') }
     end
 
     describe 'Current Invoice link does not appear' do
