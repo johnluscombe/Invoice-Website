@@ -14,3 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+function showLoader() {
+    document.getElementById('loader').style.display = 'block';
+    document.getElementById('loader-container').style.display = 'block';
+}

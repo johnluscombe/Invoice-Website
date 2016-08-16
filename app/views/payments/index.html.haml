@@ -63,13 +63,13 @@
             %i.glyphicon.glyphicon-plus
             NEW PAYMENT
         %td.payment-buttons
-          = link_to invoice_submit_path(@invoice), method: :patch, class: 'btn btn-success btn-outline' do
+          = link_to invoice_submit_path(@invoice), method: :patch, class: 'btn btn-success btn-outline', onclick: 'showLoader()' do
             %i.glyphicon.glyphicon-ok
             SUBMIT INVOICE
       - elsif @invoice.submitted?
         - if current_user.manager?
           %td.payment-buttons
-            = link_to invoice_pay_path(@invoice), method: :patch, class: 'btn btn-success btn-outline' do
+            = link_to invoice_pay_path(@invoice), method: :patch, class: 'btn btn-success btn-outline', onclick: 'showLoader()' do
               %i.glyphicon.glyphicon-usd
               MARK AS PAID
         %td.payment-buttons

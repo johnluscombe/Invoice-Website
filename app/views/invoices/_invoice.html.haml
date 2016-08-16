@@ -46,9 +46,9 @@
     - if invoice.started?
       %td.text-center= link_to 'VIEW PAYMENTS', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       - if @user
-        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
+        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs', onclick: 'showLoader()'
       - else
-        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
+        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs', onclick: 'showLoader()'
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
     - elsif invoice.submitted?
@@ -68,19 +68,19 @@
     - if invoice.started?
       %td.text-center= link_to 'VIEW PAYMENTS', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       - if @user
-        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
+        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs', onclick: 'showLoader()'
       - else
-        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
+        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs', onclick: 'showLoader()'
       %td
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
     - elsif invoice.submitted?
       %td.text-center= link_to 'VIEW INVOICE', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       - if @user
-        %td.text-center= link_to 'MARK AS PAID', invoice_pay_path(invoice), method: :patch, class: 'btn btn-success btn-outline btn-xs'
+        %td.text-center= link_to 'MARK AS PAID', invoice_pay_path(invoice), method: :patch, class: 'btn btn-success btn-outline btn-xs', onclick: 'showLoader()'
         %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       - else
-        %td.text-center= link_to 'MARK AS PAID', invoice_pay_path(invoice), method: :patch, class: 'btn btn-success btn-outline btn-xs'
+        %td.text-center= link_to 'MARK AS PAID', invoice_pay_path(invoice), method: :patch, class: 'btn btn-success btn-outline btn-xs', onclick: 'showLoader()'
         %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
       %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete
