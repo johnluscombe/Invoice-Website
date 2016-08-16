@@ -31,7 +31,7 @@ describe 'Admin User Pages' do
           elsif user.manager?
             should have_selector('tr', text: 'N/A N/A Manager No')
           else
-            should have_selector('tr', text: '$ 10.00 - Employee No')
+            should have_selector('tr', text: '10.00 - Employee No')
           end
         end
       end
@@ -74,7 +74,7 @@ describe 'Admin User Pages' do
           it 'redirects to users page and shows new user' do
             click_button submit
             should have_current_path(users_path)
-            should have_selector('tr', text: 'New Name newname new.name@example.com $ 10.00 - Employee Yes')
+            should have_selector('tr', text: 'New Name newname new.name@example.com 10.00 - Employee Yes')
           end
         end
 
@@ -284,7 +284,7 @@ describe 'Admin User Pages' do
           it 'redirects back to users page and shows user' do
             click_button submit
             should have_content 'Employees'
-            should have_selector('tr', text: 'New Name newname new.name@example.com $ 11.00 - Employee No')
+            should have_selector('tr', text: 'New Name newname new.name@example.com 11.00 - Employee No')
           end
 
           it 'does not add a new user to the system' do

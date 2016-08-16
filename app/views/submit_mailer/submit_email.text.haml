@@ -1,0 +1,6 @@
+- if @invoice.net_pay.nil?
+  = "#{ @from_name } has submitted an invoice for $#{ @invoice.get_net_pay }."
+- else
+  = "#{ @from_name } has submitted an invoice for $#{ sprintf('%.2f', @invoice.net_pay) }."
+
+You can see it under the 'Submitted Invoices' link after you login.

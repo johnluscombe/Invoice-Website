@@ -30,7 +30,7 @@ describe 'Manager User Pages' do
           else
             should_not have_selector('tr', text: user.id.to_s + ' User')
             should have_selector('tr', text: user.fullname + ' ' + user.email)
-            should have_selector('tr', text: '$ 10.00 -')
+            should have_selector('tr', text: '10.00 -')
           end
         end
       end
@@ -181,7 +181,7 @@ describe 'Manager User Pages' do
           it 'redirects back to users page and shows user' do
             click_button submit
             should have_current_path(users_path)
-            should have_selector('tr', text: 'New Name new.name@example.com $ 11.00 -')
+            should have_selector('tr', text: 'New Name new.name@example.com 11.00 -')
           end
 
           it 'does not add a new user to the system' do

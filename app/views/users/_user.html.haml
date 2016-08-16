@@ -9,7 +9,7 @@
   - if user.manager?
     %td.text-right N/A
   - else
-    - if user.rate == nil
+    - if user.rate.nil?
       %td.text-right -
     - else
       %td.text-right= sprintf('%.2f', user.rate)
@@ -18,7 +18,6 @@
     %td.text-right.no-wrap= user.net_pay
   - else
     %td.text-right.no-wrap= "$ #{ user.net_pay }"
-
 
   - if current_user.admin?
     %td.text-center

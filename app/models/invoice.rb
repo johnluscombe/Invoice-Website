@@ -62,11 +62,19 @@ class Invoice < ActiveRecord::Base
     self.transfer_date = Chronic.parse(string)
   end
 
-  def submit
-    if self.end_date == nil
+  def submit(current_user, send_email)
+    if self.end_date.nil?
       self.update(:end_date => Date.today, :status => 'Submitted')
     else
       self.update(:status => 'Submitted')
+    end
+
+    if send_email
+      User.managers.all.each do |user|
+        unless user.email.nil? or user.email == ''
+          SubmitMailer.submit_email(current_user, user, self).deliver_now
+        end
+      end
     end
   end
 
@@ -74,22 +82,30 @@ class Invoice < ActiveRecord::Base
     self.update(:status => 'Started')
   end
 
-  def pay
-    self.update(:status => 'Paid', :transfer_date => Date.today)
+  def pay(current_user)
+    if self.transfer_date.nil?
+      self.update(:transfer_date => Date.today, :status => 'Paid')
+    else
+      self.update(:status => 'Paid')
+    end
+
+    unless self.user.email.nil? or self.user.email == ''
+      PayMailer.pay_email(current_user, self.user, self).deliver_now
+    end
   end
 
   def get_net_pay
     sum_hours_without_override = self.payments.where(:daily_rate => nil).sum(:hours)
     sum_daily_rate_with_override = self.payments.where.not(:daily_rate => nil).sum(:daily_rate)
-    if self.net_pay == nil
-      if self.rate == nil
-        if self.hours == nil
+    if self.net_pay.nil?
+      if self.rate.nil?
+        if self.hours.nil?
           sprintf('%.2f', sum_hours_without_override * self.user.rate + sum_daily_rate_with_override)
         else
           sprintf('%.2f', self.hours * self.user.rate + sum_daily_rate_with_override)
         end
       else
-        if self.hours == nil
+        if self.hours.nil?
           sprintf('%.2f', sum_hours_without_override * self.rate + sum_daily_rate_with_override)
         else
           sprintf('%.2f', self.hours * self.rate + sum_daily_rate_with_override)

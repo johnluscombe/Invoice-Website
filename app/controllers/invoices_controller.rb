@@ -52,7 +52,7 @@ class InvoicesController < ApplicationController
   def submit
     @invoice = Invoice.find(params[:invoice_id])
     @user = @invoice.user
-    @invoice.submit
+    @invoice.submit(current_user, !current_user.manager?)
     redirect_to :back
   end
 
@@ -66,7 +66,7 @@ class InvoicesController < ApplicationController
   def pay
     @invoice = Invoice.find(params[:invoice_id])
     @user = @invoice.user
-    @invoice.pay
+    @invoice.pay(current_user)
     redirect_to :back
   end
 

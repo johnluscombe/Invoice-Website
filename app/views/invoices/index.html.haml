@@ -4,7 +4,10 @@
     - elsif @submitted
         %h1 Submitted Invoices
     - else
-        %h1= "Invoices for #{@user.fullname}"
+        - if @user.fullname.nil? or @user.fullname == ''
+            %h1= "Invoices for #{@user.name}"
+        - else
+            %h1= "Invoices for #{@user.fullname}"
     = link_to 'BACK', users_path, class: 'btn btn-primary btn-outline btn-xs'
     %br
 - else

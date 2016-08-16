@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    %meta{:content => 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type'}
+  %body
+    - if @invoice.net_pay.nil?
+      %p= "#{ @from_name } has submitted an invoice for $#{ @invoice.get_net_pay }."
+    - else
+      %p= "#{ @from_name } has submitted an invoice for $#{ sprintf('%.2f', @invoice.net_pay) }."
+    %p
+      You can see it under the "Submitted Invoices" link after you <a href="#{ Rails.application.config.action_mailer.default_url_options[:host] }">login</a>.

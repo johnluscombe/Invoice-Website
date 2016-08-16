@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   end
 
   def self.create_user(user)
-    if user.password_digest == nil
+    if user.password_digest.nil?
       user.password = 'password'
       user.password_confirmation = 'password'
     end

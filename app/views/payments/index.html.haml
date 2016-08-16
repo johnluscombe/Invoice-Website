@@ -43,7 +43,7 @@
           %strong
             Total:
 
-      - if @invoice.hours == nil
+      - if @invoice.hours.nil?
         %td.middle-align
           %strong= sprintf('%.2f', @invoice.payments.sum(:hours))
       - else
