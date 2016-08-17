@@ -22,30 +22,54 @@
       .collapse.navbar-collapse#bs-example-navbar-collapse-1
         %ul.nav.navbar-nav
           - if current_user&.manager?
-            %li= link_to 'Users', users_path
+            %li
+              = link_to users_path do
+                %i.glyphicon.glyphicon-user
+                Users
             - if current_user.admin?
-              %li= link_to 'All Invoices', all_invoices_path
+              %li
+                = link_to all_invoices_path do
+                  %i.glyphicon.glyphicon-globe
+                  All Invoices
             %li
               = link_to submitted_invoices_path do
+                %i.glyphicon.glyphicon-saved
                 Submitted Invoices
                 - if Invoice.submitted.count > 0
                   %span.badge= Invoice.submitted.count
           - elsif current_user
-            %li= link_to 'Invoices', user_invoices_path(current_user)
+            %li
+              = link_to user_invoices_path(current_user) do
+                %i.glyphicon.glyphicon-list
+                Invoices
             - if current_user.invoices.not_submitted.count > 0
-              %li= link_to 'Current Invoice', invoice_payments_path(current_user.invoices.not_submitted.last)
+              %li
+                = link_to invoice_payments_path(current_user.invoices.not_submitted.last) do
+                  %i.glyphicon.glyphicon-time
+                  Current Invoice
             - elsif current_user.invoices.count > 0
-              %li= link_to 'Current Invoice', invoice_payments_path(current_user.invoices.ordered.first)
+              %li
+                = link_to invoice_payments_path(current_user.invoices.ordered.first) do
+                  %i.glyphicon.glyphicon-time
+                  Current Invoice
         %ul.nav.navbar-nav.navbar-right
           - if current_user
             - if current_user.fullname.nil? or current_user.fullname == ''
-              %li= link_to 'Welcome, ' + current_user.name, edit_user_path(current_user)
+              %li
+                = link_to edit_user_path(current_user) do
+                  %i.glyphicon.glyphicon-ok
+                  &nbsp;
+                  = "Welcome, #{ current_user.name }"
             - else
-              %li= link_to 'Welcome, ' + current_user.fullname, edit_user_path(current_user)
+              %li
+                = link_to edit_user_path(current_user) do
+                  %i.glyphicon.glyphicon-ok
+                  &nbsp;
+                  = "Welcome, #{ current_user.fullname }"
             %li
               = link_to edit_user_path(current_user) do
-                %i.glyphicon.glyphicon-user
-                &nbsp;Edit Profile
+                %i.glyphicon.glyphicon-pencil
+                Edit Profile
           - if logged_in?
             %li
               = link_to logout_path, method: :delete do

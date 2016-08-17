@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
 
   def self.get_users(current_user)
     if current_user.admin?
-      User.all.order(:fullname)
+      User.all.order(profile: :desc)
     else
       User.where(:profile => 1)
     end
