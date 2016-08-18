@@ -19,10 +19,6 @@ describe 'Admin Invoice Pages' do
     end
 
     describe 'list invoices' do
-      it 'should have a back button' do
-        should have_link('BACK', href: users_path)
-      end
-
       it 'should show all invoices' do
         Invoice.all.each do |invoice|
           should have_selector('tr', text: invoice.id)
@@ -155,10 +151,6 @@ describe 'Admin Invoice Pages' do
     describe 'all invoices link' do
       before { click_link('All Invoices', href: all_invoices_path) }
 
-      it 'should have back button' do
-        should have_link('BACK', href: users_path)
-      end
-
       Invoice.all.each do |invoice|
         should have_selector('tr', text: invoice.id)
         should have_selector('tr', text: invoice.user.fullname)
@@ -184,10 +176,6 @@ describe 'Admin Invoice Pages' do
     describe 'submitted invoices link with no submitted invoices' do
       before { click_link('Submitted Invoices', href: submitted_invoices_path) }
 
-      it 'should have back button' do
-        should have_link('BACK', href: users_path)
-      end
-
       it 'should have no invoices' do
         should have_selector('p', text: 'There are no submitted invoices.')
       end
@@ -206,10 +194,6 @@ describe 'Admin Invoice Pages' do
         visit user_invoices_path(employee)
         click_link('SUBMIT', href: invoice_submit_path(invoice))
         click_link('Submitted Invoices', href: submitted_invoices_path)
-      end
-
-      it 'should have back button' do
-        should have_link('BACK', href: users_path)
       end
 
       it 'should only show one invoice' do

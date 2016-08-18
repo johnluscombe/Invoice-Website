@@ -1,7 +1,14 @@
-%h1 New user
+%ol.breadcrumb
+  %li.breadcrumb-item
+    = link_to 'Employees', users_path
+  %li.breadcrumb-item.active New User
+
+%h1 New User
+%br
 = render 'shared/errors', object: @user
 
 = form_for @user do |form|
   = render partial: 'fields', locals: {f: form }
+  %br
   = form.submit 'CREATE NEW USER', :class => 'btn btn-success'
   = link_to 'CANCEL', users_path(@user), class: 'btn btn-danger btn-outline'

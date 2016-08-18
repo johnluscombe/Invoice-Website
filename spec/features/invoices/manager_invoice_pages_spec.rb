@@ -146,10 +146,6 @@ describe 'Manager Invoice Pages' do
     describe 'submitted invoices link with no submitted invoices' do
       before { click_link('Submitted Invoices', href: submitted_invoices_path) }
 
-      it 'should have back button' do
-        should have_link('BACK', href: users_path)
-      end
-
       it 'should have no invoices' do
         should have_selector('p', text: 'There are no submitted invoices.')
       end
@@ -168,10 +164,6 @@ describe 'Manager Invoice Pages' do
         visit user_invoices_path(employee)
         click_link('SUBMIT', href: invoice_submit_path(invoice))
         click_link('Submitted Invoices', href: submitted_invoices_path)
-      end
-
-      it 'should have back button' do
-        should have_link('BACK', href: users_path)
       end
 
       it 'should only show one invoice' do

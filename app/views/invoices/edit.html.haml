@@ -1,8 +1,17 @@
-%h1 Edit invoice
+%ol.breadcrumb
+  %li.breadcrumb-item
+    = link_to 'Employees', users_path
+  %li.breadcrumb-item
+    = link_to 'Invoices', user_invoices_path(@user)
+  %li.breadcrumb-item.active Edit Invoice
+
+%h1 Edit Invoice
+%br
 = render 'shared/errors', object: @invoice
 
 = form_for @invoice do |form|
   = render partial: 'fields', locals: {f: form }
+  %br
   = form.submit 'UPDATE INVOICE', :class => 'btn btn-success'
   = link_to 'CANCEL', user_invoices_path(@user), class: 'btn btn-danger btn-outline'
 %br

@@ -1,3 +1,10 @@
+%ol.breadcrumb
+  %li.breadcrumb-item
+    = link_to 'Employees', users_path
+  %li.breadcrumb-item
+    = link_to 'Invoices', user_invoices_path(@user)
+  %li.breadcrumb-item.active Payments
+
 - if !@invoice.start_date.nil? and !@invoice.end_date.nil?
   %h1= "Payments for Invoice #{ @invoice.start_date.strftime('%m-%d-%Y') } - #{ @invoice.end_date.strftime('%m-%d-%Y') }"
 - elsif !@invoice.start_date.nil? and @invoice.end_date.nil?
@@ -6,9 +13,6 @@
   %h1= "Payments for Invoice Ending #{ @invoice.end_date.strftime('%m-%d-%Y') }"
 - else
   %h1 Payments
-
-= link_to 'BACK', user_invoices_path(@user), class: 'btn btn-primary btn-outline btn-xs'
-%br
 %br
 
 - if @invoice.paid?
