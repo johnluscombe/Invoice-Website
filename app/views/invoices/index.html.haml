@@ -1,6 +1,7 @@
 %ol.breadcrumb
-    %li.breadcrumb-item
-        = link_to 'Employees', users_path
+    - if current_user.manager?
+        %li.breadcrumb-item
+            = link_to 'Employees', users_path
     %li.breadcrumb-item.active Invoices
 
 - if current_user.manager?

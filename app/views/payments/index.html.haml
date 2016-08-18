@@ -1,9 +1,14 @@
 %ol.breadcrumb
-  %li.breadcrumb-item
-    = link_to 'Employees', users_path
-  %li.breadcrumb-item
-    = link_to 'Invoices', user_invoices_path(@user), class: 'inner-link'
-  %li.breadcrumb-item.active Payments
+  - if current_user.manager?
+    %li.breadcrumb-item
+      = link_to 'Employees', users_path
+    %li.breadcrumb-item
+      = link_to 'Invoices', user_invoices_path(@user), class: 'inner-link'
+    %li.breadcrumb-item.active Payments
+  - else
+    %li.breadcrumb-item
+      = link_to 'Invoices', user_invoices_path(current_user)
+    %li.breadcrumb-item.active Payments
 
 - if !@invoice.start_date.nil? and !@invoice.end_date.nil?
   %h1= "Payments for Invoice #{ @invoice.start_date.strftime('%m-%d-%Y') } - #{ @invoice.end_date.strftime('%m-%d-%Y') }"

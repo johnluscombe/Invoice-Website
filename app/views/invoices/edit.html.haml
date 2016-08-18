@@ -1,9 +1,14 @@
 %ol.breadcrumb
-  %li.breadcrumb-item
-    = link_to 'Employees', users_path
-  %li.breadcrumb-item
-    = link_to 'Invoices', user_invoices_path(@user), class: 'inner-link'
-  %li.breadcrumb-item.active Edit Invoice
+  - if current_user.manager?
+    %li.breadcrumb-item
+      = link_to 'Employees', users_path
+    %li.breadcrumb-item
+      = link_to 'Invoices', user_invoices_path(@user), class: 'inner-link'
+    %li.breadcrumb-item.active Edit Invoice
+  - else
+    %li.breadcrumb-item
+      = link_to 'Invoices', user_invoices_path(current_user)
+    %li.breadcrumb-item.active Edit Invoice
 
 %h1 Edit Invoice
 %br
