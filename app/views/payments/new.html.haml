@@ -2,9 +2,9 @@
   %li.breadcrumb-item
     = link_to 'Employees', users_path
   %li.breadcrumb-item
-    = link_to 'Invoices', user_invoices_path(@user)
+    = link_to 'Invoices', user_invoices_path(@user), class: 'inner-link'
   %li.breadcrumb-item
-    = link_to 'Payments', invoice_payments_path(@invoice)
+    = link_to 'Payments', invoice_payments_path(@invoice), class: 'inner-link'
   %li.breadcrumb-item.active New Payment
 
 %h1 New Payment

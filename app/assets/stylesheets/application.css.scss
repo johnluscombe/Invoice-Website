@@ -44,6 +44,10 @@ a.navbar-brand {
   color: rgb(5, 99, 193) !important;
 }
 
+.breadcrumb-item > a.inner-link {
+  margin-left: -4px;
+}
+
 button > a {
   color: white !important;
   text-decoration: none !important;

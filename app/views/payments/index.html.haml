@@ -2,7 +2,7 @@
   %li.breadcrumb-item
     = link_to 'Employees', users_path
   %li.breadcrumb-item
-    = link_to 'Invoices', user_invoices_path(@user)
+    = link_to 'Invoices', user_invoices_path(@user), class: 'inner-link'
   %li.breadcrumb-item.active Payments
 
 - if !@invoice.start_date.nil? and !@invoice.end_date.nil?
