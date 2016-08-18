@@ -44,4 +44,4 @@
     - if current_user?(user)
       %td
     - else
-      %td.text-center= link_to 'DELETE', user_path(user), class: 'btn btn-danger btn-outline btn-xs', method: :delete
+      %td.text-center= link_to 'DELETE', user_path(user), class: 'btn btn-danger btn-outline btn-xs', method: :delete, data: { confirm: 'Are you sure?' }

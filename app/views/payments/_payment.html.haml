@@ -20,4 +20,4 @@
     %td $ 0.00
 
   %td.text-center= link_to 'EDIT', edit_payment_path(payment), class: 'btn btn-primary btn-outline btn-xs'
-  %td.text-center= link_to 'DELETE', payment_path(payment), class: 'btn btn-danger btn-outline btn-xs', method: :delete
+  %td.text-center= link_to 'DELETE', payment_path(payment), class: 'btn btn-danger btn-outline btn-xs', method: :delete, data: { confirm: 'Are you sure?' }
