@@ -4,9 +4,9 @@
   %tr
     %td.text-right= f.label 'Date'
     - if @payment.date.nil?
-      %td= f.text_field :date_as_string, class: 'form-control', :value => Date.today.strftime('%m-%d-%Y')
+      %td= f.date_field :date_as_string, class: 'form-control', :value => Date.today
     - else
-      %td= f.text_field :date_as_string, class: 'form-control'
+      %td= f.date_field :date_as_string, class: 'form-control'
   %tr
     %td.text-right= f.label :description
     %td= f.text_area :description, :cols => 50, :rows => 3, class: 'form-control'
