@@ -6,7 +6,7 @@ class Payment < ActiveRecord::Base
 
   def date_as_string
     if self.date
-      @date_as_string = self.date.strftime('%m-%d-%Y')
+      @date_as_string = self.date
     else
       @date_as_string = nil
     end

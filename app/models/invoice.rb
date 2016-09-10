@@ -25,7 +25,7 @@ class Invoice < ActiveRecord::Base
 
   def start_date_as_string
     if self.start_date
-      @start_date_as_string = self.start_date.strftime('%m-%d-%Y')
+      @start_date_as_string = self.start_date
     else
       @start_date_as_string = nil
     end
@@ -38,7 +38,7 @@ class Invoice < ActiveRecord::Base
 
   def end_date_as_string
     if self.end_date
-      @end_date_as_string = self.end_date.strftime('%m-%d-%Y')
+      @end_date_as_string = self.end_date
     else
       @end_date_as_string = nil
     end
@@ -51,7 +51,7 @@ class Invoice < ActiveRecord::Base
 
   def transfer_date_as_string
     if self.transfer_date
-      @transfer_date_as_string = self.transfer_date.strftime('%m-%d-%Y')
+      @transfer_date_as_string = self.transfer_date
     else
       @transfer_date_as_string = nil
     end
