@@ -44,7 +44,8 @@ describe 'Admin Invoice Pages' do
       end
 
       it "has the date filled in with today's date" do
-        should have_field('payment_date_as_string', with: Date.today.strftime('%m-%d-%Y'))
+        # puts page.body
+        should have_field('payment_date_as_string', with: Date.today.strftime('%Y-%m-%d'))
       end
 
       describe 'with valid information' do
