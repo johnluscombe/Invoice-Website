@@ -2,6 +2,8 @@ class Invoice < ActiveRecord::Base
   belongs_to :user, inverse_of: :invoices
   has_many :payments, inverse_of: :invoice
 
+  before_destroy { Payment.destroy_all }
+
   validates :user, presence: { message: 'is required' }
   validates :status, presence: { message: 'is required' }
   validates :hours, :net_pay, :rate, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
