@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  before_destroy { Invoice.destroy_all }
+  before_destroy { self.invoices.destroy_all }
 
   validates :name, presence: { message: 'is required' }, uniqueness: true
   validates :rate, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
