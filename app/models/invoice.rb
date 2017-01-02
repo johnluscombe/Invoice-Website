@@ -71,13 +71,13 @@ class Invoice < ActiveRecord::Base
       self.update(:status => 'Submitted')
     end
 
-    if send_email
-      User.managers.all.each do |user|
-        unless user.email.nil? or user.email == ''
-          SubmitMailer.submit_email(current_user, user, self).deliver_now
-        end
-      end
-    end
+    #if send_email
+    #  User.managers.all.each do |user|
+    #    unless user.email.nil? or user.email == ''
+    #      SubmitMailer.submit_email(current_user, user, self).deliver_now
+    #    end
+    #  end
+    #end
   end
 
   def reset
@@ -91,9 +91,9 @@ class Invoice < ActiveRecord::Base
       self.update(:status => 'Paid')
     end
 
-    unless self.user.email.nil? or self.user.email == ''
-      PayMailer.pay_email(current_user, self.user, self).deliver_now
-    end
+    #unless self.user.email.nil? or self.user.email == ''
+    #  PayMailer.pay_email(current_user, self.user, self).deliver_now
+    #end
   end
 
   def get_net_pay
