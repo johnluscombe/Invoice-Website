@@ -1,95 +1,45 @@
-%tr
-  - if current_user.admin?
-    %td= invoice.id
-  - if @all or @submitted
-    %td= invoice.user.fullname
-
-  - if !invoice.start_date.nil? and !invoice.end_date.nil?
-    %td.text-center= "#{invoice.start_date.strftime('%m/%d/%y')} - #{invoice.end_date.strftime('%m/%d/%y')}"
-  - elsif invoice.start_date.nil? and !invoice.end_date.nil?
-    %td.text-center= "Ended #{invoice.end_date.strftime('%m/%d/%y')}"
-  - elsif !invoice.start_date.nil? and invoice.end_date.nil?
-    %td.text-center= "Started #{invoice.start_date.strftime('%m/%d/%y')}"
-  - else
-    %td
-
-  - if invoice.hours.nil?
-    %td.text-right= sprintf('%.2f', invoice.payments.sum(:hours))
-  - else
-    %td.override.text-right= sprintf('%.2f', invoice.hours)
-
-  - if current_user.admin?
-    - if invoice.rate.nil?
-      %td.text-right= sprintf('%.2f', invoice.user.rate)
-    - else
-      %td.override.text-right= sprintf('%.2f', invoice.rate)
-
-  - if invoice.net_pay.nil?
-    %td.text-right.no-wrap= "$ #{ sprintf('%.2f', invoice.get_net_pay) }"
-  - else
-    %td.override.text-right.no-wrap= "$ #{ sprintf('%.2f', invoice.net_pay) }"
-
-  - if invoice.paid?
-    %td.approve.text-center
-      %strong= invoice.status
-  - else
-    %td.text-center= invoice.status
-
-  - if current_user.manager?
-    %td.text-right= invoice.check_no
-    - if invoice.transfer_date.nil?
-      %td
-    - else
-      %td.text-center= invoice.transfer_date.strftime('%m/%d/%y')
-
-  - if current_user.employee?
-    - if invoice.started?
-      %td.text-center= link_to 'VIEW PAYMENTS', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
-      - if @user
-        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs', onclick: 'showLoader()'
+.row
+  .card.hoverable.pointer.space-between.grey.lighten-4
+    .card-content
+      - if @all or @submitted
+        - if invoice.net_pay.nil?
+          %span.card-title= "#{invoice.user.fullname} - #{number_to_currency(invoice.get_net_pay)}"
+        - else
+          %span.card-title= "#{invoice.user.fullname} - #{number_to_currency(invoice.net_pay)}"
       - else
-        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs', onclick: 'showLoader()'
-      %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
-      %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete, data: { confirm: 'Are you sure?' }
-    - elsif invoice.submitted?
-      %td.text-center= link_to 'VIEW INVOICE', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
-      - if @user
-        %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
-      - else
-        %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
-      %td
-      %td
-    - elsif invoice.paid?
-      %td.text-center= link_to 'VIEW INVOICE', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
-      %td
-      %td
-      %td
-  - else
-    - if invoice.started?
-      %td.text-center= link_to 'VIEW PAYMENTS', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
-      - if @user
-        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs', onclick: 'showLoader()'
-      - else
-        %td.text-center= link_to 'SUBMIT', invoice_submit_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs', onclick: 'showLoader()'
-      %td
-      %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
-      %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete, data: { confirm: 'Are you sure?' }
-    - elsif invoice.submitted?
-      %td.text-center= link_to 'VIEW INVOICE', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
-      - if @user
-        %td.text-center= link_to 'MARK AS PAID', invoice_pay_path(invoice), method: :patch, class: 'btn btn-success btn-outline btn-xs', onclick: 'showLoader()'
-        %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
-      - else
-        %td.text-center= link_to 'MARK AS PAID', invoice_pay_path(invoice), method: :patch, class: 'btn btn-success btn-outline btn-xs', onclick: 'showLoader()'
-        %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
-      %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
-      %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete, data: { confirm: 'Are you sure?' }
-    - elsif invoice.paid?
-      %td.text-center= link_to 'VIEW INVOICE', invoice_payments_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
-      %td
-      - if @user
-        %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
-      - else
-        %td.text-center= link_to 'RESET', invoice_reset_path(invoice), method: :patch, class: 'btn btn-primary btn-outline btn-xs'
-      %td.text-center= link_to 'EDIT', edit_invoice_path(invoice), class: 'btn btn-primary btn-outline btn-xs'
-      %td.text-center= link_to 'DELETE', invoice_path(invoice), class: 'btn btn-danger btn-outline btn-xs', method: :delete, data: { confirm: 'Are you sure?' }
+        - if invoice.net_pay.nil?
+          %span.card-title= number_to_currency(invoice.get_net_pay)
+        - else
+          %span.card-title= number_to_currency(invoice.net_pay)
+
+      %p.grey-text.text-darken-1
+        - if invoice.status == 'Paid'
+          Status:
+          %strong
+            %span.green-text= invoice.status
+        - else
+          = "Status: #{invoice.status}"
+
+      %p.grey-text.text-darken-1
+        - unless invoice.start_date.nil?
+          = "Started #{invoice.start_date.strftime('%m/%d/%y')}"
+        - if invoice.hours.nil?
+          %span.right= "Hours: #{sprintf('%.2f', invoice.payments.sum(:hours))}"
+        - else
+          %span.right= "Hours: #{sprintf('%.2f', invoice.hours)}"
+
+      %p.grey-text.text-darken-1
+        - unless invoice.end_date.nil?
+          = "Ended #{invoice.end_date.strftime('%m/%d/%y')}"
+        - if current_user.manager?
+          - if invoice.rate.nil?
+            %span.right= "Rate: #{number_to_currency(invoice.user.rate)}"
+          - else
+            %span.right= "Rate: #{number_to_currency(invoice.rate)}"
+
+      %p.grey-text.text-darken-1
+        - if current_user.manager?
+          - unless invoice.check_no.nil?
+            = "Check No. #{invoice.check_no}"
+          - unless invoice.transfer_date.nil?
+            %span.right= "Transferred #{invoice.transfer_date.strftime('%m/%d/%y')}"

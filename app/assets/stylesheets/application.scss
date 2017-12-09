@@ -24,6 +24,10 @@ $secondary-color: color("grey", "base") !default;
   vertical-align: middle;
 }
 
+.breadcrumb:before {
+  color: #9E9E9E;
+}
+
 .login-container {
   display: inline-block;
   padding: 32px 48px 0 48px;

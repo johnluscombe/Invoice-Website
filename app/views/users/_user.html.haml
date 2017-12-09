@@ -2,13 +2,13 @@
   .card.horizontal.hoverable.pointer.space-between.grey.lighten-4{ onclick: "redirectTo('#{ user_invoices_path(user) }')"}
     .card-content
       %span.card-title= user.fullname
-      %p= user.email
+      %p.grey-text.text-darken-1= user.email
       - unless user.manager?
         - unless user.rate.nil?
-          %p= "Employee Rate: #{number_to_currency(user.rate)}"
+          %p.grey-text.text-darken-1= "Employee Rate: #{number_to_currency(user.rate)}"
 
       - if user.net_pay != 'N/A' and user.net_pay != '-'
-        %p= "Current Invoice: #{ number_to_currency(user.net_pay) }"
+        %p.grey-text.text-darken-1= "Current Invoice: #{ number_to_currency(user.net_pay) }"
     .card-content.right-align
       - if current_user.admin?
         - unless current_user?(user)
