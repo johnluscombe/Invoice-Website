@@ -6,39 +6,40 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    %nav
-      .nav-wrapper
-        .row
-          .col.s12
-            - if current_user&.manager?
-              = link_to image_tag('logo.png', :class => 'brand'), users_path, :class => 'brand-logo left'
-            - elsif current_user
-              = link_to image_tag('logo.png', :class => 'brand'), user_invoices_path(current_user), :class => 'brand-logo left'
-            - else
-              = link_to image_tag('logo.png', :class => 'brand'), root_path, :class => 'brand-logo left'
-        %ul.nav.navbar-nav.navbar-right
-          - if current_user
-            - if current_user.fullname.nil? or current_user.fullname == ''
-              %li
-                = link_to edit_user_path(current_user) do
-                  %i.glyphicon.glyphicon-ok
-                  &nbsp;
-                  = "Welcome, #{ current_user.name }"
-            - else
-              %li
-                = link_to edit_user_path(current_user) do
-                  %i.glyphicon.glyphicon-ok
-                  &nbsp;
-                  = "Welcome, #{ current_user.fullname }"
-            %li
-              = link_to edit_user_path(current_user) do
-                %i.glyphicon.glyphicon-pencil
-                Edit Profile
-          - if logged_in?
-            %li
-              = link_to logout_path, method: :delete do
-                %i.glyphicon.glyphicon-log-in
-                &nbsp;Log Out
+    .row
+      %nav.main
+        .nav-wrapper
+          .row
+            .col.s12
+              - if current_user&.manager?
+                = link_to image_tag('logo.png', :class => 'brand'), users_path, :class => 'brand-logo left'
+              - elsif current_user
+                = link_to image_tag('logo.png', :class => 'brand'), user_invoices_path(current_user), :class => 'brand-logo left'
+              - else
+                = link_to image_tag('logo.png', :class => 'brand'), root_path, :class => 'brand-logo left'
+              %ul#nav-mobile.right.hide-on-med-and-down
+                - if current_user
+                  - if current_user.fullname.nil? or current_user.fullname == ''
+                    %li
+                      = link_to edit_user_path(current_user), class: 'valign-wrapper' do
+                        %i.material-icons.nav-icons check
+                        &nbsp;
+                        = "Welcome, #{ current_user.name }"
+                  - else
+                    %li
+                      = link_to edit_user_path(current_user), class: 'valign-wrapper' do
+                        %i.material-icons.nav-icons check
+                        &nbsp;
+                        = "Welcome, #{ current_user.fullname }"
+                  %li
+                    = link_to edit_user_path(current_user), class: 'valign-wrapper' do
+                      %i.material-icons.nav-icons edit
+                      &nbsp; Edit Profile
+                - if logged_in?
+                  %li
+                    = link_to logout_path, class: 'valign-wrapper', method: :delete do
+                      %i.material-icons.nav-icons exit_to_app
+                      &nbsp; Log Out
 
   #loader-container
     #loader

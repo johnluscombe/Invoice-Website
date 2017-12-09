@@ -1,47 +1,18 @@
-%tr
-  - if current_user.admin?
-    %td= user.id
-  %td= user.fullname
-  - if current_user.admin?
-    %td= user.name
-  %td= user.email
+.row
+  .card.horizontal.hoverable.pointer.space-between.grey.lighten-4{ onclick: "redirectTo('#{ user_invoices_path(user) }')"}
+    .card-content
+      %span.card-title= user.fullname
+      %p= user.email
+      - unless user.manager?
+        - unless user.rate.nil?
+          %p= "Employee Rate: #{number_to_currency(user.rate)}"
 
-  - if user.manager?
-    %td.text-right N/A
-  - else
-    - if user.rate.nil?
-      %td.text-right -
-    - else
-      %td.text-right= sprintf('%.2f', user.rate)
-
-  - if user.net_pay == 'N/A' or user.net_pay == '-'
-    %td.text-right.no-wrap= user.net_pay
-  - else
-    %td.text-right.no-wrap= "$ #{ user.net_pay }"
-
-  - if current_user.admin?
-    %td.text-center
-      - if user.admin?
-        Administrator
-      - elsif user.manager?
-        Manager
-      - else
-        Employee
-    %td.text-center
-      - if user.first_time
-        Yes
-      - else
-        No
-
-  - if user.manager?
-    %td
-  - else
-    %td.text-center= link_to 'VIEW INVOICES', user_invoices_path(user), class: 'btn btn-primary btn-outline btn-xs view-invoices-margin'
-
-  %td.text-center= link_to 'EDIT', edit_user_path(user), class: 'btn btn-primary btn-outline btn-xs'
-
-  - if current_user.admin?
-    - if current_user?(user)
-      %td
-    - else
-      %td.text-center= link_to 'DELETE', user_path(user), class: 'btn btn-danger btn-outline btn-xs', method: :delete, data: { confirm: 'Are you sure?' }
+      - if user.net_pay != 'N/A' and user.net_pay != '-'
+        %p= "Current Invoice: #{ number_to_currency(user.net_pay) }"
+    .card-content.right-align
+      - if current_user.admin?
+        - unless current_user?(user)
+          = link_to user_path(user), class: 'right', method: :delete, data: { confirm: 'Are you sure?' } do
+            %i.material-icons.grey-text.text-darken-3 delete
+      = link_to edit_user_path(user), class: 'right' do
+        %i.material-icons.grey-text.text-darken-3 settings

@@ -1,40 +1,28 @@
-%ol.breadcrumb
-  %li.breadcrumb-item.active Employees
+.container
+  .row
+    %nav.grey.lighten-5
+      .nav-wrapper
+        .col.s12
+          = link_to 'Users', users_path, class: 'breadcrumb grey-text text-darken-4'
 
-%h1 Employees
-%br
-- if (User.managers.count > 0 and !current_user.admin?) or (User.count > 0 and current_user.admin?)
-  %table.table.table-striped
-    = render 'column_widths'
-    %tr
-      - if current_user.admin?
-        %th.bottom-align ID
-      %th.bottom-align Employee Name
-      - if current_user.admin?
-        %th.bottom-align Username
-      %th.bottom-align Email
-      %th.bottom-align.text-right Hourly Rate
-      %th.bottom-align.text-right Current Invoice
-      - if current_user.admin?
-        %th.bottom-align.text-center Profile
-        %th.bottom-align.text-center Reset Profile?
-      %th
-      %th
-      - if current_user.admin?
-        %th
-    = render @users
+  %br
   - if current_user.admin?
-    %td
-      = link_to new_user_path, class: 'btn btn-success' do
-        %i.glyphicon.glyphicon-plus
-        NEW USER
-- else
-  - if current_user.admin?
-    %p There are no employees yet.
-    %td
-      = link_to new_user_path, class: 'btn btn-success' do
-        %i.glyphicon.glyphicon-plus
-        NEW USER
+    %h4 Users
   - else
-    %p You do not have any employees yet.
-    %p Please contact your administrator to add employees.
+    %h4 Employees
+  %br
+  - if (User.managers.count > 0 and !current_user.admin?) or (User.count > 0 and current_user.admin?)
+    = render @users
+    - if current_user.admin?
+      %td
+        = link_to new_user_path, class: 'btn-floating btn-large green' do
+          %i.material-icons add
+  - else
+    - if current_user.admin?
+      %p There are no employees yet.
+      %td
+        = link_to new_user_path, class: 'btn-floating btn-large green' do
+          %i.material-icons add
+    - else
+      %p You do not have any employees yet.
+      %p Please contact your administrator to add employees.

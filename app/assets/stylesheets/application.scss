@@ -18,6 +18,7 @@
 $primary-color: color("grey", "base") !default;
 $secondary-color: color("grey", "base") !default;
 @import "materialize";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
 .brand {
   vertical-align: middle;
@@ -29,8 +30,20 @@ $secondary-color: color("grey", "base") !default;
   width: 400px;
 }
 
-nav {
+.material-icons.nav-icons {
+  display: inline;
+}
+
+nav.main {
   background-color: #222;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.space-between {
+  justify-content: space-between;
 }
 
 @keyframes spin {
