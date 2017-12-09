@@ -14,7 +14,7 @@ group :production do
 end
 
 gem 'sass-rails', '~> 5.0'
-gem 'bootstrap-sass', '~> 3.3.5'
+gem 'materialize-sass'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'turbolinks'

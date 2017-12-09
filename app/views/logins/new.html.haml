@@ -1,8 +1,17 @@
-%h1.text-center Log In
+%br
+%br
+%h4.center-align Log In
 %br
 %br
 
-= form_tag logins_path, class: 'text-center' do
-  %p= text_field_tag :username, params[:username], class: 'form-control username', placeholder: 'Username'
-  %p= password_field_tag :password, params[:password], class: 'form-control password', placeholder: 'Password'
-  = submit_tag 'Log In', class: 'btn btn-default'
+.container.center-align
+  .login-container.z-depth-1.grey.lighten-4.row
+    - flash.each do |type, message|
+      %p.left-align.red-text= message
+    = form_tag logins_path, class: 'col s12' do
+      .row
+        = text_field_tag :username, params[:username], placeholder: 'Username'
+      .row
+        = password_field_tag :password, params[:password], placeholder: 'Password'
+      .row
+        = submit_tag 'Log In', class: 'col s12 btn btn-large'
