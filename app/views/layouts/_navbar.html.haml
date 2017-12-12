@@ -1,0 +1,17 @@
+.row
+  %nav.main
+    .nav-wrapper
+      .row
+        .col.s12
+          - if current_user&.manager?
+            = link_to image_tag('logo.png', :class => 'brand'), users_path, :class => 'brand-logo left'
+          - elsif current_user
+            = link_to image_tag('logo.png', :class => 'brand'), user_invoices_path(current_user), :class => 'brand-logo left'
+          - else
+            = link_to image_tag('logo.png', :class => 'brand'), root_path, :class => 'brand-logo left'
+          %ul#nav-mobile.right.hide-on-med-and-down
+            - if logged_in?
+              %li
+                = link_to logout_path, class: 'valign-wrapper', method: :delete do
+                  %i.material-icons.nav-icons exit_to_app
+                  &nbsp; Log Out

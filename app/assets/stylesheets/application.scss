@@ -14,18 +14,24 @@
  *= require_self
  */
 
-@import "materialize/components/color";
-$primary-color: color("grey", "base") !default;
-$secondary-color: color("grey", "base") !default;
 @import "materialize";
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
+.no-box-shadow {
+  box-shadow: none;
+}
 
 .brand {
   vertical-align: middle;
 }
 
+.breadcrumb {
+  font-size: 12px;
+}
+
 .breadcrumb:before {
   color: #9E9E9E;
+  font-size: 12px;
 }
 
 .login-container {

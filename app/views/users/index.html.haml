@@ -1,10 +1,4 @@
 .container
-  .row
-    %nav.grey.lighten-5
-      .nav-wrapper
-        .col.s12
-          = link_to 'Users', users_path, class: 'breadcrumb grey-text text-darken-4'
-
   %br
   - if current_user.admin?
     %h4 Users

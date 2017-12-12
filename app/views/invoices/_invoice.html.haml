@@ -1,5 +1,5 @@
 .row
-  .card.hoverable.pointer.space-between.grey.lighten-4
+  .card.horizontal.hoverable.pointer.space-between.grey.lighten-4
     .card-content
       - if @all or @submitted
         - if invoice.net_pay.nil?
@@ -23,23 +23,12 @@
       %p.grey-text.text-darken-1
         - unless invoice.start_date.nil?
           = "Started #{invoice.start_date.strftime('%m/%d/%y')}"
-        - if invoice.hours.nil?
-          %span.right= "Hours: #{sprintf('%.2f', invoice.payments.sum(:hours))}"
-        - else
-          %span.right= "Hours: #{sprintf('%.2f', invoice.hours)}"
 
       %p.grey-text.text-darken-1
         - unless invoice.end_date.nil?
           = "Ended #{invoice.end_date.strftime('%m/%d/%y')}"
-        - if current_user.manager?
-          - if invoice.rate.nil?
-            %span.right= "Rate: #{number_to_currency(invoice.user.rate)}"
-          - else
-            %span.right= "Rate: #{number_to_currency(invoice.rate)}"
-
-      %p.grey-text.text-darken-1
-        - if current_user.manager?
-          - unless invoice.check_no.nil?
-            = "Check No. #{invoice.check_no}"
-          - unless invoice.transfer_date.nil?
-            %span.right= "Transferred #{invoice.transfer_date.strftime('%m/%d/%y')}"
+    .card-content.right-align
+      = link_to invoice_path(invoice), class: 'right', method: :delete, data: { confirm: 'Are you sure?' } do
+        %i.material-icons.grey-text.text-darken-1 delete
+      = link_to edit_invoice_path(invoice), class: 'right' do
+        %i.material-icons.grey-text.text-darken-1 settings

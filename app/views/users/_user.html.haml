@@ -13,6 +13,6 @@
       - if current_user.admin?
         - unless current_user?(user)
           = link_to user_path(user), class: 'right', method: :delete, data: { confirm: 'Are you sure?' } do
-            %i.material-icons.grey-text.text-darken-3 delete
+            %i.material-icons.grey-text.text-darken-1 delete
       = link_to edit_user_path(user), class: 'right' do
-        %i.material-icons.grey-text.text-darken-3 settings
+        %i.material-icons.grey-text.text-darken-1 settings

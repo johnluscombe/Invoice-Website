@@ -1,51 +1,55 @@
-%table.fields
-  %col{ :width => '100' }
-  %col{ :width => '200' }
-  %tr
-    %td.text-right= f.label 'Start Date'
-    %td= f.date_field :start_date_as_string, class: 'form-control'
-  %tr
-    %td.text-right= f.label 'End Date'
-    %td= f.date_field :end_date_as_string, class: 'form-control'
-  - if current_user.manager?
-    %tr
-      %td.text-right= f.label :status
-      %td= f.select :status, [%w(Started Started), %w(Submitted Submitted), %w(Paid Paid)],
-      {}, class: 'form-control'
-    %tr
-      %td.text-right= f.label 'Check #'
-      %td= f.text_field :check_no, class: 'form-control'
-    %tr
-      %td.text-right= f.label :transfer_date
-      %td= f.date_field :transfer_date_as_string, class: 'form-control'
-%br
-%table
-  %col{ :width => '100' }
-  %col{ :width => '200' }
-  - if current_user.manager?
-    %tr
-      %td.text-center{ :colspan => '2' }
-        %strong Overrides
-%table.fields
-  %col{ :width => '100' }
-  %col{ :width => '200' }
-  - if current_user.manager?
-    %tr
-      %td.text-right= f.label :hours
-      %td
-        .input-group
-          %span.input-group-addon $
-          = f.text_field :hours, class: 'form-control text-right', value: number_with_precision(@invoice.hours, :precision => 2)
-    %tr
-      %td.text-right= f.label 'Hourly Rate'
-      %td
-        .input-group
-          %span.input-group-addon $
-          = f.text_field :rate, class: 'form-control text-right', value: number_with_precision(@invoice.rate, :precision => 2)
-    %tr
-      %td.text-right= f.label :net_pay
-      %td
-        .input-group
-          %span.input-group-addon $
-          = f.text_field :net_pay, class: 'form-control text-right', value: number_with_precision(@invoice.net_pay, :precision => 2)
-%br
+.row
+  .col.s12
+    .row
+      .input-field.col.s6
+        %i.material-icons.prefix date_range
+        - if @invoice.start_date.nil?
+          = f.label :start_date_as_string, 'Start Date'
+        - else
+          = f.label :start_date_as_string, 'Start Date', class: 'active'
+        = f.text_field :start_date_as_string, class: 'datepicker'
+      .input-field.col.s6
+        - if @invoice.end_date.nil?
+          = f.label :end_date_as_string, 'End Date'
+        - else
+          = f.label :end_date_as_string, 'End Date', class: 'active'
+        = f.text_field :end_date_as_string, class: 'datepicker'
+      - if current_user.manager?
+        .input-field.col.s4
+          %i.material-icons.prefix info_outline
+          = f.label :status, class: 'active'
+          = f.select :status, [%w(Started Started), %w(Submitted Submitted), %w(Paid Paid)], {}
+        .input-field.col.s4
+          - if @invoice.check_no.nil?
+            = f.label :check_no
+          - else
+            = f.label :check_no, class: 'active'
+          = f.text_field :check_no
+        .input-field.col.s4
+          - if @invoice.transfer_date.nil?
+            = f.label :transfer_date_as_string, 'Transfer Date'
+          - else
+            = f.label :transfer_date_as_string, 'Transfer Date', class: 'active'
+          = f.text_field :transfer_date_as_string, class: 'datepicker'
+    .row
+      - if current_user.manager?
+        %p
+          %strong Overrides
+        .input-field.col.s4
+          - if @invoice.hours.nil?
+            = f.label :hours, value: number_with_precision(@invoice.hours, :precision => 2)
+          - else
+            = f.label :hours, class: 'active', value: number_with_precision(@invoice.hours, :precision => 2)
+          = f.text_field :hours
+        .input-field.col.s4
+          - if @invoice.rate.nil?
+            = f.label :rate, value: number_with_precision(@invoice.rate, :precision => 2)
+          - else
+            = f.label :rate, class: 'active', value: number_with_precision(@invoice.rate, :precision => 2)
+          = f.text_field :rate
+        .input-field.col.s4
+          - if @invoice.net_pay.nil?
+            = f.label :net_pay, value: number_with_precision(@invoice.net_pay, :precision => 2)
+          - else
+            = f.label :net_pay, class: 'active', value: number_with_precision(@invoice.net_pay, :precision => 2)
+          = f.text_field :net_pay

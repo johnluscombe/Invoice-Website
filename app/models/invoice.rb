@@ -26,8 +26,9 @@ class Invoice < ActiveRecord::Base
   end
 
   def start_date_as_string
+    format = '%m/%d/%Y'
     if self.start_date
-      @start_date_as_string = self.start_date
+      @start_date_as_string = self.start_date.strftime(format)
     else
       @start_date_as_string = nil
     end

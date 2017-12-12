@@ -1,23 +1,20 @@
-%ol.breadcrumb
-  - if current_user.manager?
-    %li.breadcrumb-item
-      = link_to 'Employees', users_path
-    %li.breadcrumb-item
-      = link_to 'Invoices', user_invoices_path(@user), class: 'inner-link'
-    %li.breadcrumb-item.active Edit Invoice
-  - else
-    %li.breadcrumb-item
-      = link_to 'Invoices', user_invoices_path(current_user)
-    %li.breadcrumb-item.active Edit Invoice
-
-%h1 Edit Invoice
-%br
-= render 'shared/errors', object: @invoice
-
-= form_for @invoice do |form|
-  = render partial: 'fields', locals: {f: form }
+.container
+  .row
+    %nav.transparent.no-box-shadow
+      .nav-wrapper
+        .col.s12
+          - if current_user.manager?
+            = link_to 'Users', users_path, class: 'breadcrumb light-blue-text'
+          = link_to 'Invoices', user_invoices_path(@user), class: 'breadcrumb light-blue-text'
+          %span.breadcrumb.grey-text.text-darken-4 Edit
+  %h4 Edit Invoice
   %br
-  = form.submit 'UPDATE INVOICE', :class => 'btn btn-success'
-  = link_to 'CANCEL', user_invoices_path(@user), class: 'btn btn-danger btn-outline'
-%br
-%br
+  = render 'shared/errors', object: @invoice
+
+  = form_for @invoice do |form|
+    = render partial: 'fields', locals: { f: form }
+    %br
+    = form.submit 'UPDATE INVOICE', :class => 'btn btn-success'
+    = link_to 'CANCEL', user_invoices_path(@user), class: 'btn btn-danger btn-outline'
+  %br
+  %br
