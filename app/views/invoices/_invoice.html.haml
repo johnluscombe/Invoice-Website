@@ -1,34 +1,36 @@
 .row
   .card.horizontal.hoverable.pointer.space-between.grey.lighten-4
-    .card-content
-      - if @all or @submitted
-        - if invoice.net_pay.nil?
-          %span.card-title= "#{invoice.user.fullname} - #{number_to_currency(invoice.get_net_pay)}"
+    .fill-100{ onclick: "redirectTo('#{ invoice_payments_path(invoice) }')"}
+      .card-content
+        - if @all or @submitted
+          - if invoice.net_pay.nil?
+            %span.card-title= "#{invoice.user.fullname} - #{number_to_currency(invoice.get_net_pay)}"
+          - else
+            %span.card-title= "#{invoice.user.fullname} - #{number_to_currency(invoice.net_pay)}"
         - else
-          %span.card-title= "#{invoice.user.fullname} - #{number_to_currency(invoice.net_pay)}"
-      - else
-        - if invoice.net_pay.nil?
-          %span.card-title= number_to_currency(invoice.get_net_pay)
-        - else
-          %span.card-title= number_to_currency(invoice.net_pay)
+          - if invoice.net_pay.nil?
+            %span.card-title= number_to_currency(invoice.get_net_pay)
+          - else
+            %span.card-title= number_to_currency(invoice.net_pay)
 
-      %p.grey-text.text-darken-1
-        - if invoice.status == 'Paid'
-          Status:
-          %strong
-            %span.green-text= invoice.status
-        - else
-          = "Status: #{invoice.status}"
+        %p.grey-text.text-darken-1
+          - if invoice.status == 'Paid'
+            Status:
+            %strong
+              %span.green-text= invoice.status
+          - else
+            = "Status: #{invoice.status}"
 
-      %p.grey-text.text-darken-1
-        - unless invoice.start_date.nil?
-          = "Started #{invoice.start_date.strftime('%m/%d/%y')}"
+        %p.grey-text.text-darken-1
+          - unless invoice.start_date.nil?
+            = "Started #{invoice.start_date.strftime('%m/%d/%y')}"
 
-      %p.grey-text.text-darken-1
-        - unless invoice.end_date.nil?
-          = "Ended #{invoice.end_date.strftime('%m/%d/%y')}"
-    .card-content.right-align
-      = link_to invoice_path(invoice), class: 'right', method: :delete, data: { confirm: 'Are you sure?' } do
-        %i.material-icons.grey-text.text-darken-1 delete
-      = link_to edit_invoice_path(invoice), class: 'right' do
-        %i.material-icons.grey-text.text-darken-1 settings
+        %p.grey-text.text-darken-1
+          - unless invoice.end_date.nil?
+            = "Ended #{invoice.end_date.strftime('%m/%d/%y')}"
+    .edit-delete-icons
+      .card-content.right-align
+        = link_to invoice_path(invoice), class: 'right', method: :delete, data: { confirm: 'Are you sure?' } do
+          %i.material-icons.grey-text.text-darken-1 delete
+        = link_to edit_invoice_path(invoice), class: 'right' do
+          %i.material-icons.grey-text.text-darken-1 settings

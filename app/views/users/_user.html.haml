@@ -1,18 +1,20 @@
 .row
-  .card.horizontal.hoverable.pointer.space-between.grey.lighten-4{ onclick: "redirectTo('#{ user_invoices_path(user) }')"}
-    .card-content
-      %span.card-title= user.fullname
-      %p.grey-text.text-darken-1= user.email
-      - unless user.manager?
-        - unless user.rate.nil?
-          %p.grey-text.text-darken-1= "Employee Rate: #{number_to_currency(user.rate)}"
+  .card.horizontal.hoverable.pointer.space-between.grey.lighten-4
+    .fill-100{ onclick: "redirectTo('#{ user_invoices_path(user) }')"}
+      .card-content
+        %span.card-title= user.fullname
+        %p.grey-text.text-darken-1= user.email
+        - unless user.manager?
+          - unless user.rate.nil?
+            %p.grey-text.text-darken-1= "Employee Rate: #{number_to_currency(user.rate)}"
 
-      - if user.net_pay != 'N/A' and user.net_pay != '-'
-        %p.grey-text.text-darken-1= "Current Invoice: #{ number_to_currency(user.net_pay) }"
-    .card-content.right-align
-      - if current_user.admin?
-        - unless current_user?(user)
-          = link_to user_path(user), class: 'right', method: :delete, data: { confirm: 'Are you sure?' } do
-            %i.material-icons.grey-text.text-darken-1 delete
-      = link_to edit_user_path(user), class: 'right' do
-        %i.material-icons.grey-text.text-darken-1 settings
+        - if user.net_pay != 'N/A' and user.net_pay != '-'
+          %p.grey-text.text-darken-1= "Current Invoice: #{ number_to_currency(user.net_pay) }"
+    .edit-delete-icons
+      .card-content.right-align
+        - if current_user.admin?
+          - unless current_user?(user)
+            = link_to user_path(user), class: 'right', method: :delete, data: { confirm: 'Are you sure?' } do
+              %i.material-icons.grey-text.text-darken-1 delete
+        = link_to edit_user_path(user), class: 'right' do
+          %i.material-icons.grey-text.text-darken-1 settings

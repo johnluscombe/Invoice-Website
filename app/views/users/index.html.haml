@@ -8,13 +8,15 @@
   - if (User.managers.count > 0 and !current_user.admin?) or (User.count > 0 and current_user.admin?)
     = render @users
     - if current_user.admin?
-      = link_to new_user_path, class: 'btn-floating btn-large green' do
-        %i.material-icons add
+      = link_to new_user_path, class: 'btn add-button-padding' do
+        %i.material-icons.left add
+        New User
   - else
     - if current_user.admin?
       %p There are no employees yet.
-      = link_to new_user_path, class: 'btn-floating btn-large green' do
-        %i.material-icons add
+      = link_to new_user_path, class: 'btn add-button-padding' do
+        %i.material-icons.left add
+        New User
     - else
       %p You do not have any employees yet.
       %p Please contact your administrator to add employees.

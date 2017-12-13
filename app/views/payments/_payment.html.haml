@@ -1,23 +1,23 @@
 %tr
-  - if current_user.admin?
-    %td= payment.id
-
   - if !payment.date.nil?
-    %td= payment.date.strftime('%m-%d-%Y')
+    %td.payment-cell= payment.date.strftime('%m-%d-%Y')
   - else
-    %td
+    %td.payment-cell
 
   %td= payment.description
 
   - if !payment.hours.nil?
-    %td= sprintf('%.2f', payment.hours)
+    %td.payment-cell= sprintf('%.2f', payment.hours)
     - if payment.daily_rate.nil?
-      %td= "$ #{ sprintf('%.2f', payment.hours * payment.invoice.user.rate) }"
+      %td.payment-cell= "$ #{ sprintf('%.2f', payment.hours * payment.invoice.user.rate) }"
     - else
-      %td.override= "$ #{ sprintf('%.2f', payment.daily_rate)}"
+      %td.payment-cell.override= "$ #{ sprintf('%.2f', payment.daily_rate)}"
   - else
-    %td 0.00
-    %td $ 0.00
+    %td.payment-cell 0.00
+    %td.payment-cell $ 0.00
 
-  %td.text-center= link_to 'EDIT', edit_payment_path(payment), class: 'btn btn-primary btn-outline btn-xs'
-  %td.text-center= link_to 'DELETE', payment_path(payment), class: 'btn btn-danger btn-outline btn-xs', method: :delete, data: { confirm: 'Are you sure?' }
+  %td.edit-delete-cell.right-align
+    = link_to payment_path(payment), class: 'right', method: :delete, data: { confirm: 'Are you sure?' } do
+      %i.material-icons.grey-text.text-darken-1 delete
+    = link_to edit_payment_path(payment), class: 'right' do
+      %i.material-icons.grey-text.text-darken-1 settings

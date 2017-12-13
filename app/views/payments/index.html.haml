@@ -1,99 +1,45 @@
-%ol.breadcrumb
-  - if current_user.manager?
-    %li.breadcrumb-item
-      = link_to 'Employees', users_path
-    %li.breadcrumb-item
-      = link_to 'Invoices', user_invoices_path(@user), class: 'inner-link'
-    %li.breadcrumb-item.active Payments
+.container
+  .row
+    %nav.transparent.no-box-shadow
+      .nav-wrapper
+        .col.s12
+          - if current_user.manager?
+            = link_to 'Users', users_path, class: 'breadcrumb light-blue-text'
+          = link_to 'Invoices', user_invoices_path(@user), class: 'breadcrumb light-blue-text'
+          %span.breadcrumb.grey-text.text-darken-4 Payments
+
+  - if !@invoice.start_date.nil?
+    %h4= @invoice.start_date.strftime('%m/%d/%Y')
   - else
-    %li.breadcrumb-item
-      = link_to 'Invoices', user_invoices_path(current_user)
-    %li.breadcrumb-item.active Payments
-
-- if !@invoice.start_date.nil? and !@invoice.end_date.nil?
-  %h1= "Payments for Invoice #{ @invoice.start_date.strftime('%m-%d-%Y') } - #{ @invoice.end_date.strftime('%m-%d-%Y') }"
-- elsif !@invoice.start_date.nil? and @invoice.end_date.nil?
-  %h1= "Payments for Invoice Starting #{ @invoice.start_date.strftime('%m-%d-%Y') }"
-- elsif @invoice.start_date.nil? and !@invoice.end_date.nil?
-  %h1= "Payments for Invoice Ending #{ @invoice.end_date.strftime('%m-%d-%Y') }"
-- else
-  %h1 Payments
-%br
-
-- if @invoice.paid?
-  %p.emphasized
-    %strong Status:
-    %strong
-      %span.approve #{ @invoice.status }
-- else
-  %p.emphasized
-    %strong Status: #{ @invoice.status }
-
-- if @invoice.payments.count > 0
-  %table.table.table-striped
-    = render 'column_widths'
-    %tr
-      - if current_user.admin?
-        %th ID
-      %th Date
-      %th Description
-      %th Hours
-      %th Daily Rate
-      %th
-      %th
-    = render @payments
-    %tr
-      - if current_user.admin?
-        %td.middle-align.text-right{ :colspan => 3 }
-          %strong
-            Total:
-      - else
-        %td.middle-align.text-right{ :colspan => 2 }
-          %strong
-            Total:
-
-      - if @invoice.hours.nil?
-        %td.middle-align
-          %strong= sprintf('%.2f', @invoice.payments.sum(:hours))
-      - else
-        %td.override.middle-align
-          %strong= sprintf('%.2f', @invoice.hours)
-
-      %td.text-center.emphasized{ :colspan => 3 }
-        %strong= "$ #{ @invoice.get_net_pay }"
-
-  %table
-    %col{ :width => '135' }
-    %col{ :width => '135' }
-    %tr
-      - if @invoice.started?
-        %td.payment-buttons
-          = link_to new_invoice_payment_path(@invoice), class: 'btn btn-success' do
-            %i.glyphicon.glyphicon-plus
-            NEW PAYMENT
-        %td.payment-buttons
-          = link_to invoice_submit_path(@invoice), method: :patch, class: 'btn btn-success btn-outline', onclick: 'showLoader()' do
-            %i.glyphicon.glyphicon-ok
-            SUBMIT INVOICE
-      - elsif @invoice.submitted?
-        - if current_user.manager?
-          %td.payment-buttons
-            = link_to invoice_pay_path(@invoice), method: :patch, class: 'btn btn-success btn-outline', onclick: 'showLoader()' do
-              %i.glyphicon.glyphicon-usd
-              MARK AS PAID
-        %td.payment-buttons
-          = link_to invoice_reset_path(@invoice), method: :patch, class: 'btn btn-primary btn-outline' do
-            %i.glyphicon.glyphicon-repeat
-            RESET INVOICE
-      - elsif @invoice.paid? and current_user.manager?
-        = link_to invoice_reset_path(@invoice), method: :patch, class: 'btn btn-primary btn-outline' do
-          %i.glyphicon.glyphicon-repeat
-          RESET INVOICE
+    %h4 Payments
   %br
-- else
-  %p There are no payments under this invoice yet.
+
+  - if @invoice.payments.count > 0
+    %table.bordered
+      = render @payments
+      %tr
+        %td.right-align{ :colspan => 2 }
+          %strong
+            Total:
+
+        - if @invoice.hours.nil?
+          %td
+            %strong= sprintf('%.2f', @invoice.payments.sum(:hours))
+        - else
+          %td.override
+            %strong= sprintf('%.2f', @invoice.hours)
+
+        %td.center-align.emphasized{ :colspan => 2 }
+          %strong= "$ #{ @invoice.get_net_pay }"
+
+  %br
   - if @invoice.started?
-    %td.payment-buttons
-      = link_to new_invoice_payment_path(@invoice), class: 'btn btn-success' do
-        %i.glyphicon.glyphicon-plus
+    = link_to new_invoice_payment_path(@invoice), class: 'btn add-button-padding' do
+      %i.material-icons.left add
+      NEW PAYMENT
+  - else
+    %p There are no payments under this invoice yet.
+    - if @invoice.started?
+      = link_to new_invoice_payment_path(@invoice), class: 'btn add-button-padding' do
+        %i.material-icons.left add
         NEW PAYMENT

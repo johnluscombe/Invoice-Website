@@ -17,8 +17,8 @@
 @import "materialize";
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
-.no-box-shadow {
-  box-shadow: none;
+.add-button-padding {
+  padding-left: 15px;
 }
 
 .brand {
@@ -32,6 +32,26 @@
 .breadcrumb:before {
   color: #9E9E9E;
   font-size: 12px;
+}
+
+.border-test {
+  border: 1px solid black;
+}
+
+.edit-delete-cell {
+  width: 115px;
+}
+
+.edit-delete-icons {
+  min-width: 115px;
+}
+
+.emphasized {
+  font-size: 24px;
+}
+
+.fill-100 {
+  width: 100%;
 }
 
 .login-container {
@@ -48,8 +68,16 @@ nav.main {
   background-color: #222;
 }
 
+.no-box-shadow {
+  box-shadow: none;
+}
+
 .no-margin-bottom {
   margin-bottom: 0;
+}
+
+.payment-cell {
+  width: 100px;
 }
 
 .pointer {
@@ -58,6 +86,10 @@ nav.main {
 
 .space-between {
   justify-content: space-between;
+}
+
+table.bordered > tbody:first-child {
+  border-top: 1px solid #d0d0d0;
 }
 
 @keyframes spin {

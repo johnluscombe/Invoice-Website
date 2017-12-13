@@ -13,23 +13,25 @@
       %h4 Submitted Invoices
     - else
       - if @user.fullname.nil? or @user.fullname == ''
-        %h4= "Invoices for #{@user.name}"
+        %h4= @user.name
       - else
-        %h4= "Invoices for #{@user.fullname}"
+        %h4= @user.fullname
   - else
     %h4 Invoices
   %br
   - if (@user and @user.invoices.count > 0) or (@invoices.count > 0 and (@all or @submitted))
     - if @user
-      = link_to new_user_invoice_path(@user), class: 'btn-floating btn-large green' do
-        %i.material-icons add
+      = link_to new_user_invoice_path(@user), class: 'btn add-button-padding' do
+        %i.material-icons.left add
+        New Invoice
     %br
     %br
     = render @invoices
   - elsif @user
     %p You do not have any invoices yet.
-    = link_to new_user_invoice_path(@user), class: 'btn-floating btn-large green' do
-      %i.material-icons add
+    = link_to new_user_invoice_path(@user), class: 'btn add-button-padding' do
+      %i.material-icons.left add
+      New Invoice
   - elsif @submitted
     %p There are no submitted invoices.
   - elsif @all
