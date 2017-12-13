@@ -20,11 +20,12 @@
     %h4 Invoices
   %br
   - if (@user and @user.invoices.count > 0) or (@invoices.count > 0 and (@all or @submitted))
-    = render @invoices
-    %br
     - if @user
       = link_to new_user_invoice_path(@user), class: 'btn-floating btn-large green' do
         %i.material-icons add
+    %br
+    %br
+    = render @invoices
   - elsif @user
     %p You do not have any invoices yet.
     = link_to new_user_invoice_path(@user), class: 'btn-floating btn-large green' do

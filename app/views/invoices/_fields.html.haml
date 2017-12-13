@@ -1,55 +1,47 @@
 .row
   .col.s12
-    .row
-      .input-field.col.s6
-        %i.material-icons.prefix date_range
-        - if @invoice.start_date.nil?
-          = f.label :start_date_as_string, 'Start Date'
-        - else
-          = f.label :start_date_as_string, 'Start Date', class: 'active'
+    .row.valign-wrapper.no-margin-bottom
+      .col.s2.grey-text
+        Start Date
+      .input-field.col.s10
         = f.text_field :start_date_as_string, class: 'datepicker'
-      .input-field.col.s6
-        - if @invoice.end_date.nil?
-          = f.label :end_date_as_string, 'End Date'
-        - else
-          = f.label :end_date_as_string, 'End Date', class: 'active'
+    .row.valign-wrapper.no-margin-bottom
+      .col.s2.grey-text
+        End Date
+      .input-field.col.s10
         = f.text_field :end_date_as_string, class: 'datepicker'
-      - if current_user.manager?
-        .input-field.col.s4
-          %i.material-icons.prefix info_outline
-          = f.label :status, class: 'active'
+    - if current_user.manager?
+      .row.valign-wrapper.no-margin-bottom
+        .col.s2.grey-text
+          Status
+        .input-field.col.s10
           = f.select :status, [%w(Started Started), %w(Submitted Submitted), %w(Paid Paid)], {}
-        .input-field.col.s4
-          - if @invoice.check_no.nil?
-            = f.label :check_no
-          - else
-            = f.label :check_no, class: 'active'
+      .row.valign-wrapper.no-margin-bottom
+        .col.s2.grey-text
+          Check No.
+        .input-field.col.s10
           = f.text_field :check_no
-        .input-field.col.s4
-          - if @invoice.transfer_date.nil?
-            = f.label :transfer_date_as_string, 'Transfer Date'
-          - else
-            = f.label :transfer_date_as_string, 'Transfer Date', class: 'active'
+      .row.valign-wrapper.no-margin-bottom
+        .col.s2.grey-text
+          Transfer Date
+        .input-field.col.s10
           = f.text_field :transfer_date_as_string, class: 'datepicker'
-    .row
-      - if current_user.manager?
-        %p
-          %strong Overrides
-        .input-field.col.s4
-          - if @invoice.hours.nil?
-            = f.label :hours, value: number_with_precision(@invoice.hours, :precision => 2)
-          - else
-            = f.label :hours, class: 'active', value: number_with_precision(@invoice.hours, :precision => 2)
+    - if current_user.manager?
+      %br
+      %h5
+        %strong Overrides
+      .row.valign-wrapper.no-margin-bottom
+        .col.s2.grey-text
+          Hours
+        .input-field.col.s10
           = f.text_field :hours
-        .input-field.col.s4
-          - if @invoice.rate.nil?
-            = f.label :rate, value: number_with_precision(@invoice.rate, :precision => 2)
-          - else
-            = f.label :rate, class: 'active', value: number_with_precision(@invoice.rate, :precision => 2)
+      .row.valign-wrapper.no-margin-bottom
+        .col.s2.grey-text
+          Rate
+        .input-field.col.s10
           = f.text_field :rate
-        .input-field.col.s4
-          - if @invoice.net_pay.nil?
-            = f.label :net_pay, value: number_with_precision(@invoice.net_pay, :precision => 2)
-          - else
-            = f.label :net_pay, class: 'active', value: number_with_precision(@invoice.net_pay, :precision => 2)
+      .row.valign-wrapper.no-margin-bottom
+        .col.s2.grey-text
+          Net Pay
+        .input-field.col.s10
           = f.text_field :net_pay
