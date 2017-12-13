@@ -1,0 +1,14 @@
+%tr
+  %td.right-align{ :colspan => 2 }
+    %strong
+      Total:
+
+  - if @invoice.hours.nil?
+    %td
+      %strong= sprintf('%.2f', @invoice.payments.sum(:hours))
+  - else
+    %td.override
+      %strong= sprintf('%.2f', @invoice.hours)
+
+  %td.center-align.emphasized{ :colspan => 2 }
+    %strong= "$ #{ @invoice.get_net_pay }"

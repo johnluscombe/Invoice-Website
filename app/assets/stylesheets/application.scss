@@ -54,6 +54,10 @@
   width: 100%;
 }
 
+i.left {
+  margin-right: 10px;
+}
+
 .login-container {
   display: inline-block;
   padding: 32px 48px 0 48px;
@@ -88,7 +92,7 @@ nav.main {
   justify-content: space-between;
 }
 
-table.bordered > tbody:first-child {
+table.bordered > tbody > tr:first-child td {
   border-top: 1px solid #d0d0d0;
 }
 

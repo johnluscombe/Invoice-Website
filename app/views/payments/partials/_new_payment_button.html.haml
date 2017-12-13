@@ -1,0 +1,5 @@
+- if @invoice.started?
+  %br
+  = link_to new_invoice_payment_path(@invoice), class: 'btn add-button-padding' do
+    %i.material-icons.left add
+    NEW PAYMENT

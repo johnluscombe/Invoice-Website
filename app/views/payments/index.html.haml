@@ -1,45 +1,24 @@
-.container
-  .row
-    %nav.transparent.no-box-shadow
-      .nav-wrapper
-        .col.s12
-          - if current_user.manager?
-            = link_to 'Users', users_path, class: 'breadcrumb light-blue-text'
-          = link_to 'Invoices', user_invoices_path(@user), class: 'breadcrumb light-blue-text'
-          %span.breadcrumb.grey-text.text-darken-4 Payments
-
-  - if !@invoice.start_date.nil?
-    %h4= @invoice.start_date.strftime('%m/%d/%Y')
-  - else
-    %h4 Payments
-  %br
-
-  - if @invoice.payments.count > 0
-    %table.bordered
-      = render @payments
-      %tr
-        %td.right-align{ :colspan => 2 }
-          %strong
-            Total:
-
-        - if @invoice.hours.nil?
-          %td
-            %strong= sprintf('%.2f', @invoice.payments.sum(:hours))
-        - else
-          %td.override
-            %strong= sprintf('%.2f', @invoice.hours)
-
-        %td.center-align.emphasized{ :colspan => 2 }
-          %strong= "$ #{ @invoice.get_net_pay }"
-
-  %br
-  - if @invoice.started?
-    = link_to new_invoice_payment_path(@invoice), class: 'btn add-button-padding' do
-      %i.material-icons.left add
-      NEW PAYMENT
-  - else
-    %p There are no payments under this invoice yet.
-    - if @invoice.started?
-      = link_to new_invoice_payment_path(@invoice), class: 'btn add-button-padding' do
-        %i.material-icons.left add
-        NEW PAYMENT
+.row
+  %nav.transparent.no-box-shadow
+    .nav-wrapper
+      .col.s12
+        - if current_user.manager?
+          = link_to 'Users', users_path, class: 'breadcrumb light-blue-text'
+        = link_to 'Invoices', user_invoices_path(@user), class: 'breadcrumb light-blue-text'
+        %span.breadcrumb.grey-text.text-darken-4 Payments
+.row
+  .col.s3
+    = render 'payments/partials/actions_card'
+  .col.s9
+    %br
+    - if @invoice.payments.count > 0
+      %table.bordered
+        = render @payments
+        = render 'payments/partials/total_row'
+      = render 'payments/partials/new_payment_button'
+    - else
+      = render 'payments/partials/new_payment_button'
+    %br
+    %br
+    %br
+    = render 'payments/partials/status'

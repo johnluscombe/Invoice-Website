@@ -1,0 +1,25 @@
+%h5 Status
+%br
+%table.bordered
+  %col{ width: '25%' }
+  %col{ width: '75%' }
+  - if @invoice.paid?
+    %tr
+      %td Status
+      %td.green-text= @invoice.status
+  - if !@invoice.start_date.nil?
+    %tr
+      %td Start Date
+      %td= @invoice.start_date
+  - if !@invoice.end_date.nil?
+    %tr
+      %td End Date
+      %td= @invoice.end_date
+  - if !@invoice.transfer_date.nil?
+    %tr
+      %td Transfer Date
+      %td= @invoice.transfer_date
+  - if !@invoice.check_no.nil?
+    %tr
+      %td Check No
+      %td= @invoice.check_no
