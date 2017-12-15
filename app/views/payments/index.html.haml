@@ -7,9 +7,7 @@
         = link_to 'Invoices', user_invoices_path(@user), class: 'breadcrumb light-blue-text'
         %span.breadcrumb.grey-text.text-darken-4 Payments
 .row
-  .col.s3
-    = render 'payments/partials/actions_card'
-  .col.s9
+  .col.s12.l9.push-l3
     %br
     - if @invoice.payments.count > 0
       %table.bordered
@@ -23,3 +21,6 @@
     %br
     %br
     = render 'payments/partials/status'
+    %br
+  .col.s12.l3.pull-l9
+    = render 'payments/partials/actions_card'

@@ -8,9 +8,7 @@
 - else
   %br
 .row
-  .col.s3
-    = render 'shared/view_card'
-  .col.s9
+  .col.s12.l9.push-l3
     - if current_user.manager?
       - if @all
         %h4 All Invoices
@@ -41,5 +39,5 @@
       %p There are no submitted invoices.
     - elsif @all
       %p There are no invoices.
-    %br
-    %br
+  .col.s12.l3.pull-l9
+    = render 'shared/view_card'

@@ -1,8 +1,6 @@
 .row
   %br
-  .col.s3
-    = render 'shared/view_card'
-  .col.s9
+  .col.s12.l9.push-l3
     - if current_user.admin?
       %h4 Users
     - else
@@ -14,12 +12,18 @@
         = link_to new_user_path, class: 'btn add-button-padding' do
           %i.material-icons.left add
           New User
+        %br
+        %br
     - else
       - if current_user.admin?
         %p There are no employees yet.
         = link_to new_user_path, class: 'btn add-button-padding' do
           %i.material-icons.left add
           New User
+        %br
+        %br
       - else
         %p You do not have any employees yet.
         %p Please contact your administrator to add employees.
+  .col.s12.l3.pull-l9
+    = render 'shared/view_card'
