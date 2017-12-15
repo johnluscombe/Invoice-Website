@@ -9,12 +9,10 @@
           %span.breadcrumb.grey-text.text-darken-4 Edit
   %h4 Edit Invoice
   %br
-  = render 'shared/errors', object: @invoice
-
   = form_for @invoice do |form|
     = render partial: 'fields', locals: { f: form }
     %br
-    = form.submit 'UPDATE INVOICE', :class => 'btn btn-success'
-    = link_to 'CANCEL', user_invoices_path(@user), class: 'btn btn-danger btn-outline'
+    = form.submit 'SAVE', :class => 'btn'
+    = link_to 'CANCEL', user_invoices_path(@user), class: 'btn'
   %br
   %br

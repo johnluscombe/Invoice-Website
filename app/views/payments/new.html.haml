@@ -10,12 +10,10 @@
           %span.breadcrumb.grey-text.text-darken-4 New
   %h4 New Payment
   %br
-  = render 'shared/errors', object: @payment
-
   = form_for [@invoice, @payment] do |form|
     = render partial: 'fields', locals: {f: form }
     %br
-    = form.submit 'CREATE NEW PAYMENT', :class => 'btn btn-success'
+    = form.submit 'SAVE', :class => 'btn'
     = link_to 'CANCEL', invoice_payments_path(@invoice), class: 'btn btn-danger btn-outline'
   %br
   %br

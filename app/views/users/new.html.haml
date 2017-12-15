@@ -9,12 +9,10 @@
 
   %h4 New User
   %br
-  = render 'shared/errors', object: @user
-
   = form_for @user do |form|
     = render partial: 'fields', locals: {f: form }
     %br
-    = form.submit 'CREATE NEW USER', :class => 'btn btn-success'
-    = link_to 'CANCEL', users_path(@user), class: 'btn btn-danger btn-outline'
+    = form.submit 'SAVE', :class => 'btn'
+    = link_to 'CANCEL', users_path(@user), class: 'btn'
   %br
   %bf

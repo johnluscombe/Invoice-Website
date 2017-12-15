@@ -23,7 +23,7 @@ class LoginsController < ApplicationController
         end
       end
     else
-      flash.now[:danger] = 'Invalid username or password'
+      flash.now[:invalid] = 'Invalid username or password'
       render 'new'
     end
   end

@@ -17,7 +17,11 @@
       .col.s2.grey-text
         Hours
       .input-field.col.s10
-        = f.text_field :hours
+        - if @payment.errors[:hours].length > 0
+          = f.text_field :hours, class: 'invalid'
+          = f.label :hours, '&nbsp;'.html_safe, class: 'fill-100', 'data-error' => 'Invalid amount of hours'
+        - else
+          = f.text_field :hours
     - if current_user.manager?
       %br
       %h5

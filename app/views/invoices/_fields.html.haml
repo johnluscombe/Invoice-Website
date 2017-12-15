@@ -20,7 +20,11 @@
         .col.s2.grey-text
           Check No.
         .input-field.col.s10
-          = f.text_field :check_no
+          - if @invoice.errors[:check_no].length > 0
+            = f.text_field :check_no, class: 'invalid'
+            = f.label :check_no, '&nbsp;'.html_safe, class: 'fill-100', 'data-error' => 'Invalid check number'
+          - else
+            = f.text_field :check_no
       .row.valign-wrapper.no-margin-bottom
         .col.s2.grey-text
           Transfer Date
@@ -34,14 +38,26 @@
         .col.s2.grey-text
           Hours
         .input-field.col.s10
-          = f.text_field :hours
+          - if @invoice.errors[:hours].length > 0
+            = f.text_field :hours, class: 'invalid'
+            = f.label :hours, '&nbsp;'.html_safe, class: 'fill-100', 'data-error' => 'Invalid amount of hours'
+          - else
+            = f.text_field :hours
       .row.valign-wrapper.no-margin-bottom
         .col.s2.grey-text
           Rate
         .input-field.col.s10
-          = f.text_field :rate
+          - if @invoice.errors[:rate].length > 0
+            = f.text_field :rate, class: 'invalid'
+            = f.label :rate, '&nbsp;'.html_safe, class: 'fill-100', 'data-error' => 'Invalid rate'
+          - else
+            = f.text_field :rate
       .row.valign-wrapper.no-margin-bottom
         .col.s2.grey-text
           Net Pay
         .input-field.col.s10
-          = f.text_field :net_pay
+          - if @invoice.errors[:net_pay].length > 0
+            = f.text_field :net_pay, class: 'invalid'
+            = f.label :net_pay, '&nbsp;'.html_safe, class: 'fill-100', 'data-error' => 'Invalid net pay'
+          - else
+            = f.text_field :net_pay

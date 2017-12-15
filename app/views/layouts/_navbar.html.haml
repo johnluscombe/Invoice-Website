@@ -9,9 +9,25 @@
             = link_to image_tag('logo.png', :class => 'brand'), user_invoices_path(current_user), :class => 'brand-logo left'
           - else
             = link_to image_tag('logo.png', :class => 'brand'), root_path, :class => 'brand-logo left'
-          %ul#nav-mobile.right.hide-on-med-and-down
-            - if logged_in?
+          - if logged_in?
+            %ul.right
               %li
-                = link_to logout_path, class: 'valign-wrapper', method: :delete do
-                  %i.material-icons.nav-icons exit_to_app
-                  &nbsp; Log Out
+                - if current_user.fullname.nil? or current_user.fullname == ''
+                  %a.dropdown-button.valign-wrapper{ href: '#', 'data-activates' => 'user-dropdown' }
+                    = current_user.name
+                    %i.material-icons.nav-icons arrow_drop_down
+                - else
+                  %a.dropdown-button.valign-wrapper{ href: '#', 'data-activates' => 'user-dropdown' }
+                    = current_user.fullname
+                    %i.material-icons.nav-icons arrow_drop_down
+
+  - if logged_in?
+    %ul#user-dropdown.dropdown-content
+      %li
+        = link_to edit_user_path(current_user) do
+          %i.material-icons edit
+          Edit Profile
+      %li
+        = link_to logout_path, method: :delete do
+          %i.material-icons exit_to_app
+          Log Out
