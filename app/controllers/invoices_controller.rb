@@ -6,32 +6,34 @@ class InvoicesController < ApplicationController
     @user = User.find(params[:user_id])
     @invoices = @user.invoices.ordered
     if @user.manager?
-      flash[:warning] = 'User does not get paid hourly'
+      flash[:error] = 'User does not get paid hourly'
       redirect_to users_path
     end
   end
 
   def all
-    ensure_admin
-    @invoices = Invoice.all.ordered
-    @all = true
-    render 'index'
+    if ensure_admin
+      @invoices = Invoice.all.ordered
+      @all = true
+      render 'index'
+    end
   end
 
   def submitted
-    ensure_manager
-    @invoices = Invoice.submitted.ordered
-    @submitted = true
-    render 'index'
+    if ensure_manager
+      @invoices = Invoice.submitted.ordered
+      @submitted = true
+      render 'index'
+    end
   end
 
   def new
     @user = User.find(params[:user_id])
     if @user.rate.nil?
       if @user.manager?
-        flash[:danger] = 'You have not set an hourly rate for this employee.'
+        flash[:error] = 'You have not set an hourly rate for this employee.'
       else
-        flash[:danger] = 'You have not been assigned an hourly rate. Please contact your manager.'
+        flash[:error] = 'You have not been assigned an hourly rate. Please contact your manager.'
       end
       redirect_to user_invoices_path(@user)
     else
@@ -115,26 +117,28 @@ class InvoicesController < ApplicationController
       @user = @invoice.user
     end
     unless current_user.manager? or current_user?(@user)
-      flash[:danger] = 'You do not have permission to view this page. Please contact your manager.'
+      flash[:error] = 'You do not have permission to perform this action'
       redirect
     end
   rescue
-    flash[:danger] = 'Unable to find invoice'
+    flash[:error] = 'Unable to find invoice'
     redirect
   end
 
   def ensure_manager
     unless current_user.manager?
-      flash[:danger] = 'You do not have permission to perform this action. Please contact your manager.'
+      flash[:error] = 'You do not have permission to perform this action'
       redirect_to user_invoices_path(current_user)
     end
+    current_user.manager?
   end
 
   def ensure_admin
     unless current_user.admin?
-      flash[:danger] = 'You do not have permission to perform this action. Please contact your administrator.'
+      flash[:error] = 'You do not have permission to perform this action'
       redirect
     end
+    current_user.admin?
   end
 
   def redirect

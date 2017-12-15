@@ -69,11 +69,11 @@ class PaymentsController < ApplicationController
       @user = @invoice.user
     end
     unless current_user.manager? or current_user?(@user)
-      flash[:danger] = 'You do not have permission to view this page. Please contact your manager.'
+      flash[:error] = 'You do not have permission to perform this action'
       redirect
     end
   rescue
-    flash[:danger] = 'Unable to find payment'
+    flash[:error] = 'Unable to find payment'
     redirect
   end
 

@@ -17,7 +17,6 @@ class UsersController < ApplicationController
     if User.create_user(@user)
       redirect_to users_path
     else
-      flash.now[:danger] = 'Unable to create new user'
       render 'new'
     end
   end
@@ -25,7 +24,7 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     if current_user.first_time
-      flash.now[:info] = 'Some additional information is required'
+      flash.now[:error] = 'Please update your password'
     end
   end
 
@@ -34,18 +33,13 @@ class UsersController < ApplicationController
     if @user.update_user(user_params, current_user?(@user))
       redirect
     else
-      flash.now[:danger] = 'Unable to update profile'
       render 'edit'
     end
   end
 
   def destroy
     @user = User.find(params[:id])
-    if current_user?(@user)
-      flash[:danger] = 'You cannot delete yourself'
-    else
-      @user.destroy
-    end
+    @user.destroy unless current_user?(@user)
     redirect_to users_path
   end
 
@@ -63,24 +57,24 @@ class UsersController < ApplicationController
   def ensure_can_edit
     @user = User.find(params[:id])
     unless current_user?(@user) or current_user.admin? or current_user.superior(@user)
-      flash[:danger] = 'You do not have permission to perform this action'
+      flash[:error] = 'You do not have permission to perform this action'
       redirect
     end
   rescue
-    flash[:danger] = 'Unable to find user'
+    flash[:error] = 'Unable to find user'
     redirect
   end
 
   def ensure_manager
     unless current_user.manager?
-      flash[:danger] = 'You do not have permission to perform this action'
+      flash[:error] = 'You do not have permission to perform this action'
       redirect_to user_invoices_path(current_user)
     end
   end
 
   def ensure_admin
     unless current_user.admin?
-      flash[:danger] = 'You do not have permission to perform this action'
+      flash[:error] = 'You do not have permission to perform this action'
       redirect
     end
   end

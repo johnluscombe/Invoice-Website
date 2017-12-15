@@ -1,11 +1,13 @@
 .container
-  .row
-    %nav.transparent.no-box-shadow
-      .nav-wrapper
-        .col.s12
-          - if current_user.manager?
+  - if current_user.manager?
+    .row
+      %nav.transparent.no-box-shadow
+        .nav-wrapper
+          .col.s12
             = link_to 'Users', users_path, class: 'breadcrumb light-blue-text'
-          %span.breadcrumb.grey-text.text-darken-4 Edit
+            %span.breadcrumb.grey-text.text-darken-4 Edit
+  - else
+    %br
 
   %h4 Edit Profile
   %br

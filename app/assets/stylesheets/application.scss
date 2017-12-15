@@ -126,6 +126,15 @@ table.bordered > tbody > tr:first-child td {
   border-top: 1px solid #d0d0d0;
 }
 
+.toast {
+  right: -50%;
+}
+
+#toast-container {
+  right: 50%;
+  top: 64px;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

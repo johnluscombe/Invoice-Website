@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Luscombe & Associates</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <%= render 'layouts/navbar' %>
+    <%= yield %>
+  </body>
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+      <% flash.each do |type, message| %>
+        Materialize.toast('<%= message %>', 10000, 'rounded');
+      <% end %>
+    });
+  <% end %>
+</html>
