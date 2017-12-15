@@ -1,0 +1,22 @@
+.card.grey.lighten-4
+  .card-content
+    %span.card-title View
+    - if current_user&.admin?
+      = link_to all_invoices_path, class: 'valign-wrapper' do
+        %i.material-icons.grey-text.text-darken-1.left language
+        All Invoices
+    - if current_user&.manager?
+      = link_to submitted_invoices_path, class: 'valign-wrapper' do
+        %i.material-icons.grey-text.text-darken-1.left arrow_forward
+        Submitted Invoices
+        - if Invoice.submitted.count > 0
+          %span.new.badge= Invoice.submitted.count
+    - elsif current_user
+      - if current_user.invoices.not_submitted.count > 0
+        = link_to invoice_payments_path(current_user.invoices.not_submitted.last), class: 'valign-wrapper' do
+          %i.material-icons.grey-text.text-darken-1.left access_time
+          Current Invoice
+      - elsif current_user.invoices.count > 0
+        = link_to invoice_payments_path(current_user.invoices.ordered.first), class: 'valign-wrapper' do
+          %i.material-icons.grey-text.text-darken-1.left access_time
+          Current Invoice

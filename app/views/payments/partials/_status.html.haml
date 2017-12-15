@@ -3,10 +3,12 @@
 %table.bordered
   %col{ width: '25%' }
   %col{ width: '75%' }
-  - if @invoice.paid?
-    %tr
-      %td Status
+  %tr
+    %td Status
+    - if @invoice.paid?
       %td.green-text= @invoice.status
+    - else
+      %td= @invoice.status
   - if !@invoice.start_date.nil?
     %tr
       %td Start Date

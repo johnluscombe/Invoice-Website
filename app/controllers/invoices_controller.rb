@@ -52,10 +52,7 @@ class InvoicesController < ApplicationController
   def submit
     @invoice = Invoice.find(params[:invoice_id])
     @user = @invoice.user
-    @invoice.submit(current_user, !current_user.manager?)
-    redirect_to :back
-  rescue
-    flash[:danger] = "The submission email cannot be sent. Please contact your administrator."
+    @invoice.submit
     redirect_to :back
   end
 
@@ -69,10 +66,7 @@ class InvoicesController < ApplicationController
   def pay
     @invoice = Invoice.find(params[:invoice_id])
     @user = @invoice.user
-    @invoice.pay(current_user)
-    redirect_to :back
-  rescue
-    flash[:danger] = "The pay confirmation email cannot be sent. Please contact your administrator."
+    @invoice.pay
     redirect_to :back
   end
 
@@ -90,7 +84,13 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @user = @invoice.user
     @invoice.destroy
-    redirect_to user_invoices_path(@user)
+    if @all
+      redirect_to all_invoices_path
+    elsif @submitted
+      redirect_to submitted_invoices_path
+    else
+      redirect_to user_invoices_path(@user)
+    end
   end
 
   private

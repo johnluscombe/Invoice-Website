@@ -1,40 +1,45 @@
-.container
+- if current_user.manager?
   .row
     %nav.transparent.no-box-shadow
       .nav-wrapper
         .col.s12
-          - if current_user.manager?
-            = link_to 'Users', users_path, class: 'breadcrumb light-blue-text'
+          = link_to 'Users', users_path, class: 'breadcrumb light-blue-text'
           %span.breadcrumb.grey-text.text-darken-4 Invoices
-  - if current_user.manager?
-    - if @all
-      %h4 All Invoices
-    - elsif @submitted
-      %h4 Submitted Invoices
-    - else
-      - if @user.fullname.nil? or @user.fullname == ''
-        %h4= @user.name
-      - else
-        %h4= @user.fullname
-  - else
-    %h4 Invoices
+- else
   %br
-  - if (@user and @user.invoices.count > 0) or (@invoices.count > 0 and (@all or @submitted))
-    - if @user
+.row
+  .col.s3
+    = render 'shared/view_card'
+  .col.s9
+    - if current_user.manager?
+      - if @all
+        %h4 All Invoices
+      - elsif @submitted
+        %h4 Submitted Invoices
+      - else
+        - if @user.fullname.nil? or @user.fullname == ''
+          %h4= @user.name
+        - else
+          %h4= @user.fullname
+    - else
+      %h4 Invoices
+    %br
+    - if (@user and @user.invoices.count > 0) or (@invoices.count > 0 and (@all or @submitted))
+      - if @user
+        = link_to new_user_invoice_path(@user), class: 'btn add-button-padding' do
+          %i.material-icons.left add
+          New Invoice
+        %br
+        %br
+      = render @invoices
+    - elsif @user
+      %p You do not have any invoices yet.
       = link_to new_user_invoice_path(@user), class: 'btn add-button-padding' do
         %i.material-icons.left add
         New Invoice
+    - elsif @submitted
+      %p There are no submitted invoices.
+    - elsif @all
+      %p There are no invoices.
     %br
     %br
-    = render @invoices
-  - elsif @user
-    %p You do not have any invoices yet.
-    = link_to new_user_invoice_path(@user), class: 'btn add-button-padding' do
-      %i.material-icons.left add
-      New Invoice
-  - elsif @submitted
-    %p There are no submitted invoices.
-  - elsif @all
-    %p There are no invoices.
-  %br
-  %br

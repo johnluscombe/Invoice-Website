@@ -17,7 +17,8 @@
     %td.payment-cell $ 0.00
 
   %td.edit-delete-cell.right-align
-    = link_to payment_path(payment), class: 'right', method: :delete, data: { confirm: 'Are you sure?' } do
-      %i.material-icons.grey-text.text-darken-1 delete
-    = link_to edit_payment_path(payment), class: 'right' do
-      %i.material-icons.grey-text.text-darken-1 edit
+    - if @invoice.started?
+      = link_to payment_path(payment), class: 'right', method: :delete, data: { confirm: 'Are you sure?' } do
+        %i.material-icons.grey-text.text-darken-1 delete
+      = link_to edit_payment_path(payment), class: 'right' do
+        %i.material-icons.grey-text.text-darken-1 edit

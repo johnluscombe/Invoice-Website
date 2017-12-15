@@ -67,36 +67,24 @@ class Invoice < ActiveRecord::Base
     self.transfer_date = Chronic.parse(string)
   end
 
-  def submit(current_user, send_email)
+  def submit
     if self.end_date.nil?
       self.update(:end_date => Date.today, :status => 'Submitted')
     else
       self.update(:status => 'Submitted')
     end
-
-    #if send_email
-    #  User.managers.all.each do |user|
-    #    unless user.email.nil? or user.email == ''
-    #      SubmitMailer.submit_email(current_user, user, self).deliver_now
-    #    end
-    #  end
-    #end
   end
 
   def reset
     self.update(:status => 'Started')
   end
 
-  def pay(current_user)
+  def pay
     if self.transfer_date.nil?
       self.update(:transfer_date => Date.today, :status => 'Paid')
     else
       self.update(:status => 'Paid')
     end
-
-    #unless self.user.email.nil? or self.user.email == ''
-    #  PayMailer.pay_email(current_user, self.user, self).deliver_now
-    #end
   end
 
   def get_net_pay
