@@ -1,34 +1,29 @@
-%table.fields
-  %col{ :width => '100' }
-  %col{ :width => '300' }
-  %tr
-    %td.text-right= f.label 'Date'
-    - if @payment.date.nil?
-      %td= f.date_field :date_as_string, class: 'form-control', :value => Date.today
-    - else
-      %td= f.date_field :date_as_string, class: 'form-control'
-  %tr
-    %td.text-right= f.label :description
-    %td= f.text_area :description, :cols => 50, :rows => 3, class: 'form-control'
-  %tr
-    %td.text-right= f.label :hours
-    %td= f.text_field :hours, class: 'form-control'
-%br
-%table
-  %col{ :width => '100' }
-  %col{ :width => '300' }
-  - if current_user.manager?
-    %tr
-      %td.text-center{ :colspan => '2' }
+.row
+  .col.s12
+    .row.valign-wrapper.no-margin-bottom
+      .col.s2.grey-text
+        Date
+      .input-field.col.s10
+        - if @payment.date.nil?
+          = f.text_field :date_as_string, class: 'datepicker', value: Date.today.strftime('%m/%d/%Y')
+        - else
+          = f.text_field :date_as_string, class: 'datepicker'
+    .row.valign-wrapper.no-margin-bottom
+      .col.s2.grey-text
+        Description
+      .input-field.col.s10
+        = f.text_area :description, class: 'materialize-textarea'
+    .row.valign-wrapper.no-margin-bottom
+      .col.s2.grey-text
+        Hours
+      .input-field.col.s10
+        = f.text_field :hours
+    - if current_user.manager?
+      %br
+      %h5
         %strong Overrides
-%table.fields
-  %col{ :width => '100' }
-  %col{ :width => '300' }
-  - if current_user.manager?
-    %tr
-      %td.text-right= f.label :daily_rate
-      %td
-        .input-group
-          %span.input-group-addon $
-          = f.text_field :daily_rate, class: 'form-control text-right', value: number_with_precision(@payment.daily_rate, :precision => 2)
-%br
+      .row.valign-wrapper.no-margin-bottom
+        .col.s2.grey-text
+          Payment Amount
+        .input-field.col.s10
+          = f.text_field :daily_rate, value: number_with_precision(@payment.daily_rate, :precision => 2)

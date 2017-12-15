@@ -16,11 +16,6 @@
 //= require materialize
 //= require_tree .
 
-function showLoader() {
-    document.getElementById('loader').style.display = 'block';
-    document.getElementById('loader-container').style.display = 'block';
-}
-
 function redirectTo(path) {
     window.location = path;
 }

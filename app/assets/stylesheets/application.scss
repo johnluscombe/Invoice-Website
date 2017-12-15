@@ -88,6 +88,21 @@ nav.main {
   cursor: pointer;
 }
 
+#preloader {
+  display: none;
+}
+
+#preloader-container {
+  background: #555;
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.5;
+}
+
 .space-between {
   justify-content: space-between;
 }

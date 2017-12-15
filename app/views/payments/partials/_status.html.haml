@@ -10,15 +10,15 @@
   - if !@invoice.start_date.nil?
     %tr
       %td Start Date
-      %td= @invoice.start_date
+      %td= @invoice.start_date_as_string
   - if !@invoice.end_date.nil?
     %tr
       %td End Date
-      %td= @invoice.end_date
+      %td= @invoice.end_date_as_string
   - if !@invoice.transfer_date.nil?
     %tr
       %td Transfer Date
-      %td= @invoice.transfer_date
+      %td= @invoice.transfer_date_as_string
   - if !@invoice.check_no.nil?
     %tr
       %td Check No

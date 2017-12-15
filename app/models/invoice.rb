@@ -40,8 +40,9 @@ class Invoice < ActiveRecord::Base
   end
 
   def end_date_as_string
+    format = '%m/%d/%Y'
     if self.end_date
-      @end_date_as_string = self.end_date
+      @end_date_as_string = self.end_date.strftime(format)
     else
       @end_date_as_string = nil
     end
@@ -53,8 +54,9 @@ class Invoice < ActiveRecord::Base
   end
 
   def transfer_date_as_string
+    format = '%m/%d/%Y'
     if self.transfer_date
-      @transfer_date_as_string = self.transfer_date
+      @transfer_date_as_string = self.transfer_date.strftime(format)
     else
       @transfer_date_as_string = nil
     end

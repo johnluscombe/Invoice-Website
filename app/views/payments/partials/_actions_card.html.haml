@@ -2,12 +2,12 @@
   .card-content
     %span.card-title Actions
     - if @invoice.started?
-      = link_to invoice_submit_path(@invoice), method: :patch, class: 'valign-wrapper', onclick: 'showLoader()' do
+      = link_to invoice_submit_path(@invoice), method: :patch, class: 'valign-wrapper' do
         %i.material-icons.grey-text.text-darken-1.left send
         Submit Invoice
     - elsif @invoice.submitted?
       - if current_user.manager?
-        = link_to invoice_pay_path(@invoice), method: :patch, class: 'valign-wrapper', onclick: 'showLoader()' do
+        = link_to invoice_pay_path(@invoice), method: :patch, class: 'valign-wrapper' do
           %i.material-icons.grey-text.text-darken-1.left check
           Mark as Paid
       = link_to invoice_reset_path(@invoice), method: :patch, class: 'valign-wrapper' do

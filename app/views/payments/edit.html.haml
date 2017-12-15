@@ -1,9 +1,21 @@
-%h4 Edit Payment
-%br
-= render 'shared/errors', object: @payment
-
-= form_for @payment do |form|
-  = render partial: 'fields', locals: {f: form }
+.container
+  .row
+    %nav.transparent.no-box-shadow
+      .nav-wrapper
+        .col.s12
+          - if current_user.manager?
+            = link_to 'Users', users_path, class: 'breadcrumb light-blue-text'
+          = link_to 'Invoices', user_invoices_path(@user), class: 'breadcrumb light-blue-text'
+          = link_to 'Payments', invoice_payments_path(@invoice), class: 'breadcrumb light-blue-text'
+          %span.breadcrumb.grey-text.text-darken-4 Edit
+  %h4 Edit Payment
   %br
-  = form.submit 'UPDATE PAYMENT', :class => 'btn btn-success'
-  = link_to 'CANCEL', invoice_payments_path(@invoice), class: 'btn btn-danger btn-outline'
+  = render 'shared/errors', object: @payment
+
+  = form_for @payment do |form|
+    = render partial: 'fields', locals: {f: form }
+    %br
+    = form.submit 'UPDATE PAYMENT', :class => 'btn btn-success'
+    = link_to 'CANCEL', invoice_payments_path(@invoice), class: 'btn btn-danger btn-outline'
+  %br
+  %br
