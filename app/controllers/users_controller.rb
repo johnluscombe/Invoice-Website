@@ -51,7 +51,9 @@ class UsersController < ApplicationController
   end
 
   def ensure_user_logged_in
-    redirect_to login_path unless current_user
+    unless current_user
+      redirect_to login_path(redirect: request.path)
+    end
   end
 
   def ensure_can_edit

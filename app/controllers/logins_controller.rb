@@ -1,11 +1,7 @@
 class LoginsController < ApplicationController
   def new
     if current_user
-      if current_user.manager?
-        redirect_to users_path
-      else
-        redirect_to user_invoices_path(current_user)
-      end
+      redirect_to_home_for(current_user)
     end
   end
 
@@ -16,11 +12,7 @@ class LoginsController < ApplicationController
       if user.first_time
         redirect_to edit_user_path(user)
       else
-        if user.manager?
-          redirect_to users_path
-        else
-          redirect_to user_invoices_path(user)
-        end
+        redirect_to_home_for(user)
       end
     else
       flash.now[:invalid] = 'Invalid username or password'
@@ -30,6 +22,18 @@ class LoginsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to users_path
+    redirect_to login_path
+  end
+
+  private
+
+  def redirect_to_home_for(user)
+    if params[:redirect]
+      redirect_to params[:redirect]
+    elsif user.manager?
+      redirect_to users_path
+    else
+      redirect_to user_invoices_path(user)
+    end
   end
 end

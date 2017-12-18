@@ -67,24 +67,27 @@ class Invoice < ActiveRecord::Base
     self.transfer_date = Chronic.parse(string)
   end
 
-  def submit
+  def submit(submitter, body)
     if self.end_date.nil?
       self.update(:end_date => Date.today, :status => 'Submitted')
     else
       self.update(:status => 'Submitted')
     end
+    send_submit_emails(submitter, body)
   end
 
   def reset
     self.update(:status => 'Started')
   end
 
-  def pay
+  def pay(payer, body)
     if self.transfer_date.nil?
       self.update(:transfer_date => Date.today, :status => 'Paid')
     else
       self.update(:status => 'Paid')
     end
+    subject = get_pay_subject(payer)
+    send_email(self.user, subject, body)
   end
 
   def get_net_pay
@@ -106,6 +109,59 @@ class Invoice < ActiveRecord::Base
       end
     else
       sprintf('%.2f', self.net_pay)
+    end
+  end
+
+  private
+
+  def send_submit_emails(submitter, body)
+    if submitter.employee?
+      User.managers.each do |recipient|
+        subject = get_submit_subject(submitter)
+        send_email(recipient, subject, body)
+      end
+    end
+  end
+
+  def send_email(recipient, subject, body)
+    if recipient.email
+      ses = Aws::SES::Client.new(region: 'us-east-1',
+                                 access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+                                 secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'])
+      ses.send_email({
+        destination: {
+          to_addresses: [ recipient.email ]
+        },
+        message: {
+          body: {
+            html: {
+              charset: 'UTF-8',
+              data: body
+            }
+          },
+          subject: {
+            charset: 'UTF-8',
+            data: subject
+          }
+        },
+        source: 'Luscombe & Associates <luscombeandassociates@gmail.com>'
+      })
+    end
+  end
+
+  def get_submit_subject(submitter)
+    if submitter.fullname.nil?
+      "#{submitter.name} submitted an invoice for $#{self.get_net_pay}"
+    else
+      "#{submitter.fullname} submitted an invoice for $#{self.get_net_pay}"
+    end
+  end
+
+  def get_pay_subject(payer)
+    if payer.fullname.nil?
+      "#{payer.name} paid your invoice for $#{self.get_net_pay}"
+    else
+      "#{payer.fullname} paid your invoice for $#{self.get_net_pay}"
     end
   end
 end

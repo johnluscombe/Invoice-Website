@@ -17,3 +17,5 @@
       = link_to invoice_reset_path(@invoice), method: :patch, class: 'valign-wrapper' do
         %i.material-icons.grey-text.text-darken-1.left refresh
         Reset Invoice
+    - else
+      %p.grey-text.text-darken-1 No actions available

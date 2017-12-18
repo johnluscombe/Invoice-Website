@@ -1,0 +1,30 @@
+!!!
+%html
+  %body
+    %link{rel:'stylesheet', href:'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css'}
+  %head
+    .container
+      - if submitter.fullname.nil?
+        %h5.center-align= "#{submitter.name} submitted an invoice"
+      - else
+        %h5.center-align= "#{submitter.fullname} submitted an invoice"
+      %br
+
+      %table.bordered
+        %col{ width: '25%' }
+        %col{ width: '75%' }
+        - if !invoice.start_date.nil?
+          %tr
+            %td Start Date
+            %td= invoice.start_date_as_string
+        - if !invoice.end_date.nil?
+          %tr
+            %td End Date
+            %td= invoice.end_date_as_string
+        %tr
+          %td Net Pay
+          %td= number_to_currency(invoice.get_net_pay)
+      %br
+
+      .row.center-align
+        = link_to 'View Invoice', invoice_payments_url(invoice), class: 'btn btn-large'

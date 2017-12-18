@@ -55,7 +55,7 @@ class PaymentsController < ApplicationController
 
   def ensure_user_logged_in
     unless current_user
-      redirect_to login_path
+      redirect_to login_path(redirect: request.path)
     end
   end
 

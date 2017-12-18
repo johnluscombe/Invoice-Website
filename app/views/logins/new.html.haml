@@ -9,6 +9,7 @@
     - flash.each do |type, message|
       %p.left-align.red-text= message
     = form_tag logins_path, class: 'col s12' do
+      = hidden_field_tag :redirect, params[:redirect]
       .row
         = text_field_tag :username, params[:username], placeholder: 'Username'
       .row

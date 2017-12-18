@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
     self.profile >= 2
   end
 
+  def self.managers
+    User.where(profile: 2)
+  end
+
   def admin?
     self.profile == 3
   end

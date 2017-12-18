@@ -54,7 +54,11 @@ class InvoicesController < ApplicationController
   def submit
     @invoice = Invoice.find(params[:invoice_id])
     @user = @invoice.user
-    @invoice.submit
+    body = render_to_string partial: 'mailers/submit', locals: {submitter: current_user, invoice: @invoice}
+    @invoice.submit(current_user, body)
+    redirect_to :back
+  rescue
+    flash[:error] = 'Email failed to send'
     redirect_to :back
   end
 
@@ -68,7 +72,11 @@ class InvoicesController < ApplicationController
   def pay
     @invoice = Invoice.find(params[:invoice_id])
     @user = @invoice.user
-    @invoice.pay
+    body = render_to_string partial: 'mailers/pay', locals: {payer: current_user, invoice: @invoice}
+    @invoice.pay(current_user, body)
+    redirect_to :back
+  rescue
+    flash[:error] = 'Email failed to send'
     redirect_to :back
   end
 
@@ -105,7 +113,7 @@ class InvoicesController < ApplicationController
 
   def ensure_user_logged_in
     unless current_user
-      redirect_to login_path
+      redirect_to login_path(redirect: request.path)
     end
   end
 
