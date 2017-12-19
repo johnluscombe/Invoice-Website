@@ -65,9 +65,7 @@ i.left {
 }
 
 .login-container {
-  display: inline-block;
   padding: 32px 48px 0 48px;
-  width: 400px;
 }
 
 .material-icons.nav-icons {
@@ -138,4 +136,11 @@ table.bordered > tbody > tr:first-child td {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@media (min-width: 992px) {
+  .login-container {
+    display: inline-block;
+    width: 400px;
+  }
 }

@@ -41,3 +41,5 @@
       %p There are no invoices.
   .col.s12.l3.pull-l9
     = render 'shared/view_card'
+    - if current_user.admin?
+      = render 'shared/administration'

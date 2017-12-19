@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622013731) do
+ActiveRecord::Schema.define(version: 20171219024630) do
+
+  create_table "blacklist_ip_addresses", force: :cascade do |t|
+    t.string "begin_ip"
+    t.string "end_ip"
+  end
 
   create_table "invoices", force: :cascade do |t|
     t.date     "start_date"
@@ -52,6 +57,11 @@ ActiveRecord::Schema.define(version: 20160622013731) do
     t.string   "fullname"
     t.boolean  "first_time",      default: true
     t.integer  "profile",         default: 1
+  end
+
+  create_table "whitelist_ip_addresses", force: :cascade do |t|
+    t.string "begin_ip"
+    t.string "end_ip"
   end
 
 end
