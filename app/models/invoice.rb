@@ -144,7 +144,7 @@ class Invoice < ActiveRecord::Base
             data: subject
           }
         },
-        source: 'Luscombe & Associates <luscombeandassociates@gmail.com>'
+        source: "#{ENV['SOURCE_EMAIL_DISPLAY_NAME']} <#{ENV['SOURCE_EMAIL']}>"
       })
     end
   end
