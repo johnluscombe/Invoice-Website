@@ -57,8 +57,7 @@ class InvoicesController < ApplicationController
     body = render_to_string partial: 'mailers/submit', locals: {submitter: current_user, invoice: @invoice}
     @invoice.submit(current_user, body)
     redirect_to :back
-  rescue Exception => e
-    puts e
+  rescue
     flash[:error] = 'Email failed to send'
     redirect_to :back
   end
