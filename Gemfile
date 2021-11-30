@@ -10,7 +10,7 @@ group :development do
 end
 
 group :production do
-  gem 'pg', '1.2.3'
+  gem 'pg', '0.21.0'
 end
 
 gem 'aws-sdk-ses', '1.43.0'
