@@ -14,7 +14,7 @@ group :production do
 end
 
 gem 'aws-sdk-ses', '1.43.0'
-gem 'bcrypt', '3.1.7'
+gem 'bcrypt', '3.1.16'
 gem 'bigdecimal', '1.3.5'
 gem 'chronic', '0.10.2'
 gem 'ffi', '1.15.4'
