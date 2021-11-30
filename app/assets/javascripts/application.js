@@ -30,6 +30,9 @@ $(document).on('turbolinks:load', function() {
         closeOnSelect: false, // Close upon selecting a date,
         format: 'mm/dd/yyyy'
     });
+    $('.datepicker').on('mousedown', function preventClosing(event) {
+        event.preventDefault();
+      });
     $(".dropdown-button").dropdown();
     $('select').material_select();
 });

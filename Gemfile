@@ -1,31 +1,31 @@
 source 'https://rubygems.org'
 
 ruby '2.5.1'
-gem 'rails', '4.2.10'
+gem 'rails', '4.2.11.3'
 
 group :development do
-  gem 'pry-rails'
-  gem 'spring'
-  gem 'sqlite3'
+  gem 'pry-rails', '0.3.9'
+  gem 'spring', '2.1.1'
+  gem 'sqlite3', '1.3.13'
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg', '1.2.3'
 end
 
-gem 'aws-sdk-ses'
-gem 'bcrypt', '~> 3.1.7'
-gem 'chronic'
-gem 'haml'
-gem 'jquery-rails'
-gem 'materialize-sass'
-gem 'turbolinks'
-gem 'uglifier', '>= 1.3.0'
-gem 'sass-rails', '~> 5.0'
-gem 'seed_dump'
-
-gem 'sprockets', '>= 3.7.2'
-gem 'ffi', '>= 1.9.24'
-gem 'nokogiri', '>= 1.8.2'
-gem 'rails-html-sanitizer', '>= 1.0.4'
-gem 'loofah', '>= 2.2.3'
+gem 'aws-sdk-ses', '1.43.0'
+gem 'bcrypt', '3.1.7'
+gem 'bigdecimal', '1.3.5'
+gem 'chronic', '0.10.2'
+gem 'ffi', '1.15.4'
+gem 'haml', '5.2.2'
+gem 'jquery-rails', '4.4.0'
+gem 'loofah', '2.2.3'
+gem 'materialize-sass', '0.100.2'
+gem 'nokogiri', '1.12.5'
+gem 'rails-html-sanitizer', '1.0.4'
+gem 'sass-rails', '5.0.7'
+gem 'seed_dump', '3.3.1'
+gem 'sprockets', '3.7.2'
+gem 'turbolinks', '5.2.1'
+gem 'uglifier', '1.3.0'
