@@ -81,7 +81,6 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.6.1)
     minitest (5.14.4)
-    multi_json (1.15.0)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
@@ -155,9 +154,8 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.9)
       thread_safe (~> 0.1)
-    uglifier (1.3.0)
-      execjs (>= 0.3.0)
-      multi_json (~> 1.0, >= 1.0.2)
+    uglifier (4.2.0)
+      execjs (>= 0.3.0, < 3)
 
 PLATFORMS
   ruby
@@ -183,7 +181,10 @@ DEPENDENCIES
   sprockets (= 3.7.2)
   sqlite3 (= 1.3.13)
   turbolinks (= 5.2.1)
-  uglifier (= 1.3.0)
+  uglifier (= 4.2.0)
+
+RUBY VERSION
+   ruby 2.7.5p203
 
 BUNDLED WITH
    1.16.2
